@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">JustWeather</string>
+    <string name="logo">logo</string>
+    <string name="settings">Settings</string>
+    <string name="openND">Open navigation drawer</string>
+    <string name="closeND">Close navigation drawer</string>
+    <string name="BASE_URL_OPEN_WEATHER_MAP">http://api.openweathermap.org/</string>
+</resources>
