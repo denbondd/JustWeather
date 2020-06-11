@@ -12,4 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
-secrets.properties
+
+#File with api keys
+app/src/main/jni/keys.c

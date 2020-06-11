@@ -6,7 +6,7 @@ import android.os.Handler;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.ui.activities.main.MainActivity;
 import com.denbondd.justweather.ui.base.BaseActivity;
-import com.denbondd.justweather.util.ActivityExtensionsKt;
+import com.denbondd.justweather.util.ActivityExtensions;
 
 public class SplashActivity extends BaseActivity<SplashVM> {
 
@@ -16,7 +16,7 @@ public class SplashActivity extends BaseActivity<SplashVM> {
     }
 
     @Override
-    public Class getViewModelClass() {
+    public Class<SplashVM> getViewModelClass() {
         return SplashVM.class;
     }
 
@@ -24,7 +24,7 @@ public class SplashActivity extends BaseActivity<SplashVM> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new Handler().postDelayed(() -> {
-            ActivityExtensionsKt.startActivityWithAnim(this, new MainActivity());
+            ActivityExtensions.startSplashActivityWithAnim(this, new MainActivity());
             finish();
         }, 4000);
     }

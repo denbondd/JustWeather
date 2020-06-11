@@ -1,62 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dlMain"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.activities.main.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.core.widget.NestedScrollView
+    <data>
+
+        <variable
+            name="oneCallOWM"
+            type="com.denbondd.justweather.models.OneCallOWM" />
+
+        <variable
+            name="date"
+            type="long" />
+
+        <variable
+            name="cityName"
+            type="String" />
+
+        <import
+            alias="timeExt"
+            type="com.denbondd.justweather.util.TimeExtensions" />
+    </data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/dlMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fitsSystemWindows="true"
+        tools:context=".ui.activities.main.MainActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/main_background">
+            android:fillViewport="true">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/tbMain"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="@style/ToolBarTheme"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/main_background">
 
-            <TextClock
-                android:id="@+id/txtCurrentTime"
-                style="@style/txtLight18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:theme="@style/txtLight18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tbMain"
-                app:layout_constraintEnd_toEndOf="@+id/tbMain"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/txtCurrentTemp"
+                    style="@style/txtRegular64sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="46dp"
+                    android:text="@{Long.toString(Math.round(oneCallOWM.current.temp)) + @string/celsiusSign}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                    tools:text="-8°C" />
 
-            <TextView
-                android:id="@+id/txtAnswer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tbMain" />
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/tbMain"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/ToolBarTheme"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextClock
+                    android:id="@+id/txtCurrentTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/montserrat_light"
+                    android:textColor="@color/mainGray"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tbMain"
+                    app:layout_constraintEnd_toEndOf="@+id/tbMain"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="23:54" />
 
-    </androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/txtSelectedDate"
+                    style="@style/txtLight16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{timeExt.convertMillisToDate(date, @string/fullDayNamePattern)}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tbMain"
+                    tools:text="Tuesday, 24 December" />
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nvMain"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/main_menu" />
+                <TextView
+                    android:id="@+id/txtTodayOrElse"
+                    style="@style/txtLight16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/today"
+                    app:layout_constraintEnd_toEndOf="@+id/txtSelectedDate"
+                    app:layout_constraintStart_toStartOf="@+id/txtSelectedDate"
+                    app:layout_constraintTop_toBottomOf="@+id/txtSelectedDate" />
 
-</androidx.drawerlayout.widget.DrawerLayout>
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="48dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtCityName"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/txtCityName"
+                    style="@style/txtRegular26sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:text="@{cityName}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTodayOrElse"
+                    tools:text="Kharkiv" />
+
+                <TextView
+                    android:id="@+id/txtMinMaxTemp"
+                    style="@style/txtRegular24sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.format(@string/tempMinMaxSplit, Math.round(oneCallOWM.daily.get(0).temp.min), Math.round(oneCallOWM.daily.get(0).temp.max))}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtCurrentTemp"
+                    tools:text="-10°/-6°" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/txtRegular18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="58dp"
+                    android:text="@string/more_info"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    style="@style/txtRegular24sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="26dp"
+                    android:text="@{oneCallOWM.current.weather.get(0).main}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtMinMaxTemp"
+                    tools:text="Sunny" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nvMain"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:menu="@menu/main_menu" />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>

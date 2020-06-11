@@ -11,7 +11,11 @@ public class AppApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        context = new WeakReference(this);
+        context = new WeakReference<>(this);
+    }
+
+    static {
+        System.loadLibrary("keys");
     }
 
     public static Context getContext() {

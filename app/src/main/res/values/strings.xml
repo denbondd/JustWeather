@@ -5,4 +5,10 @@
     <string name="openND">Open navigation drawer</string>
     <string name="closeND">Close navigation drawer</string>
     <string name="BASE_URL_OPEN_WEATHER_MAP">http://api.openweathermap.org/</string>
+    <string name="fullDayNamePattern">EEEE, d MMMM</string>
+    <string name="today">Today</string>
+    <string name="celsiusSign">°C</string>
+    <string name="tempSign">°</string>
+    <string name="tempMinMaxSplit">%1$d°/%2$d°</string>
+    <string name="more_info">More info</string>
 </resources>
