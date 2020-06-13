@@ -40,6 +40,17 @@ Java_com_denbondd_justweather_services_Keys_getOWMkey(JNIEnv* env, jobject this)
 - Now build your project again, and if you paste working api key, you can use this app now.
 
 ## Project structure
+- com.denbondd.justweather
+    - dataflow - files for working with data (APIs and databases)
+    - di - files for dependency injection
+    - models - models needed for project
+        - onecallowm - package with models for OpenWeatherMap OneCallApi
+    - services - files for working with retrofit
+    - ui - files used for user interface
+        - activities - all activities of project
+        - base - base ui components, that all other inherit
+        - fragments - all fragments of project
+    - util - different extensions     
 
 ## Download release apk
 Release apk isn't available now, because I'm currently working on this app. Anyway, if you want to take a look on it, you can set up this project in Android Studio.
