@@ -6,6 +6,7 @@ import android.content.Context;
 import java.lang.ref.WeakReference;
 
 public class AppApplication extends Application {
+    //for getting context from anywhere
     private static WeakReference<Context> context;
 
     @Override

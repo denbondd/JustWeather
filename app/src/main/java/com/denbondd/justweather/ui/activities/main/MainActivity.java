@@ -102,7 +102,10 @@ public class MainActivity extends BaseActivity<MainVM> {
                     return;
                 }
                 OneCallOWM oneCallOWM = response.body();
-                binding.setOneCallOWM(oneCallOWM);
+                if (oneCallOWM != null) {
+                    binding.setOneCallOWM(oneCallOWM);
+                    binding.setWeatherIcon(getViewModel().getIconById(oneCallOWM.getCurrent().getWeather().get(0).getId()));
+                }
             }
 
             @Override
