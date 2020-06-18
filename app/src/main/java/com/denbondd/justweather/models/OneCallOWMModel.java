@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class OneCallOWM {
+public class OneCallOWMModel {
 
     @SerializedName("lat")
     @Expose

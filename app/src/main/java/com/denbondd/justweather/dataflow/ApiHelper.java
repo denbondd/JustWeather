@@ -2,7 +2,8 @@ package com.denbondd.justweather.dataflow;
 
 import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
-import com.denbondd.justweather.models.OneCallOWM;
+import com.denbondd.justweather.models.CurrentWeatherOWMModel;
+import com.denbondd.justweather.models.OneCallOWMModel;
 import com.denbondd.justweather.services.Keys;
 import com.denbondd.justweather.services.OpenWeatherMapApi;
 
@@ -16,8 +17,13 @@ public class ApiHelper {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    public Call<OneCallOWM> getCurrentWeather(double lat, double lon) {
-        OpenWeatherMapApi openWeatherMapApi = retrofitOWM.create(OpenWeatherMapApi.class);
-        return openWeatherMapApi.getCurrentWeather(lat, lon, Keys.readOWMkey(), "metric");
+    private final OpenWeatherMapApi openWeatherMapApi = retrofitOWM.create(OpenWeatherMapApi.class);
+
+    public Call<OneCallOWMModel> getOneCallOWM(double lat, double lon) {
+        return openWeatherMapApi.getOneCallOWM(lat, lon, Keys.readOWMkey(), "metric");
+    }
+
+    public Call<CurrentWeatherOWMModel> getCurrentWeatherOWM(double lat, double lon) {
+        return openWeatherMapApi.getCurrentWeatherOWM(lat, lon, Keys.readOWMkey(), "metric");
     }
 }
