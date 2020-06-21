@@ -8,43 +8,54 @@
     </style>
 
     <style name="ToolBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorPrimary">@color/mainGray</item>
+        <item name="android:textColorPrimary">#fff</item>
     </style>
 
-    <style name="txtLight18sp">
+    <style name="txtLight">
         <item name="fontFamily">@font/montserrat_light</item>
-        <item name="android:textColor">@color/mainGray</item>
+    </style>
+
+    <style name="txtLight.18sp">
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="txtLight16sp">
-        <item name="fontFamily">@font/montserrat_light</item>
-        <item name="android:textColor">@color/mainGray</item>
+    <style name="txtLight.16sp">
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="txtRegular26sp">
+    <style name="txtRegular">
         <item name="fontFamily">@font/montserrat_regular</item>
-        <item name="android:textColor">@color/mainGray</item>
+    </style>
+
+    <style name="txtRegular.26sp">
         <item name="android:textSize">26sp</item>
     </style>
 
-    <style name="txtRegular64sp">
-        <item name="fontFamily">@font/montserrat_regular</item>
-        <item name="android:textColor">@color/mainGray</item>
+    <style name="txtRegular.64sp">
         <item name="android:textSize">64sp</item>
     </style>
 
-    <style name="txtRegular24sp">
-        <item name="fontFamily">@font/montserrat_regular</item>
-        <item name="android:textColor">@color/mainGray</item>
+    <style name="txtRegular.24sp">
         <item name="android:textSize">24sp</item>
     </style>
 
-    <style name="txtRegular18sp">
-        <item name="fontFamily">@font/montserrat_regular</item>
-        <item name="android:textColor">@color/mainGray</item>
+    <style name="txtRegular.18sp">
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="txtRegular.13sp">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="txtRegular.21sp">
+        <item name="android:textSize">21sp</item>
+    </style>
+
+    <style name="txtMedium">
+        <item name="fontFamily">@font/montserrat_medium</item>
+    </style>
+
+    <style name="txtMedium.32sp">
+        <item name="android:textSize">32sp</item>
+    </style>
 </resources>

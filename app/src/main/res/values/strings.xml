@@ -12,4 +12,14 @@
     <string name="tempMinMaxSplit">%1$d°/%2$d°</string>
     <string name="more_info">More info</string>
     <string name="weather_icon">weather_icon</string>
+    <string name="itemico">itemIco</string>
+    <string name="feels_like">Feels like</string>
+    <string name="humidity">Humidity</string>
+    <string name="percent">%</string>
+    <string name="wind">Wind</string>
+    <string name="m_per_sec">m/s</string>
+    <string name="pressure">Pressure</string>
+    <string name="h_pa">hPa</string>
+    <string name="cloudiness">Cloudiness</string>
+    <string name="uv_index">UV index</string>
 </resources>

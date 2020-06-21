@@ -11,11 +11,14 @@ import androidx.lifecycle.MutableLiveData;
 import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.models.CurrentWeatherOWMModel;
+import com.denbondd.justweather.models.MoreInfoItemModel;
+import com.denbondd.justweather.models.MoreInfoTypeEnum;
 import com.denbondd.justweather.models.OneCallOWMModel;
 import com.denbondd.justweather.ui.base.BaseVM;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import retrofit2.Call;
@@ -50,6 +53,53 @@ public class MainViewModel extends BaseVM {
                 Toast.makeText(AppApplication.getContext(), "Can't get location name", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public ArrayList<MoreInfoItemModel> getMoreInfoArray(OneCallOWMModel oneCallOWM) {
+        ArrayList<MoreInfoItemModel> answ = new ArrayList<>();
+        answ.add(new MoreInfoItemModel(
+                MoreInfoTypeEnum.HUMIDITY,
+                getString(R.string.humidity),
+                oneCallOWM.getCurrent().getHumidity(),
+                getDrawable(R.drawable.ic_humidity),
+                getString(R.string.percent)
+        ));
+        answ.add(new MoreInfoItemModel(
+                MoreInfoTypeEnum.WIND,
+                getString(R.string.wind),
+                oneCallOWM.getCurrent().getWindSpeed(),
+                getDrawable(R.drawable.ic_winddirection),
+                getString(R.string.m_per_sec)
+        ));
+        answ.add(new MoreInfoItemModel(
+                MoreInfoTypeEnum.PRESSURE,
+                getString(R.string.pressure),
+                oneCallOWM.getCurrent().getPressure(),
+                getDrawable(R.drawable.ic_pressure),
+                getString(R.string.h_pa)
+        ));
+        answ.add(new MoreInfoItemModel(
+                MoreInfoTypeEnum.CLOUDINESS,
+                getString(R.string.cloudiness),
+                oneCallOWM.getCurrent().getClouds(),
+                getDrawable(R.drawable.ic_cloudiness),
+                getString(R.string.percent)
+        ));
+        answ.add(new MoreInfoItemModel(
+                MoreInfoTypeEnum.UV_INDEX,
+                getString(R.string.uv_index),
+                oneCallOWM.getCurrent().getUvi(),
+                getDrawable(R.drawable.ic_uvindex),
+                ""
+        ));
+        answ.add(new MoreInfoItemModel(
+                MoreInfoTypeEnum.FEELS_LIKE,
+                getString(R.string.feels_like),
+                oneCallOWM.getCurrent().getFeelsLike(),
+                getDrawable(R.drawable.ic_feelslike),
+                getString(R.string.celsiusSign)
+        ));
+        return answ;
     }
 
     public boolean checkLocationPermissions() {
@@ -137,7 +187,8 @@ public class MainViewModel extends BaseVM {
             case 803:
             case 804:
                 return getDrawable(R.drawable.ic_weather21);
-            default: return null;
+            default:
+                return null;
         }
     }
 
@@ -145,8 +196,13 @@ public class MainViewModel extends BaseVM {
         return AppApplication.getContext().getDrawable(id);
     }
 
+    private String getString(int id) {
+        return AppApplication.getContext().getString(id);
+    }
+
     /**
      * check if it's night or day
+     *
      * @return if it's day, return true. otherwise return false
      */
     private boolean isNowSunOrMoon() {

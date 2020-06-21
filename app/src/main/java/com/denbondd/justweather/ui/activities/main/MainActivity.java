@@ -41,7 +41,6 @@ public class MainActivity extends BaseActivity<MainVM> {
                 "MainFragment",
                 R.id.fcvMainContainer,
                 true,
-                false,
                 false
         );
     }

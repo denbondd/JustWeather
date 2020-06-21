@@ -4,21 +4,25 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextClock;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.databinding.MainFragmentBinding;
 import com.denbondd.justweather.models.OneCallOWMModel;
+import com.denbondd.justweather.ui.adapters.MoreInfoRVAdapter;
 import com.denbondd.justweather.ui.base.BaseFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -48,9 +52,13 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     private MainFragmentBinding binding;
     private Location location;
 
+    private RecyclerView moreInfoRecyclerView;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        moreInfoRecyclerView = view.findViewById(R.id.rvMoreInfo);
+        ImageView ivWeatherIco = view.findViewById(R.id.ivWeatherIco);
 
         binding = MainFragmentBinding.bind(view);
         binding.setDate(System.currentTimeMillis());
@@ -72,7 +80,10 @@ public class MainFragment extends BaseFragment<MainViewModel> {
                         OneCallOWMModel oneCallOWM = response.body();
                         if (oneCallOWM != null) {
                             binding.setOneCallOWMModel(oneCallOWM);
-                            binding.setWeatherIcon(getViewModel().getIconById(oneCallOWM.getCurrent().getWeather().get(0).getId()));
+                            Glide.with(MainFragment.this)
+                                    .load(getViewModel().getIconById(oneCallOWM.getCurrent().getWeather().get(0).getId()))
+                                    .into(ivWeatherIco);
+                            makeMoreInfoRecycler(oneCallOWM);
                         }
                     }
 
@@ -84,6 +95,13 @@ public class MainFragment extends BaseFragment<MainViewModel> {
             }
         });
         updateLocation();
+    }
+
+    private void makeMoreInfoRecycler(OneCallOWMModel oneCallOWM) {
+        MoreInfoRVAdapter adapter = new MoreInfoRVAdapter();
+        adapter.setItems(getViewModel().getMoreInfoArray(oneCallOWM));
+        moreInfoRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        moreInfoRecyclerView.setAdapter(adapter);
     }
 
     @Override

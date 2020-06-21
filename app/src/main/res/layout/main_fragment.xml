@@ -17,113 +17,131 @@
             name="cityName"
             type="String" />
 
-        <variable
-            name="weatherIcon"
-            type="android.graphics.drawable.Drawable" />
-
         <import
             alias="timeExt"
             type="com.denbondd.justweather.util.TimeExtensions" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:background="@drawable/main_background">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txtCurrentTemp"
-            style="@style/txtRegular64sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:text="@{Long.toString(Math.round(oneCallOWMModel.current.temp)) + @string/celsiusSign}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            tools:text="-8°C" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:background="@drawable/main_background">
 
-        <TextView
-            android:id="@+id/txtSelectedDate"
-            style="@style/txtLight16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{timeExt.convertMillisToDate(date, @string/fullDayNamePattern)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Tuesday, 24 December" />
+            <TextView
+                android:id="@+id/txtCurrentTemp"
+                style="@style/txtRegular.64sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:text="@{Long.toString(Math.round(oneCallOWMModel.current.temp)) + @string/celsiusSign}"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivWeatherIco"
+                tools:text="-8°C" />
 
-        <TextView
-            android:id="@+id/txtTodayOrElse"
-            style="@style/txtLight16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/today"
-            app:layout_constraintEnd_toEndOf="@+id/txtSelectedDate"
-            app:layout_constraintStart_toStartOf="@+id/txtSelectedDate"
-            app:layout_constraintTop_toBottomOf="@+id/txtSelectedDate" />
+            <TextView
+                android:layout_marginTop="?attr/actionBarSize"
+                android:id="@+id/txtSelectedDate"
+                style="@style/txtLight.16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{timeExt.convertMillisToDate(date, @string/fullDayNamePattern)}"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Tuesday, 24 December" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="48dp"
-            android:src="@{weatherIcon}"
-            android:tint="@color/mainGray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtCityName"
-            tools:srcCompat="@drawable/ic_weather1d"
-            android:contentDescription="@string/weather_icon" />
+            <TextView
+                android:id="@+id/txtTodayOrElse"
+                style="@style/txtLight.16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/today"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="@+id/txtSelectedDate"
+                app:layout_constraintStart_toStartOf="@+id/txtSelectedDate"
+                app:layout_constraintTop_toBottomOf="@+id/txtSelectedDate" />
 
-        <TextView
-            android:id="@+id/txtCityName"
-            style="@style/txtRegular26sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            android:text="@{cityName}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtTodayOrElse"
-            tools:text="Kharkiv" />
+            <ImageView
+                android:id="@+id/ivWeatherIco"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="48dp"
+                android:contentDescription="@string/weather_icon"
+                android:tint="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCityName"
+                tools:srcCompat="@drawable/ic_weather1d" />
 
-        <TextView
-            android:id="@+id/txtMinMaxTemp"
-            style="@style/txtRegular24sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{String.format(@string/tempMinMaxSplit, Math.round(oneCallOWMModel.daily.get(0).temp.min), Math.round(oneCallOWMModel.daily.get(0).temp.max))}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtCurrentTemp"
-            tools:text="-10°/-6°" />
+            <TextView
+                android:id="@+id/txtCityName"
+                style="@style/txtRegular.26sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:text="@{cityName}"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTodayOrElse"
+                tools:text="Kharkiv" />
 
-        <TextView
-            android:id="@+id/textView3"
-            style="@style/txtRegular18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="50dp"
-            android:text="@string/more_info"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            <TextView
+                android:id="@+id/txtMinMaxTemp"
+                style="@style/txtRegular.24sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.format(@string/tempMinMaxSplit, Math.round(oneCallOWMModel.daily.get(0).temp.min), Math.round(oneCallOWMModel.daily.get(0).temp.max))}"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtCurrentTemp"
+                tools:text="-10°/-6°" />
 
-        <TextView
-            android:id="@+id/textView4"
-            style="@style/txtRegular24sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:text="@{oneCallOWMModel.current.weather.get(0).main}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtMinMaxTemp"
-            tools:text="Sunny" />
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/txtRegular.18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="50dp"
+                android:text="@string/more_info"
+                android:textColor="@android:color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/txtRegular.24sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:text="@{oneCallOWMModel.current.weather.get(0).main}"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtMinMaxTemp"
+                tools:text="Sunny" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMoreInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </layout>
