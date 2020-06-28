@@ -22,4 +22,5 @@
     <string name="h_pa">hPa</string>
     <string name="cloudiness">Cloudiness</string>
     <string name="uv_index">UV index</string>
+    <string name="hourly">Hourly</string>
 </resources>

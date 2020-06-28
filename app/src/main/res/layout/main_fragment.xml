@@ -28,7 +28,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:background="@drawable/main_background">
 
             <TextView
@@ -139,6 +139,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <Button
+                android:id="@+id/btnHourly"
+                style="@style/FilledButtonWithArrow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="13dp"
+                android:text="@string/hourly"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvMoreInfo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

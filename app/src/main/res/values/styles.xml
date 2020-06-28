@@ -47,6 +47,10 @@
         <item name="android:textSize">13sp</item>
     </style>
 
+    <style name="txtRegular.14sp">
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="txtRegular.21sp">
         <item name="android:textSize">21sp</item>
     </style>
@@ -58,4 +62,22 @@
     <style name="txtMedium.32sp">
         <item name="android:textSize">32sp</item>
     </style>
+
+    <style name="txtMedium.18sp">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="FilledButtonWithArrow">
+        <item name="android:background">@drawable/btn_filled</item>
+        <item name="fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">18sp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:paddingStart">19dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingTop">18dp</item>
+        <item name="android:paddingBottom">18dp</item>
+        <item name="android:drawableEnd">@drawable/ic_arrow_right</item>
+    </style>
+
 </resources>
