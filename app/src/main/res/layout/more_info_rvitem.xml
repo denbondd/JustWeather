@@ -6,6 +6,10 @@
         <variable
             name="item"
             type="com.denbondd.justweather.models.MoreInfoItemModel" />
+
+        <import
+            alias="owmExt"
+            type="com.denbondd.justweather.util.OWMExtensions" />
     </data>
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -58,7 +62,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="7dp"
                 android:layout_marginEnd="4dp"
-                android:text="@{item.data % 1 == 0 ? Integer.toString((int)item.data) + item.measure : Double.toString(item.data) + item.measure}"
+                android:text="@{owmExt.getRoundedOrNot(item.data) + item.measure}"
                 android:textColor="@color/mainGray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

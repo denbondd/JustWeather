@@ -6,7 +6,9 @@ import com.denbondd.justweather.AppApplication;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class TimeExtensions {
     public static String convertMillisToDate(long millis, String pattern) {
@@ -16,13 +18,15 @@ public class TimeExtensions {
         return simpleDateFormat.format(calendar.getTime());
     }
 
-    public static String getHours(long millis) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(millis);
+    public static String getHoursUTC(long utx) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.setTimeInMillis(utx * 1000);
+        SimpleDateFormat simpleDateFormat;
         if (DateFormat.is24HourFormat(AppApplication.getContext())) {
-            return new SimpleDateFormat("H", Locale.US).format(calendar.getTime());
+            simpleDateFormat = new SimpleDateFormat("H:mm", Locale.US);
         } else {
-            return new SimpleDateFormat("h a", Locale.US).format(calendar.getTime());
+            simpleDateFormat = new SimpleDateFormat("h:mm a", Locale.US);
         }
+        return simpleDateFormat.format(calendar.getTime());
     }
 }

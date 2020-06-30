@@ -2,6 +2,7 @@ package com.denbondd.justweather.ui.fragments.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -28,6 +29,7 @@ import com.denbondd.justweather.ui.adapters.MoreInfoRVAdapter;
 import com.denbondd.justweather.ui.base.BaseFragment;
 import com.denbondd.justweather.ui.fragments.hourly.HourlyFragment;
 import com.denbondd.justweather.util.FragmentExtensions;
+import com.denbondd.justweather.util.OWMExtensions;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -93,7 +95,7 @@ public class MainFragment extends BaseFragment<MainViewModel> {
                             oneCallOWMModel = oneCallOWM;
                             binding.setOneCallOWMModel(oneCallOWMModel);
                             Glide.with(MainFragment.this)
-                                    .load(getViewModel().getIconById(oneCallOWMModel.getCurrent().getWeather().get(0).getId()))
+                                    .load(OWMExtensions.getIconById(oneCallOWMModel.getCurrent().getWeather().get(0).getId()))
                                     .into(ivWeatherIco);
                             makeMoreInfoRecycler(oneCallOWMModel);
                         }
@@ -111,11 +113,11 @@ public class MainFragment extends BaseFragment<MainViewModel> {
 
     private void btnHourlyOnClick() {
         FragmentExtensions.addFragmentWithAnim(
-                (AppCompatActivity) getActivity(),
+                (AppCompatActivity) Objects.requireNonNull(getActivity()),
                 HourlyFragment.newInstance((ArrayList<Hourly>) oneCallOWMModel.getHourly()),
                 "HourlyFragment",
                 R.id.fcvMainContainer,
-                false, true);
+                true, true);
     }
 
     private void makeMoreInfoRecycler(OneCallOWMModel oneCallOWM) {
