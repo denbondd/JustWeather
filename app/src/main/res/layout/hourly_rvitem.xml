@@ -13,6 +13,10 @@
             alias="timeExt"
             type="com.denbondd.justweather.util.TimeExtensions" />
 
+        <import
+            alias="owmExt"
+            type="com.denbondd.justweather.util.OWMExtensions" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -59,11 +63,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@{hourly.temp.toString() + @string/celsiusSign + ' ' + @string/feels_like + ' ' + hourly.feelsLike.toString() + @string/celsiusSign}"
+                android:text="@{Math.round(hourly.temp) + @string/celsiusSign + ' ' + ' ' + @string/feels_like + ' ' + ' ' + Math.round(hourly.feelsLike) + @string/celsiusSign}"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/tvTime"
                 app:layout_constraintTop_toBottomOf="@+id/tvTime"
-                tools:text="-8°C - Feels like -10°C" />
+                tools:text="-8°C  Feels like  -10°C" />
 
             <TextView
                 android:id="@+id/tvWeather"
@@ -82,11 +86,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
+                android:text="@{@string/wind + ' ' + ' ' + owmExt.getRounded(hourly.windSpeed) + @string/m_per_sec + ' ' + ' ' + owmExt.getWindDirection(hourly.windDeg)}"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/tvWeather"
                 app:layout_constraintTop_toBottomOf="@+id/tvWeather"
-                android:text="@{@string/wind + ' ' + hourly.windSpeed + @string/m_per_sec}"
-                tools:text="Wind 7 m/s" />
+                tools:text="Wind  7 m/s  North" />
 
             <TextView
                 android:id="@+id/tvHumidity"
@@ -98,8 +102,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvWind"
                 app:layout_constraintTop_toBottomOf="@+id/tvWind"
-                android:text="@{@string/humidity + ' ' + hourly.humidity + '%'}"
-                tools:text="Humidity 46%" />
+                android:text="@{@string/humidity + ' ' + ' ' + hourly.humidity + '%'}"
+                tools:text="Humidity  46%" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

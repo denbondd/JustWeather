@@ -23,4 +23,12 @@
     <string name="cloudiness">Cloudiness</string>
     <string name="uv_index">UV index</string>
     <string name="hourly">Hourly</string>
+    <string name="n">North</string>
+    <string name="ne">Northeast</string>
+    <string name="e">East</string>
+    <string name="se">Southeast</string>
+    <string name="s">South</string>
+    <string name="sw">Southwest</string>
+    <string name="w">West</string>
+    <string name="nw">Northwest</string>
 </resources>
