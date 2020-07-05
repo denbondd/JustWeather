@@ -2,7 +2,6 @@ package com.denbondd.justweather.ui.fragments.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -17,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,9 +24,12 @@ import com.bumptech.glide.Glide;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.databinding.MainFragmentBinding;
 import com.denbondd.justweather.models.OneCallOWMModel;
+import com.denbondd.justweather.models.onecallowm.Daily;
 import com.denbondd.justweather.models.onecallowm.Hourly;
+import com.denbondd.justweather.ui.activities.main.MainActivity;
 import com.denbondd.justweather.ui.adapters.MoreInfoRVAdapter;
 import com.denbondd.justweather.ui.base.BaseFragment;
+import com.denbondd.justweather.ui.fragments.daily.DailyFragment;
 import com.denbondd.justweather.ui.fragments.hourly.HourlyFragment;
 import com.denbondd.justweather.util.FragmentExtensions;
 import com.denbondd.justweather.util.OWMExtensions;
@@ -62,16 +65,18 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     private OneCallOWMModel oneCallOWMModel;
 
     private RecyclerView moreInfoRecyclerView;
-    private Button btnHourly;
+    private Button btnHourly, btnDaily;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         moreInfoRecyclerView = view.findViewById(R.id.rvMoreInfo);
         btnHourly = view.findViewById(R.id.btnHourly);
+        btnDaily = view.findViewById(R.id.btnDaily);
         ImageView ivWeatherIco = view.findViewById(R.id.ivWeatherIco);
 
         btnHourly.setOnClickListener(v -> btnHourlyOnClick());
+        btnDaily.setOnClickListener(v -> btnDailyOnClick());
 
         binding = MainFragmentBinding.bind(view);
         binding.setDate(System.currentTimeMillis());
@@ -117,7 +122,20 @@ public class MainFragment extends BaseFragment<MainViewModel> {
                 HourlyFragment.newInstance((ArrayList<Hourly>) oneCallOWMModel.getHourly()),
                 "HourlyFragment",
                 R.id.fcvMainContainer,
-                true, true);
+                true, true
+        );
+        ((MainActivity) getActivity()).setBackArrow();
+    }
+
+    private void btnDailyOnClick() {
+        FragmentExtensions.addFragmentWithAnim(
+                (AppCompatActivity) Objects.requireNonNull(getActivity()),
+                DailyFragment.newInstance((ArrayList<Daily>) oneCallOWMModel.getDaily()),
+                "DailyFragment",
+                R.id.fcvMainContainer,
+                true, true
+        );
+        ((MainActivity) getActivity()).setBackArrow();
     }
 
     private void makeMoreInfoRecycler(OneCallOWMModel oneCallOWM) {

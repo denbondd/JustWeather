@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="daily"
+            type="com.denbondd.justweather.models.onecallowm.Daily" />
+
+        <import
+            alias="timeExt"
+            type="com.denbondd.justweather.util.TimeExtensions" />
+
+        <import
+            alias="owmExt"
+            type="com.denbondd.justweather.util.OWMExtensions" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="7dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivWeatherIcon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="13dp"
+                android:contentDescription="@string/itemico"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_weather11n" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                style="@style/txtMedium.18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="13dp"
+                android:text="@{timeExt.getDaysUTC(daily.dt)}"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toEndOf="@+id/ivWeatherIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Tuesday, 21 January" />
+
+            <TextView
+                android:id="@+id/tvTemp"
+                style="@style/txtRegular.14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{Math.round(daily.temp.max) + @string/celsiusSign + ' ' + '/' + ' ' + Math.round(daily.temp.min) + @string/celsiusSign}"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="@+id/tvTime"
+                app:layout_constraintTop_toBottomOf="@+id/tvTime"
+                tools:text="-8°C / -10°C" />
+
+            <TextView
+                android:id="@+id/tvWeather"
+                style="@style/txtRegular.14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{daily.weather.get(0).main}"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="@+id/tvTemp"
+                app:layout_constraintTop_toBottomOf="@+id/tvTemp"
+                tools:text="Snow" />
+
+            <TextView
+                android:id="@+id/tvWind"
+                style="@style/txtRegular.14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="@{@string/wind + ' ' + ' ' + owmExt.getRounded(daily.windSpeed) + @string/m_per_sec + ' ' + ' ' + owmExt.getWindDirection(daily.windDeg)}"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="@+id/tvWeather"
+                app:layout_constraintTop_toBottomOf="@+id/tvWeather"
+                tools:text="Wind  7 m/s  North" />
+
+            <TextView
+                android:id="@+id/tvHumidity"
+                style="@style/txtRegular.14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:text="@{@string/humidity + ' ' + ' ' + daily.humidity + '%'}"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvWind"
+                app:layout_constraintTop_toBottomOf="@+id/tvWind"
+                tools:text="Humidity  46%" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.denbondd.justweather.R;
@@ -24,16 +25,19 @@ public class MainActivity extends BaseActivity<MainVM> {
         return MainVM.class;
     }
 
+    Toolbar tbMain;
+    DrawerLayout dlMain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Toolbar tbMain = findViewById(R.id.tbMain);
-        DrawerLayout dlMain = findViewById(R.id.dlMain);
+        tbMain = findViewById(R.id.tbMain);
+        dlMain = findViewById(R.id.dlMain);
 
         setSupportActionBar(tbMain);
         if (getSupportActionBar() != null) getSupportActionBar().setTitle("");
-        ActivityExtensions.setMenuIcon(this, dlMain, tbMain);
+        setMenuIcon();
 
         FragmentExtensions.replaceFragmentWithAnim(
                 this,
@@ -43,5 +47,25 @@ public class MainActivity extends BaseActivity<MainVM> {
                 true,
                 false
         );
+    }
+
+    public void setBackArrow() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tbMain.setNavigationOnClickListener((view) -> onBackPressed());
+    }
+
+    public void setMenuIcon() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ActivityExtensions.setMenuIcon(this, dlMain, tbMain);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (dlMain.isDrawerOpen(GravityCompat.START)) {
+            dlMain.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+            setMenuIcon();
+        }
     }
 }

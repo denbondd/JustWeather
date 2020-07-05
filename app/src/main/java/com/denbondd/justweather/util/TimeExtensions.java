@@ -18,6 +18,14 @@ public class TimeExtensions {
         return simpleDateFormat.format(calendar.getTime());
     }
 
+    public static String getDaysUTC(long utx) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.setTimeInMillis(utx * 1000);
+        SimpleDateFormat simpleDateFormat;
+        simpleDateFormat = new SimpleDateFormat("EEEE, d MMMM", Locale.US);
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
     public static String getHoursUTC(long utx) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTimeInMillis(utx * 1000);

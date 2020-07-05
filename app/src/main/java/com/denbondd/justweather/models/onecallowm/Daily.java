@@ -1,9 +1,12 @@
 package com.denbondd.justweather.models.onecallowm;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Daily {
+public class Daily implements Parcelable {
 
     @SerializedName("dt")
     @Expose
@@ -103,4 +106,149 @@ public class Daily {
     public Double getRain() {
         return rain;
     }
+
+    protected Daily(Parcel in) {
+        if (in.readByte() == 0) {
+            dt = null;
+        } else {
+            dt = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            sunrise = null;
+        } else {
+            sunrise = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            sunset = null;
+        } else {
+            sunset = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            pressure = null;
+        } else {
+            pressure = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            humidity = null;
+        } else {
+            humidity = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            dewPoint = null;
+        } else {
+            dewPoint = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            windSpeed = null;
+        } else {
+            windSpeed = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            windDeg = null;
+        } else {
+            windDeg = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            clouds = null;
+        } else {
+            clouds = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            uvi = null;
+        } else {
+            uvi = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            rain = null;
+        } else {
+            rain = in.readDouble();
+        }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (dt == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(dt);
+        }
+        if (sunrise == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(sunrise);
+        }
+        if (sunset == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(sunset);
+        }
+        if (pressure == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(pressure);
+        }
+        if (humidity == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(humidity);
+        }
+        if (dewPoint == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(dewPoint);
+        }
+        if (windSpeed == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(windSpeed);
+        }
+        if (windDeg == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(windDeg);
+        }
+        if (clouds == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(clouds);
+        }
+        if (uvi == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(uvi);
+        }
+        if (rain == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(rain);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Daily> CREATOR = new Creator<Daily>() {
+        @Override
+        public Daily createFromParcel(Parcel in) {
+            return new Daily(in);
+        }
+
+        @Override
+        public Daily[] newArray(int size) {
+            return new Daily[size];
+        }
+    };
 }

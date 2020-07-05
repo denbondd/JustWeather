@@ -15,14 +15,13 @@ import com.denbondd.justweather.util.OWMExtensions;
 
 public class HourlyRVViewHolder extends RecyclerView.ViewHolder {
     private ImageView weatherIcon;
+    private HourlyRvitemBinding binding;
 
     public HourlyRVViewHolder(@NonNull View itemView) {
         super(itemView);
         weatherIcon = itemView.findViewById(R.id.ivWeatherIcon);
         binding = HourlyRvitemBinding.bind(itemView);
     }
-
-    private HourlyRvitemBinding binding;
 
     public void onBind(Hourly hourly) {
         binding.setHourly(hourly);
