@@ -6,4 +6,5 @@
     <color name="gradientStartColor">#65C8FF</color>
     <color name="gradientEndColor">#74F1F1</color>
     <color name="mainGray">#515151</color>
+    <color name="lightBlue">#DDF5F5</color>
 </resources>
