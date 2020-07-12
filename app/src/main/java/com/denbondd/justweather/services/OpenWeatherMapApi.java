@@ -2,6 +2,9 @@ package com.denbondd.justweather.services;
 
 import com.denbondd.justweather.models.CurrentWeatherOWMModel;
 import com.denbondd.justweather.models.OneCallOWMModel;
+import com.denbondd.justweather.models.findowm.Data;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -23,5 +26,11 @@ public interface OpenWeatherMapApi {
             @Query("lon") double lon,
             @Query("appid") String appid,
             @Query("units") String units
+    );
+
+    @GET("data/2.5/find")
+    Call<List<Data>> findCities(
+            @Query("q") String name,
+            @Query("appid") String appid
     );
 }

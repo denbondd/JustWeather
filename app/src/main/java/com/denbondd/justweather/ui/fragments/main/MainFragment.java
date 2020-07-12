@@ -16,13 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.databinding.MainFragmentBinding;
+import com.denbondd.justweather.models.CityModel;
 import com.denbondd.justweather.models.OneCallOWMModel;
 import com.denbondd.justweather.models.onecallowm.Daily;
 import com.denbondd.justweather.models.onecallowm.Hourly;
@@ -37,7 +37,6 @@ import com.denbondd.justweather.util.OWMExtensions;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -55,17 +54,24 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         return MainViewModel.class;
     }
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    private static final String CITY_KEY = "CITY_KEY";
+    public static MainFragment newInstance(CityModel city) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(CITY_KEY, city);
+        MainFragment mainFragment = new MainFragment();
+        mainFragment.setArguments(bundle);
+        return mainFragment;
     }
 
     private static final int LOCATION_PERMISSION_CODE = 91;
     private MainFragmentBinding binding;
     private Location location;
     private OneCallOWMModel oneCallOWMModel;
+    private CityModel city;
 
     private RecyclerView moreInfoRecyclerView;
     private Button btnHourly, btnDaily;
+    private ImageView ivWeatherIco;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -73,7 +79,8 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         moreInfoRecyclerView = view.findViewById(R.id.rvMoreInfo);
         btnHourly = view.findViewById(R.id.btnHourly);
         btnDaily = view.findViewById(R.id.btnDaily);
-        ImageView ivWeatherIco = view.findViewById(R.id.ivWeatherIco);
+        ivWeatherIco = view.findViewById(R.id.ivWeatherIco);
+        city = Objects.requireNonNull(getArguments()).getParcelable(CITY_KEY);
 
         btnHourly.setOnClickListener(v -> btnHourlyOnClick());
         btnDaily.setOnClickListener(v -> btnDailyOnClick());
@@ -81,9 +88,14 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         binding = MainFragmentBinding.bind(view);
         binding.setDate(System.currentTimeMillis());
 
+        setCity();
+    }
+
+    private void setCity() {
         getViewModel().currentLocationNameOWM.observe(getViewLifecycleOwner(), name -> {
             if (name != null) {
                 binding.setCityName(name);
+                city.setName(name);
             }
         });
         getViewModel().oneCallOWM.observe(getViewLifecycleOwner(), oneCallOWMCall -> {
@@ -99,7 +111,7 @@ public class MainFragment extends BaseFragment<MainViewModel> {
                         if (oneCallOWM != null) {
                             oneCallOWMModel = oneCallOWM;
                             binding.setOneCallOWMModel(oneCallOWMModel);
-                            Glide.with(MainFragment.this)
+                            Glide.with(Objects.requireNonNull(getContext()))
                                     .load(OWMExtensions.getIconById(oneCallOWMModel.getCurrent().getWeather().get(0).getId()))
                                     .into(ivWeatherIco);
                             makeMoreInfoRecycler(oneCallOWMModel);
@@ -163,15 +175,19 @@ public class MainFragment extends BaseFragment<MainViewModel> {
 
     @SuppressLint("MissingPermission")
     private void updateLocation() {
-        if (getViewModel().checkLocationPermissions()) {
-            LocationManager locationManager = (LocationManager) Objects.requireNonNull(getActivity()).getSystemService(Context.LOCATION_SERVICE);
-            if (locationManager != null) {
-                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                updateWeatherLiveData();
+        if (city.isGeolocation()) {
+            if (getViewModel().checkLocationPermissions()) {
+                LocationManager locationManager = (LocationManager) Objects.requireNonNull(getActivity()).getSystemService(Context.LOCATION_SERVICE);
+                if (locationManager != null) {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    updateWeatherLiveData();
+                }
+            } else {
+                askPermission();
+                Toast.makeText(getContext(), "No permission granted", Toast.LENGTH_SHORT).show();
             }
         } else {
-            askPermission();
-            Toast.makeText(getContext(), "No permission granted", Toast.LENGTH_SHORT).show();
+            getViewModel().updateLocationOWM(city.getLat(), city.getLon());
         }
     }
 

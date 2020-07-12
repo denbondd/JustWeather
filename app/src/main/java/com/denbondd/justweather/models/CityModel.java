@@ -1,6 +1,9 @@
 package com.denbondd.justweather.models;
 
-public class CityModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class CityModel implements Parcelable {
 
     private String name;
     private boolean isGeolocation;
@@ -13,6 +16,42 @@ public class CityModel {
         this.lat = lat;
         this.lon = lon;
     }
+
+    public CityModel(boolean isGeolocation) {
+        this.isGeolocation = isGeolocation;
+    }
+
+    protected CityModel(Parcel in) {
+        name = in.readString();
+        isGeolocation = in.readByte() != 0;
+        lat = in.readDouble();
+        lon = in.readDouble();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeByte((byte) (isGeolocation ? 1 : 0));
+        dest.writeDouble(lat);
+        dest.writeDouble(lon);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<CityModel> CREATOR = new Creator<CityModel>() {
+        @Override
+        public CityModel createFromParcel(Parcel in) {
+            return new CityModel(in);
+        }
+
+        @Override
+        public CityModel[] newArray(int size) {
+            return new CityModel[size];
+        }
+    };
 
     public String getName() {
         return name;

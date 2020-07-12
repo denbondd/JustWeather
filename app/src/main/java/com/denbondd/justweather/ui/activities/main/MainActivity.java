@@ -1,6 +1,8 @@
 package com.denbondd.justweather.ui.activities.main;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -51,7 +53,7 @@ public class MainActivity extends BaseActivity<MainVM> {
 
         FragmentExtensions.replaceFragmentWithAnim(
                 this,
-                MainFragment.newInstance(),
+                MainFragment.newInstance(new CityModel(true)),
                 "MainFragment",
                 R.id.fcvMainContainer,
                 true,
@@ -61,15 +63,28 @@ public class MainActivity extends BaseActivity<MainVM> {
 
     private void setRecyclerView() {
         ArrayList<CityModel> arrayList = new ArrayList<>();
-        arrayList.add(new CityModel("Kharkiv", true, 0, 0));
-        arrayList.add(new CityModel("Lviv", false, 0, 0));
-        arrayList.add(new CityModel("London", false, 0, 0));
+        arrayList.add(new CityModel(true));
+        arrayList.add(new CityModel("Kharkiv", false, 50, 36.25));
+        arrayList.add(new CityModel("Lviv", false, 49.8383, 24.0232));
+        arrayList.add(new CityModel("London", false, 51.5085, -0.1257));
 
         NavItemsRVAdapter adapter = new NavItemsRVAdapter(city -> {
-
+            FragmentExtensions.replaceFragmentWithAnim(
+                    this,
+                    MainFragment.newInstance(city),
+                    "MainFragment",
+                    R.id.fcvMainContainer,
+                    true,
+                    false
+            );
+            dlMain.closeDrawer(GravityCompat.START);
         });
         adapter.setCityModels(arrayList);
         rvCities.setAdapter(adapter);
+        new Handler().postDelayed(() -> {
+            adapter.notifyDataSetChanged();
+            Log.d("SMTH", "smth");
+        }, 5000);
     }
 
     public void setBackArrow() {
