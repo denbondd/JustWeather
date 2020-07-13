@@ -9,6 +9,7 @@ public class CityModel implements Parcelable {
     private boolean isGeolocation;
     private double lat;
     private double lon;
+    private boolean isCurrent;
 
     public CityModel(String name, boolean isGeolocation, double lat, double lon) {
         this.name = name;
@@ -26,6 +27,7 @@ public class CityModel implements Parcelable {
         isGeolocation = in.readByte() != 0;
         lat = in.readDouble();
         lon = in.readDouble();
+        isCurrent = in.readByte() != 0;
     }
 
     @Override
@@ -34,6 +36,7 @@ public class CityModel implements Parcelable {
         dest.writeByte((byte) (isGeolocation ? 1 : 0));
         dest.writeDouble(lat);
         dest.writeDouble(lon);
+        dest.writeByte((byte) (isCurrent ? 1 : 0));
     }
 
     @Override
@@ -83,5 +86,13 @@ public class CityModel implements Parcelable {
 
     public void setLon(double lon) {
         this.lon = lon;
+    }
+
+    public boolean isCurrent() {
+        return isCurrent;
+    }
+
+    public void setCurrent(boolean current) {
+        isCurrent = current;
     }
 }

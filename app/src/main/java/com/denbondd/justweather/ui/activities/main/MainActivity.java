@@ -3,6 +3,7 @@ package com.denbondd.justweather.ui.activities.main;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,6 +38,12 @@ public class MainActivity extends BaseActivity<MainVM> {
     private Toolbar tbMain;
     private DrawerLayout dlMain;
     private RecyclerView rvCities;
+    private ArrayList<CityModel> arrayList = new ArrayList<>();
+    private NavItemsRVAdapter adapter;
+    private Button btnSettings;
+
+    private final String GEOLOCATION_TAG = "Geolocation";
+    private final String SETTINGS_TAG = "Settings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,7 @@ public class MainActivity extends BaseActivity<MainVM> {
         tbMain = findViewById(R.id.tbMain);
         dlMain = findViewById(R.id.dlMain);
         rvCities = findViewById(R.id.rvCities);
+        btnSettings = findViewById(R.id.btnSettings);
 
         setSupportActionBar(tbMain);
         if (getSupportActionBar() != null) getSupportActionBar().setTitle("");
@@ -59,32 +67,58 @@ public class MainActivity extends BaseActivity<MainVM> {
                 true,
                 false
         );
+        getViewModel().activeFragment.postValue(GEOLOCATION_TAG);
+
+        getViewModel().activeFragment.observe(this, str -> {
+            btnSettings.setBackground(null);
+            if (str.equals(SETTINGS_TAG)) {
+                btnSettings.setBackground(getDrawable(R.drawable.btn_nav_item));
+                return;
+            }
+            for (CityModel city : arrayList){
+                city.setCurrent(false);
+                if (city.isGeolocation() && str.equals(GEOLOCATION_TAG)) {
+                    arrayList.get(0).setCurrent(true);
+                } else if (city.getName() != null && city.getName().equals(str)) {
+                    arrayList.get(arrayList.indexOf(city)).setCurrent(true);
+                }
+                adapter.notifyItemChanged(arrayList.indexOf(city));
+            }
+        });
+
+        btnSettings.setOnClickListener(v -> {
+            //show settings fragment
+            //getViewModel().activeFragment.postValue(SETTINGS_TAG);
+        });
     }
 
     private void setRecyclerView() {
-        ArrayList<CityModel> arrayList = new ArrayList<>();
         arrayList.add(new CityModel(true));
         arrayList.add(new CityModel("Kharkiv", false, 50, 36.25));
         arrayList.add(new CityModel("Lviv", false, 49.8383, 24.0232));
         arrayList.add(new CityModel("London", false, 51.5085, -0.1257));
 
-        NavItemsRVAdapter adapter = new NavItemsRVAdapter(city -> {
+        adapter = new NavItemsRVAdapter(city -> {
+            if (city.isCurrent()) {
+                dlMain.closeDrawer(GravityCompat.START);
+                return;
+            }
             FragmentExtensions.replaceFragmentWithAnim(
                     this,
                     MainFragment.newInstance(city),
-                    "MainFragment",
+                    city.getName(),
                     R.id.fcvMainContainer,
                     true,
                     false
             );
             dlMain.closeDrawer(GravityCompat.START);
+            getViewModel().activeFragment.postValue(city.getName());
         });
         adapter.setCityModels(arrayList);
         rvCities.setAdapter(adapter);
-        new Handler().postDelayed(() -> {
-            adapter.notifyDataSetChanged();
-            Log.d("SMTH", "smth");
-        }, 5000);
+    }
+
+    private void setCurrentFragment() {
     }
 
     public void setBackArrow() {
@@ -92,7 +126,7 @@ public class MainActivity extends BaseActivity<MainVM> {
         tbMain.setNavigationOnClickListener((view) -> onBackPressed());
     }
 
-    public void setMenuIcon() {
+    private void setMenuIcon() {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         ActivityExtensions.setMenuIcon(this, dlMain, tbMain);
     }
