@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,11 +15,11 @@ import com.denbondd.justweather.models.CityModel;
 import com.denbondd.justweather.ui.adapters.NavItemsRVAdapter;
 import com.denbondd.justweather.ui.base.BaseActivity;
 import com.denbondd.justweather.ui.fragments.main.MainFragment;
+import com.denbondd.justweather.ui.fragments.settings.SettingsFragment;
 import com.denbondd.justweather.util.ActivityExtensions;
 import com.denbondd.justweather.util.FragmentExtensions;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 
 public class MainActivity extends BaseActivity<MainVM> {
@@ -58,6 +57,7 @@ public class MainActivity extends BaseActivity<MainVM> {
         if (getSupportActionBar() != null) getSupportActionBar().setTitle("");
         setMenuIcon();
         setRecyclerView();
+        makeObserver();
 
         FragmentExtensions.replaceFragmentWithAnim(
                 this,
@@ -69,11 +69,25 @@ public class MainActivity extends BaseActivity<MainVM> {
         );
         getViewModel().activeFragment.postValue(GEOLOCATION_TAG);
 
+        btnSettings.setOnClickListener(v -> {
+            FragmentExtensions.replaceFragmentWithAnim(
+                    this,
+                    new SettingsFragment(),
+                    "SettingsFragment",
+                    R.id.fcvMainContainer,
+                    true,
+                    true
+            );
+            dlMain.closeDrawer(GravityCompat.START);
+            getViewModel().activeFragment.postValue(SETTINGS_TAG);
+        });
+    }
+
+    private void makeObserver() {
         getViewModel().activeFragment.observe(this, str -> {
             btnSettings.setBackground(null);
             if (str.equals(SETTINGS_TAG)) {
                 btnSettings.setBackground(getDrawable(R.drawable.btn_nav_item));
-                return;
             }
             for (CityModel city : arrayList){
                 city.setCurrent(false);
@@ -83,12 +97,8 @@ public class MainActivity extends BaseActivity<MainVM> {
                     arrayList.get(arrayList.indexOf(city)).setCurrent(true);
                 }
                 adapter.notifyItemChanged(arrayList.indexOf(city));
+                Log.d("CITY", city.getName() == null ? "null" : city.getName());
             }
-        });
-
-        btnSettings.setOnClickListener(v -> {
-            //show settings fragment
-            //getViewModel().activeFragment.postValue(SETTINGS_TAG);
         });
     }
 
@@ -112,13 +122,10 @@ public class MainActivity extends BaseActivity<MainVM> {
                     false
             );
             dlMain.closeDrawer(GravityCompat.START);
-            getViewModel().activeFragment.postValue(city.getName());
+            getViewModel().activeFragment.postValue(city.isGeolocation() ? GEOLOCATION_TAG : city.getName());
         });
         adapter.setCityModels(arrayList);
         rvCities.setAdapter(adapter);
-    }
-
-    private void setCurrentFragment() {
     }
 
     public void setBackArrow() {
