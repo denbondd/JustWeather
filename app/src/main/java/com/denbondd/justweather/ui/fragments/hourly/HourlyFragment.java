@@ -1,25 +1,19 @@
 package com.denbondd.justweather.ui.fragments.hourly;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.models.onecallowm.Hourly;
-import com.denbondd.justweather.ui.adapters.HourlyRVAdapter;
+import com.denbondd.justweather.ui.adapters.hourly.HourlyRVAdapter;
 import com.denbondd.justweather.ui.base.BaseFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HourlyFragment extends BaseFragment<HourlyViewModel> {
     private static final String HOURLY_LIST_KEY = "HOURLY_LIST_KEY";

@@ -1,4 +1,4 @@
-package com.denbondd.justweather.ui.adapters;
+package com.denbondd.justweather.ui.adapters.hourly;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

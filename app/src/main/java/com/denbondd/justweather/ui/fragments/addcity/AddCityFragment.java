@@ -8,13 +8,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.models.FindCityOWMModel;
+import com.denbondd.justweather.models.findowm.Data;
+import com.denbondd.justweather.ui.adapters.addcity.AddCityRVAdapter;
 import com.denbondd.justweather.ui.base.BaseFragment;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,13 +43,16 @@ public class AddCityFragment extends BaseFragment<AddCityViewModel> {
 
     private EditText tietCityName;
     private TextInputLayout tilCityName;
+    private final AddCityRVAdapter adapter = new AddCityRVAdapter();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tilCityName = view.findViewById(R.id.tilCityName);
         tietCityName = tilCityName.getEditText();
+        RecyclerView rvAddCity = view.findViewById(R.id.rvAddCity);
         setUpEditTexts();
+        rvAddCity.setAdapter(adapter);
     }
 
     private void setUpEditTexts() {
@@ -60,6 +68,7 @@ public class AddCityFragment extends BaseFragment<AddCityViewModel> {
                     Log.d("CITY_FIND", response.message());
                     if (response.body() != null) {
                         Log.d("CITY_FIND", response.body().getCount().toString()); //ok
+                        adapter.setCities((ArrayList<Data>) response.body().getData());
                     }
                 }
             }

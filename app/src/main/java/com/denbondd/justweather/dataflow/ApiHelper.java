@@ -29,6 +29,6 @@ public class ApiHelper {
     }
 
     public Call<FindCityOWMModel> getFindCityOWM(String name) {
-        return openWeatherMapApi.findCities(name, Keys.readOWMkey());
+        return openWeatherMapApi.findCities(name, "metric", Keys.readOWMkey());
     }
 }

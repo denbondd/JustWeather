@@ -1,7 +1,6 @@
 package com.denbondd.justweather.ui.activities.main;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.models.CityModel;
-import com.denbondd.justweather.ui.adapters.NavItemsRVAdapter;
+import com.denbondd.justweather.ui.adapters.navitems.NavItemsRVAdapter;
 import com.denbondd.justweather.ui.base.BaseActivity;
 import com.denbondd.justweather.ui.fragments.addcity.AddCityFragment;
 import com.denbondd.justweather.ui.fragments.main.MainFragment;

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.models.onecallowm.Daily;
-import com.denbondd.justweather.ui.adapters.DailyRVAdapter;
+import com.denbondd.justweather.ui.adapters.daily.DailyRVAdapter;
 import com.denbondd.justweather.ui.base.BaseFragment;
 
 import java.util.ArrayList;

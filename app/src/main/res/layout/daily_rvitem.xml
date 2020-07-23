@@ -14,8 +14,8 @@
             type="com.denbondd.justweather.util.TimeExtensions" />
 
         <import
-            alias="owmExt"
-            type="com.denbondd.justweather.util.OWMExtensions" />
+            alias="weatherExt"
+            type="com.denbondd.justweather.util.WeatherExtensions" />
 
     </data>
 
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@{Math.round(daily.temp.max) + @string/celsiusSign + ' ' + '/' + ' ' + Math.round(daily.temp.min) + @string/celsiusSign}"
+                android:text="@{weatherExt.getMaxMinTempStr(daily.temp.max, daily.temp.min)}"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/tvTime"
                 app:layout_constraintTop_toBottomOf="@+id/tvTime"
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:text="@{@string/wind + ' ' + ' ' + owmExt.getRounded(daily.windSpeed) + @string/m_per_sec + ' ' + ' ' + owmExt.getWindDirection(daily.windDeg)}"
+                android:text="@{weatherExt.getWindStr(daily.windSpeed, daily.windDeg)}"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/tvWeather"
                 app:layout_constraintTop_toBottomOf="@+id/tvWeather"
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="13dp"
-                android:text="@{@string/humidity + ' ' + ' ' + daily.humidity + '%'}"
+                android:text="@{weatherExt.getHumidityStr(daily.humidity)}"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvWind"

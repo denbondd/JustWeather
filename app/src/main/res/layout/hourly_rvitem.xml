@@ -14,8 +14,8 @@
             type="com.denbondd.justweather.util.TimeExtensions" />
 
         <import
-            alias="owmExt"
-            type="com.denbondd.justweather.util.OWMExtensions" />
+            alias="weatherExt"
+            type="com.denbondd.justweather.util.WeatherExtensions" />
 
     </data>
 
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@{Math.round(hourly.temp) + @string/celsiusSign + ' ' + ' ' + @string/feels_like + ' ' + ' ' + Math.round(hourly.feelsLike) + @string/celsiusSign}"
+                android:text="@{weatherExt.getMiddleFeelsLikeTempStr(hourly.temp, hourly.feelsLike)}"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/tvTime"
                 app:layout_constraintTop_toBottomOf="@+id/tvTime"
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:text="@{@string/wind + ' ' + ' ' + owmExt.getRounded(hourly.windSpeed) + @string/m_per_sec + ' ' + ' ' + owmExt.getWindDirection(hourly.windDeg)}"
+                android:text="@{weatherExt.getWindStr(hourly.windSpeed, hourly.windDeg)}"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/tvWeather"
                 app:layout_constraintTop_toBottomOf="@+id/tvWeather"
@@ -102,7 +102,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvWind"
                 app:layout_constraintTop_toBottomOf="@+id/tvWind"
-                android:text="@{@string/humidity + ' ' + ' ' + hourly.humidity + '%'}"
+                android:text="@{weatherExt.getHumidityStr(hourly.humidity)}"
                 tools:text="Humidity  46%" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

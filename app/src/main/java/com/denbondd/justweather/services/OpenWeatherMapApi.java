@@ -32,6 +32,7 @@ public interface OpenWeatherMapApi {
     @GET("data/2.5/find")
     Call<FindCityOWMModel> findCities(
             @Query("q") String name,
+            @Query("units") String units,
             @Query("appid") String appid
     );
 }

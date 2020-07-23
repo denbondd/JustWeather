@@ -9,33 +9,6 @@ import java.util.Calendar;
 
 public class OWMExtensions {
 
-    public static String getRounded(double data) {
-        if (data % 0.1 != 0) data = Math.round(data * 10.0) / 10.0;
-        return data % 1 == 0 ? Integer.toString((int) data) : Double.toString(data);
-    }
-
-    public static String getWindDirection(double degrees) {
-        if (degrees >= 337.5 && degrees <= 360 || degrees < 23.5) {
-            return getString(R.string.n);
-        } else if (degrees >= 23.5 && degrees < 62.5) {
-            return getString(R.string.ne);
-        } else if (degrees >= 62.5 && degrees < 112.5) {
-            return getString(R.string.e);
-        } else if (degrees >= 112.5 && degrees < 152.5) {
-            return getString(R.string.se);
-        } else if (degrees >= 152.5 && degrees < 202.5) {
-            return getString(R.string.s);
-        } else if (degrees >= 202.5 && degrees < 242.5) {
-            return getString(R.string.sw);
-        } else if (degrees >= 242.5 && degrees < 292.5) {
-            return getString(R.string.w);
-        } else if (degrees >= 292.5 && degrees < 337.5) {
-            return getString(R.string.nw);
-        } else {
-            return null;
-        }
-    }
-
     /**
      * open weather map returns weather id. this method take this id and return icon according to weather id
      * @param iconId weather id

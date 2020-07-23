@@ -27,7 +27,7 @@ import com.denbondd.justweather.models.OneCallOWMModel;
 import com.denbondd.justweather.models.onecallowm.Daily;
 import com.denbondd.justweather.models.onecallowm.Hourly;
 import com.denbondd.justweather.ui.activities.main.MainActivity;
-import com.denbondd.justweather.ui.adapters.MoreInfoRVAdapter;
+import com.denbondd.justweather.ui.adapters.moreinfo.MoreInfoRVAdapter;
 import com.denbondd.justweather.ui.base.BaseFragment;
 import com.denbondd.justweather.ui.fragments.daily.DailyFragment;
 import com.denbondd.justweather.ui.fragments.hourly.HourlyFragment;

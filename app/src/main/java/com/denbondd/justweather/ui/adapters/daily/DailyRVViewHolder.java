@@ -1,4 +1,4 @@
-package com.denbondd.justweather.ui.adapters;
+package com.denbondd.justweather.ui.adapters.daily;
 
 import android.view.View;
 import android.widget.ImageView;

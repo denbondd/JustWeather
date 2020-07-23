@@ -1,5 +1,5 @@
 
-package com.denbondd.justweather.ui.adapters;
+package com.denbondd.justweather.ui.adapters.navitems;
 
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.databinding.NavRvitemBinding;
 import com.denbondd.justweather.models.CityModel;
+import com.denbondd.justweather.ui.adapters.navitems.NavItemsRVAdapter;
 
 public class NavItemsRVViewHolder extends RecyclerView.ViewHolder {
     private final Button navItem = itemView.findViewById(R.id.btnNavItem);

@@ -5,6 +5,13 @@
 
     <data>
 
+        <variable
+            name="city"
+            type="com.denbondd.justweather.models.findowm.Data" />
+
+        <import
+            alias="weatherExt"
+            type="com.denbondd.justweather.util.WeatherExtensions" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -40,6 +47,7 @@
                 android:layout_marginStart="13dp"
                 android:layout_marginTop="13dp"
                 android:textColor="@android:color/black"
+                android:text="@{weatherExt.getCityStr(city.name, city.sys.country)}"
                 app:layout_constraintStart_toEndOf="@+id/ivWeatherIcon"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Mala, Peru" />
@@ -51,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@android:color/black"
+                android:text="@{weatherExt.getMaxMinTempStr(city.main.tempMax, city.main.tempMin)}"
                 app:layout_constraintStart_toStartOf="@+id/tvCity"
                 app:layout_constraintTop_toBottomOf="@+id/tvCity"
                 tools:text="-8°C / -10°C" />
@@ -61,6 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
+                android:text="@{city.weather.get(0).main}"
                 app:layout_constraintStart_toStartOf="@+id/tvTemp"
                 app:layout_constraintTop_toBottomOf="@+id/tvTemp"
                 tools:text="Snow" />
@@ -72,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:textColor="@android:color/black"
+                android:text="@{weatherExt.getWindStr(city.wind.speed, city.wind.deg)}"
                 app:layout_constraintStart_toStartOf="@+id/tvWeather"
                 app:layout_constraintTop_toBottomOf="@+id/tvWeather"
                 tools:text="Wind  7 m/s  North" />
@@ -82,6 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
+                android:text="@{weatherExt.getHumidityStr(city.main.humidity)}"
                 app:layout_constraintStart_toStartOf="@+id/tvWind"
                 app:layout_constraintTop_toBottomOf="@+id/tvWind"
                 tools:text="Humidity  46%" />

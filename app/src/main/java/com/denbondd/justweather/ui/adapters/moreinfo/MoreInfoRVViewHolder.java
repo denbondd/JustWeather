@@ -1,4 +1,4 @@
-package com.denbondd.justweather.ui.adapters;
+package com.denbondd.justweather.ui.adapters.moreinfo;
 
 import android.view.View;
 
