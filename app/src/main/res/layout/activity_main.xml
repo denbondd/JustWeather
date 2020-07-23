@@ -77,7 +77,41 @@
                 app:layout_constraintBottom_toTopOf="@+id/btnSettings"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/btnAddCity"
+                android:layout_width="match_parent"
+                android:layout_marginTop="4dp"
+                style="@style/NavigationItemStyle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvCities" />
+
+            <ImageView
+                android:id="@+id/ivAddCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAddCity"
+                app:layout_constraintStart_toStartOf="@+id/btnAddCity"
+                app:layout_constraintTop_toTopOf="@+id/btnAddCity"
+                app:srcCompat="@drawable/ic_add"
+                android:contentDescription="@string/itemico"/>
+
+            <TextView
+                android:id="@+id/tvAddCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/add_city"
+                style="@style/txtMedium.14sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAddCity"
+                app:layout_constraintStart_toEndOf="@+id/ivAddCity"
+                app:layout_constraintTop_toTopOf="@+id/btnAddCity" />
 
             <Button
                 android:id="@+id/btnSettings"

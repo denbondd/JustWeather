@@ -96,4 +96,14 @@
         <item name="android:layout_height">40dp</item>
     </style>
 
+    <style name="TextInputEditTextFind">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextInputLayoutFind">
+        <item name="android:colorControlNormal">#6BFFFFFF</item>
+        <item name="android:colorControlActivated">#FFFFFF</item>
+        <item name="android:textColorHint">#6BFFFFFF</item>
+    </style>
+
 </resources>

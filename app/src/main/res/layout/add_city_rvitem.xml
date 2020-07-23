@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="7dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivWeatherIcon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="13dp"
+                android:contentDescription="@string/itemico"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_weather11n" />
+
+            <TextView
+                android:id="@+id/tvCity"
+                style="@style/txtMedium.18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="13dp"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toEndOf="@+id/ivWeatherIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Mala, Peru" />
+
+            <TextView
+                android:id="@+id/tvTemp"
+                style="@style/txtRegular.14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="@+id/tvCity"
+                app:layout_constraintTop_toBottomOf="@+id/tvCity"
+                tools:text="-8°C / -10°C" />
+
+            <TextView
+                android:id="@+id/tvWeather"
+                style="@style/txtRegular.14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="@+id/tvTemp"
+                app:layout_constraintTop_toBottomOf="@+id/tvTemp"
+                tools:text="Snow" />
+
+            <TextView
+                android:id="@+id/tvWind"
+                style="@style/txtRegular.14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="@+id/tvWeather"
+                app:layout_constraintTop_toBottomOf="@+id/tvWeather"
+                tools:text="Wind  7 m/s  North" />
+
+            <TextView
+                android:id="@+id/tvHumidity"
+                style="@style/txtRegular.14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="@+id/tvWind"
+                app:layout_constraintTop_toBottomOf="@+id/tvWind"
+                tools:text="Humidity  46%" />
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="172dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvHumidity">
+
+                <WebView
+                    android:id="@+id/wvCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

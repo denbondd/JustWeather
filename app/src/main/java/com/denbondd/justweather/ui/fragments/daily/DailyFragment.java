@@ -41,7 +41,7 @@ public class DailyFragment extends BaseFragment<DailyViewModel> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dailies = getArguments().getParcelableArrayList(DAILY_KEY);
+        dailies = requireArguments().getParcelableArrayList(DAILY_KEY);
         rvDaily = view.findViewById(R.id.rvDaily);
 
         makeRecycler();

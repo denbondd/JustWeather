@@ -14,6 +14,7 @@ import com.denbondd.justweather.R;
 import com.denbondd.justweather.models.CityModel;
 import com.denbondd.justweather.ui.adapters.NavItemsRVAdapter;
 import com.denbondd.justweather.ui.base.BaseActivity;
+import com.denbondd.justweather.ui.fragments.addcity.AddCityFragment;
 import com.denbondd.justweather.ui.fragments.main.MainFragment;
 import com.denbondd.justweather.ui.fragments.settings.SettingsFragment;
 import com.denbondd.justweather.util.ActivityExtensions;
@@ -40,9 +41,11 @@ public class MainActivity extends BaseActivity<MainVM> {
     private ArrayList<CityModel> arrayList = new ArrayList<>();
     private NavItemsRVAdapter adapter;
     private Button btnSettings;
+    private Button btnAddCity;
 
     private final String GEOLOCATION_TAG = "Geolocation";
     private final String SETTINGS_TAG = "Settings";
+    private final String ADD_CITY_TAG = "AddCity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class MainActivity extends BaseActivity<MainVM> {
         dlMain = findViewById(R.id.dlMain);
         rvCities = findViewById(R.id.rvCities);
         btnSettings = findViewById(R.id.btnSettings);
+        btnAddCity = findViewById(R.id.btnAddCity);
 
         setSupportActionBar(tbMain);
         if (getSupportActionBar() != null) getSupportActionBar().setTitle("");
@@ -81,13 +85,29 @@ public class MainActivity extends BaseActivity<MainVM> {
             dlMain.closeDrawer(GravityCompat.START);
             getViewModel().activeFragment.postValue(SETTINGS_TAG);
         });
+
+        btnAddCity.setOnClickListener(v -> {
+            FragmentExtensions.replaceFragmentWithAnim(
+                    this,
+                    AddCityFragment.newInstance(),
+                    "AddCityFragment",
+                    R.id.fcvMainContainer,
+                    true,
+                    true
+            );
+            dlMain.closeDrawer(GravityCompat.START);
+            getViewModel().activeFragment.postValue(ADD_CITY_TAG);
+        });
     }
 
     private void makeObserver() {
         getViewModel().activeFragment.observe(this, str -> {
             btnSettings.setBackground(null);
+            btnAddCity.setBackground(null);
             if (str.equals(SETTINGS_TAG)) {
                 btnSettings.setBackground(getDrawable(R.drawable.btn_nav_item));
+            } else if (str.equals(ADD_CITY_TAG)) {
+                btnAddCity.setBackground(getDrawable(R.drawable.btn_nav_item));
             }
             for (CityModel city : arrayList){
                 city.setCurrent(false);

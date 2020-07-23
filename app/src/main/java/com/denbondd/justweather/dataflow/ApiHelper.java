@@ -3,6 +3,7 @@ package com.denbondd.justweather.dataflow;
 import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.models.CurrentWeatherOWMModel;
+import com.denbondd.justweather.models.FindCityOWMModel;
 import com.denbondd.justweather.models.OneCallOWMModel;
 import com.denbondd.justweather.services.Keys;
 import com.denbondd.justweather.services.OpenWeatherMapApi;
@@ -25,5 +26,9 @@ public class ApiHelper {
 
     public Call<CurrentWeatherOWMModel> getCurrentWeatherOWM(double lat, double lon) {
         return openWeatherMapApi.getCurrentWeatherOWM(lat, lon, Keys.readOWMkey(), "metric");
+    }
+
+    public Call<FindCityOWMModel> getFindCityOWM(String name) {
+        return openWeatherMapApi.findCities(name, Keys.readOWMkey());
     }
 }

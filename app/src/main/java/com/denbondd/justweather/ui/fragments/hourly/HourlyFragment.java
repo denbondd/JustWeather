@@ -48,7 +48,7 @@ public class HourlyFragment extends BaseFragment<HourlyViewModel> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        hourlyArrayList = getArguments().getParcelableArrayList(HOURLY_LIST_KEY);
+        hourlyArrayList = requireArguments().getParcelableArrayList(HOURLY_LIST_KEY);
 
         rvHourly = view.findViewById(R.id.rvHourly);
         makeRecycler();

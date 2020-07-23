@@ -1,6 +1,7 @@
 package com.denbondd.justweather.services;
 
 import com.denbondd.justweather.models.CurrentWeatherOWMModel;
+import com.denbondd.justweather.models.FindCityOWMModel;
 import com.denbondd.justweather.models.OneCallOWMModel;
 import com.denbondd.justweather.models.findowm.Data;
 
@@ -29,7 +30,7 @@ public interface OpenWeatherMapApi {
     );
 
     @GET("data/2.5/find")
-    Call<List<Data>> findCities(
+    Call<FindCityOWMModel> findCities(
             @Query("q") String name,
             @Query("appid") String appid
     );

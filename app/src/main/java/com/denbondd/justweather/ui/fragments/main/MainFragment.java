@@ -79,7 +79,7 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         btnHourly = view.findViewById(R.id.btnHourly);
         btnDaily = view.findViewById(R.id.btnDaily);
         ivWeatherIco = view.findViewById(R.id.ivWeatherIco);
-        city = getArguments().getParcelable(CITY_KEY);
+        city = requireArguments().getParcelable(CITY_KEY);
 
         btnHourly.setOnClickListener(v -> btnHourlyOnClick());
         btnDaily.setOnClickListener(v -> btnDailyOnClick());
@@ -110,7 +110,7 @@ public class MainFragment extends BaseFragment<MainViewModel> {
                         if (oneCallOWM != null) {
                             oneCallOWMModel = oneCallOWM;
                             binding.setOneCallOWMModel(oneCallOWMModel);
-                            Glide.with(getContext())
+                            Glide.with(requireContext())
                                     .load(OWMExtensions.getIconById(oneCallOWMModel.getCurrent().getWeather().get(0).getId()))
                                     .into(ivWeatherIco);
                             makeMoreInfoRecycler(oneCallOWMModel);
@@ -129,24 +129,24 @@ public class MainFragment extends BaseFragment<MainViewModel> {
 
     private void btnHourlyOnClick() {
         FragmentExtensions.addFragmentWithAnim(
-                (AppCompatActivity) getActivity(),
+                (AppCompatActivity) requireActivity(),
                 HourlyFragment.newInstance((ArrayList<Hourly>) oneCallOWMModel.getHourly()),
                 "HourlyFragment",
                 R.id.fcvMainContainer,
                 true, true
         );
-        ((MainActivity) getActivity()).setBackArrow();
+        ((MainActivity) requireActivity()).setBackArrow();
     }
 
     private void btnDailyOnClick() {
         FragmentExtensions.addFragmentWithAnim(
-                (AppCompatActivity) getActivity(),
+                (AppCompatActivity) requireActivity(),
                 DailyFragment.newInstance((ArrayList<Daily>) oneCallOWMModel.getDaily()),
                 "DailyFragment",
                 R.id.fcvMainContainer,
                 true, true
         );
-        ((MainActivity) getActivity()).setBackArrow();
+        ((MainActivity) requireActivity()).setBackArrow();
     }
 
     private void makeMoreInfoRecycler(OneCallOWMModel oneCallOWM) {
@@ -169,14 +169,14 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     }
 
     private void askPermission() {
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_CODE);
+        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_CODE);
     }
 
     @SuppressLint("MissingPermission")
     private void updateLocation() {
         if (city.isGeolocation()) {
             if (getViewModel().checkLocationPermissions()) {
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
                 if (locationManager != null) {
                     location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     updateWeatherLiveData();
