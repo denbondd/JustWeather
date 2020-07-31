@@ -29,7 +29,8 @@
             style="@style/TextInputEditTextFind"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textCapWords" />
+            android:inputType="textCapWords"
+            android:imeOptions="actionSearch"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -12,6 +12,10 @@
         <import
             alias="weatherExt"
             type="com.denbondd.justweather.util.WeatherExtensions" />
+
+        <import
+            alias="owmExt"
+            type="com.denbondd.justweather.util.OWMExtensions" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -35,6 +39,7 @@
                 android:layout_marginStart="13dp"
                 android:layout_marginTop="13dp"
                 android:contentDescription="@string/itemico"
+                android:src="@{owmExt.getIconById(city.weather.get(0).id)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@drawable/ic_weather11n" />
@@ -92,33 +97,14 @@
                 style="@style/txtRegular.14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
+                android:layout_marginBottom="13dp"
                 android:text="@{weatherExt.getHumidityStr(city.main.humidity)}"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvWind"
                 app:layout_constraintTop_toBottomOf="@+id/tvWind"
                 tools:text="Humidity  46%" />
 
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="172dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvHumidity">
-
-                <WebView
-                    android:id="@+id/wvCity"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

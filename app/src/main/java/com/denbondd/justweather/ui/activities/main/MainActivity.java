@@ -7,10 +7,14 @@ import android.widget.Button;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
-import com.denbondd.justweather.models.CityModel;
+import com.denbondd.justweather.db.AppDatabase;
+import com.denbondd.justweather.models.City;
 import com.denbondd.justweather.ui.adapters.navitems.NavItemsRVAdapter;
 import com.denbondd.justweather.ui.base.BaseActivity;
 import com.denbondd.justweather.ui.fragments.addcity.AddCityFragment;
@@ -20,7 +24,10 @@ import com.denbondd.justweather.util.ActivityExtensions;
 import com.denbondd.justweather.util.FragmentExtensions;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity<MainVM> {
 
@@ -37,42 +44,35 @@ public class MainActivity extends BaseActivity<MainVM> {
     private Toolbar tbMain;
     private DrawerLayout dlMain;
     private RecyclerView rvCities;
-    private ArrayList<CityModel> arrayList = new ArrayList<>();
     private NavItemsRVAdapter adapter;
-    private Button btnSettings;
-    private Button btnAddCity;
 
-    private final String GEOLOCATION_TAG = "Geolocation";
-    private final String SETTINGS_TAG = "Settings";
-    private final String ADD_CITY_TAG = "AddCity";
+    @Inject
+    AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((AppApplication)getApplication()).getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         tbMain = findViewById(R.id.tbMain);
         dlMain = findViewById(R.id.dlMain);
         rvCities = findViewById(R.id.rvCities);
-        btnSettings = findViewById(R.id.btnSettings);
-        btnAddCity = findViewById(R.id.btnAddCity);
 
         setSupportActionBar(tbMain);
         if (getSupportActionBar() != null) getSupportActionBar().setTitle("");
         setMenuIcon();
         setRecyclerView();
-        makeObserver();
 
         FragmentExtensions.replaceFragmentWithAnim(
                 this,
-                MainFragment.newInstance(new CityModel(true)),
+                MainFragment.newInstance(new City(true)),
                 "MainFragment",
                 R.id.fcvMainContainer,
                 true,
                 false
         );
-        getViewModel().activeFragment.postValue(GEOLOCATION_TAG);
 
-        btnSettings.setOnClickListener(v -> {
+        findViewById(R.id.btnSettings).setOnClickListener(v -> {
             FragmentExtensions.replaceFragmentWithAnim(
                     this,
                     new SettingsFragment(),
@@ -82,10 +82,9 @@ public class MainActivity extends BaseActivity<MainVM> {
                     true
             );
             dlMain.closeDrawer(GravityCompat.START);
-            getViewModel().activeFragment.postValue(SETTINGS_TAG);
         });
 
-        btnAddCity.setOnClickListener(v -> {
+        findViewById(R.id.btnAddCity).setOnClickListener(v -> {
             FragmentExtensions.replaceFragmentWithAnim(
                     this,
                     AddCityFragment.newInstance(),
@@ -95,38 +94,10 @@ public class MainActivity extends BaseActivity<MainVM> {
                     true
             );
             dlMain.closeDrawer(GravityCompat.START);
-            getViewModel().activeFragment.postValue(ADD_CITY_TAG);
-        });
-    }
-
-    private void makeObserver() {
-        getViewModel().activeFragment.observe(this, str -> {
-            btnSettings.setBackground(null);
-            btnAddCity.setBackground(null);
-            if (str.equals(SETTINGS_TAG)) {
-                btnSettings.setBackground(getDrawable(R.drawable.btn_nav_item));
-            } else if (str.equals(ADD_CITY_TAG)) {
-                btnAddCity.setBackground(getDrawable(R.drawable.btn_nav_item));
-            }
-            for (CityModel city : arrayList){
-                city.setCurrent(false);
-                if (city.isGeolocation() && str.equals(GEOLOCATION_TAG)) {
-                    arrayList.get(0).setCurrent(true);
-                } else if (city.getName() != null && city.getName().equals(str)) {
-                    arrayList.get(arrayList.indexOf(city)).setCurrent(true);
-                }
-                adapter.notifyItemChanged(arrayList.indexOf(city));
-                Log.d("CITY", city.getName() == null ? "null" : city.getName());
-            }
         });
     }
 
     private void setRecyclerView() {
-        arrayList.add(new CityModel(true));
-        arrayList.add(new CityModel("Kharkiv", false, 50, 36.25));
-        arrayList.add(new CityModel("Lviv", false, 49.8383, 24.0232));
-        arrayList.add(new CityModel("London", false, 51.5085, -0.1257));
-
         adapter = new NavItemsRVAdapter(city -> {
             if (city.isCurrent()) {
                 dlMain.closeDrawer(GravityCompat.START);
@@ -141,10 +112,13 @@ public class MainActivity extends BaseActivity<MainVM> {
                     false
             );
             dlMain.closeDrawer(GravityCompat.START);
-            getViewModel().activeFragment.postValue(city.isGeolocation() ? GEOLOCATION_TAG : city.getName());
         });
-        adapter.setCityModels(arrayList);
         rvCities.setAdapter(adapter);
+        appDatabase.cityDao().getAll().observe(this, cities -> {
+            if (cities != null) {
+                adapter.setCities((ArrayList<City>) cities);
+            }
+        });
     }
 
     public void setBackArrow() {

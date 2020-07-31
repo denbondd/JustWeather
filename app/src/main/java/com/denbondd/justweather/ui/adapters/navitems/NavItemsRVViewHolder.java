@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.databinding.NavRvitemBinding;
-import com.denbondd.justweather.models.CityModel;
-import com.denbondd.justweather.ui.adapters.navitems.NavItemsRVAdapter;
+import com.denbondd.justweather.models.City;
 
 public class NavItemsRVViewHolder extends RecyclerView.ViewHolder {
     private final Button navItem = itemView.findViewById(R.id.btnNavItem);
@@ -23,7 +22,7 @@ public class NavItemsRVViewHolder extends RecyclerView.ViewHolder {
         this.navItemsRVInterface = navItemsRVInterface;
     }
 
-    public void onBind(CityModel city) {
+    public void onBind(City city) {
         binding.setCity(city);
 
         navItem.setOnClickListener(v -> navItemsRVInterface.openCityFragment(city));

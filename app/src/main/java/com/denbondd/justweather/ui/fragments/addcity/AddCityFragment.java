@@ -1,25 +1,33 @@
 package com.denbondd.justweather.ui.fragments.addcity;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
+import com.denbondd.justweather.db.AppDatabase;
 import com.denbondd.justweather.models.FindCityOWMModel;
 import com.denbondd.justweather.models.findowm.Data;
 import com.denbondd.justweather.ui.adapters.addcity.AddCityRVAdapter;
 import com.denbondd.justweather.ui.base.BaseFragment;
+import com.denbondd.justweather.ui.fragments.main.MainFragment;
+import com.denbondd.justweather.util.ActivityExtensions;
+import com.denbondd.justweather.util.FragmentExtensions;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,9 +49,23 @@ public class AddCityFragment extends BaseFragment<AddCityViewModel> {
         return new AddCityFragment();
     }
 
+    @Inject
+    AppDatabase appDatabase;
+
     private EditText tietCityName;
     private TextInputLayout tilCityName;
-    private final AddCityRVAdapter adapter = new AddCityRVAdapter();
+    private final AddCityRVAdapter adapter = new AddCityRVAdapter(city -> new Thread(() -> {
+            appDatabase.cityDao().insert(city);
+            FragmentExtensions.replaceFragmentWithAnim(
+                    (AppCompatActivity) requireActivity(),
+                    MainFragment.newInstance(city),
+                    "MainFragment",
+                    R.id.fcvMainContainer,
+                    true,
+                    false);
+        }
+        ).start()
+    );
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -56,7 +78,15 @@ public class AddCityFragment extends BaseFragment<AddCityViewModel> {
     }
 
     private void setUpEditTexts() {
-        tilCityName.setEndIconOnClickListener((v) -> getViewModel().updateFindCity(tietCityName.getText().toString()));
+        tilCityName.setEndIconOnClickListener((v) -> {
+            getViewModel().updateFindCity(tietCityName.getText().toString());
+            ActivityExtensions.hideKeyboard(requireActivity());
+        });
+        tietCityName.setOnEditorActionListener((v, actionId, event) -> {
+            getViewModel().updateFindCity(tietCityName.getText().toString());
+            ActivityExtensions.hideKeyboard(requireActivity());
+            return false;
+        });
         setUpObserver();
     }
 
@@ -65,9 +95,7 @@ public class AddCityFragment extends BaseFragment<AddCityViewModel> {
             @Override
             public void onResponse(@NotNull Call<FindCityOWMModel> call, @NotNull Response<FindCityOWMModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d("CITY_FIND", response.message());
                     if (response.body() != null) {
-                        Log.d("CITY_FIND", response.body().getCount().toString()); //ok
                         adapter.setCities((ArrayList<Data>) response.body().getData());
                     }
                 }
@@ -79,5 +107,11 @@ public class AddCityFragment extends BaseFragment<AddCityViewModel> {
                 t.printStackTrace();
             }
         }));
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        ((AppApplication) requireActivity().getApplication()).getAppComponent().inject(this);
     }
 }

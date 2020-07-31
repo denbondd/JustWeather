@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.databinding.MainFragmentBinding;
-import com.denbondd.justweather.models.CityModel;
+import com.denbondd.justweather.models.City;
 import com.denbondd.justweather.models.OneCallOWMModel;
 import com.denbondd.justweather.models.onecallowm.Daily;
 import com.denbondd.justweather.models.onecallowm.Hourly;
@@ -54,7 +54,7 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     }
 
     private static final String CITY_KEY = "CITY_KEY";
-    public static MainFragment newInstance(CityModel city) {
+    public static MainFragment newInstance(City city) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(CITY_KEY, city);
         MainFragment mainFragment = new MainFragment();
@@ -66,7 +66,7 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     private MainFragmentBinding binding;
     private Location location;
     private OneCallOWMModel oneCallOWMModel;
-    private CityModel city;
+    private City city;
 
     private RecyclerView moreInfoRecyclerView;
     private Button btnHourly, btnDaily;

@@ -7,12 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.denbondd.justweather.R;
-import com.denbondd.justweather.models.CityModel;
+import com.denbondd.justweather.models.City;
 
 import java.util.ArrayList;
 
 public class NavItemsRVAdapter extends RecyclerView.Adapter<NavItemsRVViewHolder> {
-    private ArrayList<CityModel> cityModels;
+    private ArrayList<City> cities = new ArrayList<>();
     private final NavItemsRVInterface navItemsRVInterface;
 
     public NavItemsRVAdapter(NavItemsRVInterface navItemsRVInterface) {
@@ -30,20 +30,20 @@ public class NavItemsRVAdapter extends RecyclerView.Adapter<NavItemsRVViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull NavItemsRVViewHolder holder, int position) {
-        holder.onBind(cityModels.get(position));
+        holder.onBind(cities.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return cityModels.size();
+        return cities.size();
     }
 
-    public void setCityModels(ArrayList<CityModel> cityModels) {
-        this.cityModels = cityModels;
+    public void setCities(ArrayList<City> cities) {
+        this.cities = cities;
         notifyDataSetChanged();
     }
 
     public interface NavItemsRVInterface {
-        void openCityFragment(CityModel city);
+        void openCityFragment(City city);
     }
 }
