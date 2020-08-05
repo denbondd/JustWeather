@@ -1,14 +1,13 @@
 package com.denbondd.justweather.ui.activities.main;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.denbondd.justweather.AppApplication;
@@ -24,7 +23,6 @@ import com.denbondd.justweather.util.ActivityExtensions;
 import com.denbondd.justweather.util.FragmentExtensions;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -45,9 +43,13 @@ public class MainActivity extends BaseActivity<MainVM> {
     private DrawerLayout dlMain;
     private RecyclerView rvCities;
     private NavItemsRVAdapter adapter;
+    private Button btnSettings, btnAddCity;
 
     @Inject
     AppDatabase appDatabase;
+
+    private final String SETTINGS_TAG = "SettingsFragment";
+    private final String ADD_CITY_TAG = "AddCityFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,9 @@ public class MainActivity extends BaseActivity<MainVM> {
         tbMain = findViewById(R.id.tbMain);
         dlMain = findViewById(R.id.dlMain);
         rvCities = findViewById(R.id.rvCities);
+
+        btnSettings = findViewById(R.id.btnSettings);
+        btnAddCity = findViewById(R.id.btnAddCity);
 
         setSupportActionBar(tbMain);
         if (getSupportActionBar() != null) getSupportActionBar().setTitle("");
@@ -72,29 +77,25 @@ public class MainActivity extends BaseActivity<MainVM> {
                 false
         );
 
-        findViewById(R.id.btnSettings).setOnClickListener(v -> {
-            FragmentExtensions.replaceFragmentWithAnim(
-                    this,
-                    new SettingsFragment(),
-                    "SettingsFragment",
-                    R.id.fcvMainContainer,
-                    true,
-                    true
-            );
-            dlMain.closeDrawer(GravityCompat.START);
-        });
+        findViewById(R.id.btnSettings).setOnClickListener(v -> onNavItemClick(new SettingsFragment(), "SettingsFragment"));
+        findViewById(R.id.btnAddCity).setOnClickListener(v -> onNavItemClick(AddCityFragment.newInstance(), "AddCityFragment"));
+        getViewModel().currentPage.observe(this, this::changeCurrent);
+    }
 
-        findViewById(R.id.btnAddCity).setOnClickListener(v -> {
-            FragmentExtensions.replaceFragmentWithAnim(
-                    this,
-                    AddCityFragment.newInstance(),
-                    "AddCityFragment",
-                    R.id.fcvMainContainer,
-                    true,
-                    true
-            );
-            dlMain.closeDrawer(GravityCompat.START);
-        });
+    private void changeCurrent(String state) {
+        btnSettings.setBackground(null);
+        btnAddCity.setBackground(null);
+        switch (state) {
+            case SETTINGS_TAG:
+                btnSettings.setBackgroundResource(R.drawable.btn_nav_item);
+                break;
+            case ADD_CITY_TAG:
+                btnAddCity.setBackgroundResource(R.drawable.btn_nav_item);
+                break;
+            default:
+                adapter.setCurrentCity(Long.parseLong(state));
+                break;
+        }
     }
 
     private void setRecyclerView() {
@@ -111,14 +112,15 @@ public class MainActivity extends BaseActivity<MainVM> {
                     true,
                     false
             );
+            getViewModel().currentPage.postValue(Long.toString(city.getId()));
             dlMain.closeDrawer(GravityCompat.START);
         });
         rvCities.setAdapter(adapter);
-        appDatabase.cityDao().getAll().observe(this, cities -> {
-            if (cities != null) {
-                adapter.setCities((ArrayList<City>) cities);
-            }
-        });
+        updateCities();
+    }
+
+    public void updateCities() {
+        runOnUiThread(() -> adapter.setCities((ArrayList<City>) appDatabase.cityDao().getAll()));
     }
 
     public void setBackArrow() {
@@ -129,6 +131,19 @@ public class MainActivity extends BaseActivity<MainVM> {
     private void setMenuIcon() {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         ActivityExtensions.setMenuIcon(this, dlMain, tbMain);
+    }
+
+    private void onNavItemClick(Fragment fragment, String tag) {
+        FragmentExtensions.replaceFragmentWithAnim(
+                this,
+                fragment,
+                tag,
+                R.id.fcvMainContainer,
+                true,
+                true
+        );
+        getViewModel().currentPage.postValue(tag);
+        dlMain.closeDrawer(GravityCompat.START);
     }
 
     @Override

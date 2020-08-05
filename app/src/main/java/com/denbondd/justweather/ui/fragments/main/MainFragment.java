@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,8 +21,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.databinding.MainFragmentBinding;
+import com.denbondd.justweather.db.AppDatabase;
 import com.denbondd.justweather.models.City;
 import com.denbondd.justweather.models.OneCallOWMModel;
 import com.denbondd.justweather.models.onecallowm.Daily;
@@ -37,6 +40,8 @@ import com.denbondd.justweather.util.OWMExtensions;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,6 +77,9 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     private Button btnHourly, btnDaily;
     private ImageView ivWeatherIco;
 
+    @Inject
+    AppDatabase appDatabase;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -94,7 +102,7 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         getViewModel().currentLocationNameOWM.observe(getViewLifecycleOwner(), name -> {
             if (name != null) {
                 binding.setCityName(name);
-                city.setName(name);
+                if (!city.getName().equals(name)) city.setName(name);
             }
         });
         getViewModel().oneCallOWM.observe(getViewLifecycleOwner(), oneCallOWMCall -> {
@@ -114,6 +122,11 @@ public class MainFragment extends BaseFragment<MainViewModel> {
                                     .load(OWMExtensions.getIconById(oneCallOWMModel.getCurrent().getWeather().get(0).getId()))
                                     .into(ivWeatherIco);
                             makeMoreInfoRecycler(oneCallOWMModel);
+                            if (city.getLon() != oneCallOWM.getLon() && city.getLat() != oneCallOWM.getLat()) {
+                                city.setLat(oneCallOWM.getLat());
+                                city.setLon(oneCallOWM.getLon());
+                                updateCities();
+                            }
                         }
                     }
 
@@ -125,6 +138,13 @@ public class MainFragment extends BaseFragment<MainViewModel> {
             }
         });
         updateLocation();
+    }
+
+    private void updateCities() {
+        new Thread(() -> {
+            appDatabase.cityDao().update(city);
+        }).start();
+        new Handler().postDelayed(() -> ((MainActivity) getActivity()).updateCities(), 1000);
     }
 
     private void btnHourlyOnClick() {
@@ -192,5 +212,11 @@ public class MainFragment extends BaseFragment<MainViewModel> {
 
     private void updateWeatherLiveData() {
         getViewModel().updateLocationOWM(location.getLatitude(), location.getLongitude());
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        ((AppApplication) getActivity().getApplication()).getAppComponent().inject(this);
     }
 }

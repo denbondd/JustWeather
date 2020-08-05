@@ -9,13 +9,14 @@ import androidx.room.Update;
 
 import com.denbondd.justweather.models.City;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
 public interface CityDao {
 
     @Query("SELECT * FROM City")
-    LiveData<List<City>> getAll();
+    List<City> getAll();
 
     @Query("SELECT * FROM City WHERE id = :id")
     City getById(long id);

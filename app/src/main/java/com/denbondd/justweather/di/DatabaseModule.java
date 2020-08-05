@@ -16,6 +16,9 @@ public class DatabaseModule {
 
     @Provides
     AppDatabase provideAppDatabase(Context context){
-        return Room.databaseBuilder(context, AppDatabase.class, "database").build();
+        return Room
+                .databaseBuilder(context, AppDatabase.class, "database")
+                .allowMainThreadQueries()
+                .build();
     }
 }

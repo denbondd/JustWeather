@@ -43,6 +43,13 @@ public class NavItemsRVAdapter extends RecyclerView.Adapter<NavItemsRVViewHolder
         notifyDataSetChanged();
     }
 
+    public void setCurrentCity(long id) {
+        for (City city : cities) {
+            city.setCurrent(city.getId() == id);
+            notifyItemChanged(cities.indexOf(city));
+        }
+    }
+
     public interface NavItemsRVInterface {
         void openCityFragment(City city);
     }

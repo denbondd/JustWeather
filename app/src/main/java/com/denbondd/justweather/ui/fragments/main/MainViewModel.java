@@ -3,6 +3,7 @@ package com.denbondd.justweather.ui.fragments.main;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.denbondd.justweather.models.CurrentWeatherOWMModel;
 import com.denbondd.justweather.models.MoreInfoItemModel;
 import com.denbondd.justweather.models.MoreInfoTypeEnum;
 import com.denbondd.justweather.models.OneCallOWMModel;
+import com.denbondd.justweather.ui.activities.main.MainActivity;
 import com.denbondd.justweather.ui.base.BaseVM;
 
 import org.jetbrains.annotations.NotNull;

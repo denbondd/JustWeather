@@ -7,6 +7,7 @@ import com.denbondd.justweather.db.AppDatabase;
 import com.denbondd.justweather.db.CityDao;
 import com.denbondd.justweather.ui.activities.main.MainActivity;
 import com.denbondd.justweather.ui.fragments.addcity.AddCityFragment;
+import com.denbondd.justweather.ui.fragments.main.MainFragment;
 
 import dagger.BindsInstance;
 import dagger.Component;
@@ -18,6 +19,7 @@ public interface AppComponent {
 
     void inject(AddCityFragment addCityFragment);
     void inject(MainActivity mainActivity);
+    void inject(MainFragment mainFragment);
 
     @Component.Builder
     interface Builder {

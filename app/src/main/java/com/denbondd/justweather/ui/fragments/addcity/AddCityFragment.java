@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.db.AppDatabase;
+import com.denbondd.justweather.models.City;
 import com.denbondd.justweather.models.FindCityOWMModel;
 import com.denbondd.justweather.models.findowm.Data;
+import com.denbondd.justweather.ui.activities.main.MainActivity;
 import com.denbondd.justweather.ui.adapters.addcity.AddCityRVAdapter;
 import com.denbondd.justweather.ui.base.BaseFragment;
 import com.denbondd.justweather.ui.fragments.main.MainFragment;
@@ -55,15 +57,16 @@ public class AddCityFragment extends BaseFragment<AddCityViewModel> {
     private EditText tietCityName;
     private TextInputLayout tilCityName;
     private final AddCityRVAdapter adapter = new AddCityRVAdapter(city -> new Thread(() -> {
-            appDatabase.cityDao().insert(city);
-            FragmentExtensions.replaceFragmentWithAnim(
-                    (AppCompatActivity) requireActivity(),
-                    MainFragment.newInstance(city),
-                    "MainFragment",
-                    R.id.fcvMainContainer,
-                    true,
-                    false);
-        }
+        appDatabase.cityDao().insert(city);
+        FragmentExtensions.replaceFragmentWithAnim(
+                (AppCompatActivity) requireActivity(),
+                MainFragment.newInstance(city),
+                "MainFragment",
+                R.id.fcvMainContainer,
+                true,
+                false);
+        ((MainActivity) getActivity()).updateCities();
+    }
         ).start()
     );
 
