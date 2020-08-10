@@ -21,11 +21,17 @@ public interface CityDao {
     @Query("SELECT * FROM City WHERE id = :id")
     City getById(long id);
 
+    @Query("SELECT * FROM City WHERE isCurrent = 1")
+    City getCurrent();
+
     @Insert
     void insert(City city);
 
     @Update
     void update(City city);
+
+    @Update
+    void updateAll(List<City> cities);
 
     @Delete
     void delete(City city);

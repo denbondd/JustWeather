@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity<MainVM> {
 
         FragmentExtensions.replaceFragmentWithAnim(
                 this,
-                MainFragment.newInstance(new City(true)),
+                MainFragment.newInstance(appDatabase.cityDao().getCurrent()),
                 "MainFragment",
                 R.id.fcvMainContainer,
                 true,
@@ -88,12 +88,16 @@ public class MainActivity extends BaseActivity<MainVM> {
         switch (state) {
             case SETTINGS_TAG:
                 btnSettings.setBackgroundResource(R.drawable.btn_nav_item);
+                adapter.setCurrentCity(-1);
                 break;
             case ADD_CITY_TAG:
                 btnAddCity.setBackgroundResource(R.drawable.btn_nav_item);
+                adapter.setCurrentCity(-1);
                 break;
             default:
-                adapter.setCurrentCity(Long.parseLong(state));
+                if (adapter.setCurrentCity(Long.parseLong(state))) {
+                    new Thread(() -> appDatabase.cityDao().updateAll(adapter.getCities())).start();
+                }
                 break;
         }
     }
