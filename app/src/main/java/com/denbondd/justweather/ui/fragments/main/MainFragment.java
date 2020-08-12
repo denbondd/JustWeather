@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.denbondd.justweather.AppApplication;
@@ -74,8 +75,8 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     private City city;
 
     private RecyclerView moreInfoRecyclerView;
-    private Button btnHourly, btnDaily;
     private ImageView ivWeatherIco;
+    private SwipeRefreshLayout srlMainFragment;
 
     @Inject
     AppDatabase appDatabase;
@@ -84,18 +85,28 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         moreInfoRecyclerView = view.findViewById(R.id.rvMoreInfo);
-        btnHourly = view.findViewById(R.id.btnHourly);
-        btnDaily = view.findViewById(R.id.btnDaily);
         ivWeatherIco = view.findViewById(R.id.ivWeatherIco);
+        srlMainFragment = view.findViewById(R.id.srlMainFragment);
         city = requireArguments().getParcelable(CITY_KEY);
 
-        btnHourly.setOnClickListener(v -> btnHourlyOnClick());
-        btnDaily.setOnClickListener(v -> btnDailyOnClick());
+        view.findViewById(R.id.btnHourly).setOnClickListener(v -> btnHourlyOnClick());
+        view.findViewById(R.id.btnDaily).setOnClickListener(v -> btnDailyOnClick());
 
         binding = MainFragmentBinding.bind(view);
         binding.setDate(System.currentTimeMillis());
 
+        srlMainFragment.setRefreshing(true);
         setCity();
+
+        srlMainFragment.setOnRefreshListener(() -> {
+            if (!getViewModel().checkInternetConnection()) {
+                Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                srlMainFragment.setRefreshing(false);
+            } else {
+                updateLocation();
+            }
+        });
+        srlMainFragment.setColorSchemeResources(R.color.gradientStartColor);
     }
 
     private void setCity() {
@@ -128,11 +139,14 @@ public class MainFragment extends BaseFragment<MainViewModel> {
                                 updateCities();
                             }
                         }
+                        srlMainFragment.setRefreshing(false);
                     }
 
                     @Override
                     public void onFailure(@NotNull Call<OneCallOWMModel> call, @NotNull Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        t.printStackTrace();
+                        Toast.makeText(getContext(), "Error with getting weather", Toast.LENGTH_SHORT).show();
+                        srlMainFragment.setRefreshing(false);
                     }
                 });
             }
@@ -141,10 +155,8 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     }
 
     private void updateCities() {
-        new Thread(() -> {
-            appDatabase.cityDao().update(city);
-        }).start();
-        new Handler().postDelayed(() -> ((MainActivity) getActivity()).updateCities(), 1000);
+        new Thread(() -> appDatabase.cityDao().update(city)).start();
+        new Handler().postDelayed(() -> ((MainActivity) requireActivity()).updateCities(), 1000);
     }
 
     private void btnHourlyOnClick() {
@@ -217,6 +229,6 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((AppApplication) getActivity().getApplication()).getAppComponent().inject(this);
+        ((AppApplication) requireActivity().getApplication()).getAppComponent().inject(this);
     }
 }

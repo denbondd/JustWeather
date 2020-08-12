@@ -1,10 +1,11 @@
 package com.denbondd.justweather.ui.fragments.main;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.util.Log;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -16,13 +17,11 @@ import com.denbondd.justweather.models.CurrentWeatherOWMModel;
 import com.denbondd.justweather.models.MoreInfoItemModel;
 import com.denbondd.justweather.models.MoreInfoTypeEnum;
 import com.denbondd.justweather.models.OneCallOWMModel;
-import com.denbondd.justweather.ui.activities.main.MainActivity;
 import com.denbondd.justweather.ui.base.BaseVM;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,9 +52,31 @@ public class MainViewModel extends BaseVM {
 
             @Override
             public void onFailure(@NotNull Call<CurrentWeatherOWMModel> call, @NotNull Throwable t) {
-                Toast.makeText(AppApplication.getContext(), "Can't get location name", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+                Toast.makeText(AppApplication.getContext(), "Error with location name", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public boolean checkInternetConnection() {
+        try {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo mobileNI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo wifiNI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo ethernetNI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET);
+            NetworkInfo vpnNI = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_VPN);
+
+            boolean mobile = mobileNI.getState() == NetworkInfo.State.CONNECTED || mobileNI.getState() == NetworkInfo.State.CONNECTING;
+            boolean wifi = wifiNI.getState() == NetworkInfo.State.CONNECTED || wifiNI.getState() == NetworkInfo.State.CONNECTING;
+            boolean ethernet = ethernetNI.getState() == NetworkInfo.State.CONNECTED || ethernetNI.getState() == NetworkInfo.State.CONNECTING;
+            boolean vpn = vpnNI.getState() == NetworkInfo.State.CONNECTED || vpnNI.getState() == NetworkInfo.State.CONNECTING;
+
+            return mobile || wifi || ethernet || vpn;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public ArrayList<MoreInfoItemModel> getMoreInfoArray(OneCallOWMModel oneCallOWM) {

@@ -65,7 +65,7 @@ public class AddCityFragment extends BaseFragment<AddCityViewModel> {
                 R.id.fcvMainContainer,
                 true,
                 false);
-        ((MainActivity) getActivity()).updateCities();
+        ((MainActivity) requireActivity()).updateCities();
     }
         ).start()
     );
