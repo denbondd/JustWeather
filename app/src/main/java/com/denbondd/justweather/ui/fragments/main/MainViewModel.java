@@ -28,11 +28,27 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainViewModel extends BaseVM {
-    public MutableLiveData<Call<OneCallOWMModel>> oneCallOWM = new MutableLiveData<>();
+    public MutableLiveData<OneCallOWMModel> oneCallOWM = new MutableLiveData<>();
     public MutableLiveData<String> currentLocationNameOWM = new MutableLiveData<>();
 
     public void updateLocationOWM(double lat, double lon) {
-        oneCallOWM.setValue(apiHelper.getOneCallOWM(lat, lon));
+        apiHelper.getOneCallOWM(lat, lon).enqueue(new Callback<OneCallOWMModel>() {
+            @Override
+            public void onResponse(@NotNull Call<OneCallOWMModel> call, @NotNull Response<OneCallOWMModel> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                oneCallOWM.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<OneCallOWMModel> call, @NotNull Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(getContext(), "Error with getting weather", Toast.LENGTH_SHORT).show();
+                oneCallOWM.postValue(null);
+            }
+        });
         updateCurrentLocationNameOWM(lat, lon);
     }
 

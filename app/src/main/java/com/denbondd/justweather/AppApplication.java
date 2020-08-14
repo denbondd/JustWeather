@@ -12,7 +12,7 @@ public class AppApplication extends Application {
 
     //for getting context from anywhere
     private static WeakReference<Context> context;
-    private AppComponent appComponent;
+    private static AppComponent appComponent;
 
     @Override
     public void onCreate() {
@@ -29,7 +29,7 @@ public class AppApplication extends Application {
         return context.get();
     }
 
-    public AppComponent getAppComponent() {
+    public static AppComponent getAppComponent() {
         return appComponent;
     }
 }

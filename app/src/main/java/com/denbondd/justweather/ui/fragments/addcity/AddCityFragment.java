@@ -115,6 +115,6 @@ public class AddCityFragment extends BaseFragment<AddCityViewModel> {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((AppApplication) requireActivity().getApplication()).getAppComponent().inject(this);
+        AppApplication.getAppComponent().inject(this);
     }
 }

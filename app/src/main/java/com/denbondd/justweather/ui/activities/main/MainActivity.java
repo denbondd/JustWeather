@@ -1,6 +1,5 @@
 package com.denbondd.justweather.ui.activities.main;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -27,6 +26,10 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import static com.denbondd.justweather.util.Constants.ADD_CITY_TAG;
+import static com.denbondd.justweather.util.Constants.SETTINGS_TAG;
+import static com.denbondd.justweather.util.Constants.SHOW_ADD_CITY;
+
 public class MainActivity extends BaseActivity<MainVM> {
 
     @Override
@@ -48,12 +51,9 @@ public class MainActivity extends BaseActivity<MainVM> {
     @Inject
     AppDatabase appDatabase;
 
-    private final String SETTINGS_TAG = "SettingsFragment";
-    private final String ADD_CITY_TAG = "AddCityFragment";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ((AppApplication)getApplication()).getAppComponent().inject(this);
+        AppApplication.getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         tbMain = findViewById(R.id.tbMain);
@@ -63,22 +63,36 @@ public class MainActivity extends BaseActivity<MainVM> {
         btnSettings = findViewById(R.id.btnSettings);
         btnAddCity = findViewById(R.id.btnAddCity);
 
+        boolean showAddCity = getIntent().getBooleanExtra(SHOW_ADD_CITY, false);
+
         setSupportActionBar(tbMain);
         if (getSupportActionBar() != null) getSupportActionBar().setTitle("");
         setMenuIcon();
         setRecyclerView();
 
-        FragmentExtensions.replaceFragmentWithAnim(
-                this,
-                MainFragment.newInstance(appDatabase.cityDao().getCurrent()),
-                "MainFragment",
-                R.id.fcvMainContainer,
-                true,
-                false
-        );
+        if (!showAddCity) {
+            FragmentExtensions.replaceFragmentWithAnim(
+                    this,
+                    MainFragment.newInstance(appDatabase.cityDao().getCurrent()),
+                    "MainFragment",
+                    R.id.fcvMainContainer,
+                    true,
+                    false
+            );
+        } else {
+            FragmentExtensions.replaceFragmentWithAnim(
+                    this,
+                    AddCityFragment.newInstance(),
+                    "AddCityFragment",
+                    R.id.fcvMainContainer,
+                    true,
+                    false
+            );
+            getViewModel().currentPage.postValue(ADD_CITY_TAG);
+        }
 
-        findViewById(R.id.btnSettings).setOnClickListener(v -> onNavItemClick(new SettingsFragment(), "SettingsFragment"));
-        findViewById(R.id.btnAddCity).setOnClickListener(v -> onNavItemClick(AddCityFragment.newInstance(), "AddCityFragment"));
+        findViewById(R.id.btnSettings).setOnClickListener(v -> onNavItemClick(new SettingsFragment(), SETTINGS_TAG));
+        findViewById(R.id.btnAddCity).setOnClickListener(v -> onNavItemClick(AddCityFragment.newInstance(), ADD_CITY_TAG));
         getViewModel().currentPage.observe(this, this::changeCurrent);
     }
 
@@ -137,7 +151,7 @@ public class MainActivity extends BaseActivity<MainVM> {
         ActivityExtensions.setMenuIcon(this, dlMain, tbMain);
     }
 
-    private void onNavItemClick(Fragment fragment, String tag) {
+    public void onNavItemClick(Fragment fragment, String tag) {
         FragmentExtensions.replaceFragmentWithAnim(
                 this,
                 fragment,

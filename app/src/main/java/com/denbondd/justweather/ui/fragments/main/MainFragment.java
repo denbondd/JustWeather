@@ -1,22 +1,18 @@
 package com.denbondd.justweather.ui.fragments.main;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -38,15 +34,11 @@ import com.denbondd.justweather.ui.fragments.hourly.HourlyFragment;
 import com.denbondd.justweather.util.FragmentExtensions;
 import com.denbondd.justweather.util.OWMExtensions;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import static com.denbondd.justweather.util.Constants.CITY_KEY;
 
 public class MainFragment extends BaseFragment<MainViewModel> {
     @Override
@@ -59,7 +51,6 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         return MainViewModel.class;
     }
 
-    private static final String CITY_KEY = "CITY_KEY";
     public static MainFragment newInstance(City city) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(CITY_KEY, city);
@@ -68,7 +59,6 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         return mainFragment;
     }
 
-    private static final int LOCATION_PERMISSION_CODE = 91;
     private MainFragmentBinding binding;
     private Location location;
     private OneCallOWMModel oneCallOWMModel;
@@ -96,62 +86,43 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         binding.setDate(System.currentTimeMillis());
 
         srlMainFragment.setRefreshing(true);
-        setCity();
+        useCityFromVM();
 
         srlMainFragment.setOnRefreshListener(() -> {
             if (!getViewModel().checkInternetConnection()) {
                 Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
                 srlMainFragment.setRefreshing(false);
             } else {
-                updateLocation();
+                updateCityLocation();
             }
         });
         srlMainFragment.setColorSchemeResources(R.color.gradientStartColor);
     }
 
-    private void setCity() {
+    private void useCityFromVM() {
         getViewModel().currentLocationNameOWM.observe(getViewLifecycleOwner(), name -> {
             if (name != null) {
                 binding.setCityName(name);
                 if (!city.getName().equals(name)) city.setName(name);
             }
         });
-        getViewModel().oneCallOWM.observe(getViewLifecycleOwner(), oneCallOWMCall -> {
-            if (oneCallOWMCall != null) {
-                oneCallOWMCall.enqueue(new Callback<OneCallOWMModel>() {
-                    @Override
-                    public void onResponse(@NotNull Call<OneCallOWMModel> call, @NotNull Response<OneCallOWMModel> response) {
-                        if (!response.isSuccessful()) {
-                            Toast.makeText(getContext(), response.code(), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        OneCallOWMModel oneCallOWM = response.body();
-                        if (oneCallOWM != null) {
-                            oneCallOWMModel = oneCallOWM;
-                            binding.setOneCallOWMModel(oneCallOWMModel);
-                            Glide.with(requireContext())
-                                    .load(OWMExtensions.getIconById(oneCallOWMModel.getCurrent().getWeather().get(0).getId()))
-                                    .into(ivWeatherIco);
-                            makeMoreInfoRecycler(oneCallOWMModel);
-                            if (city.getLon() != oneCallOWM.getLon() && city.getLat() != oneCallOWM.getLat()) {
-                                city.setLat(oneCallOWM.getLat());
-                                city.setLon(oneCallOWM.getLon());
-                                updateCities();
-                            }
-                        }
-                        srlMainFragment.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void onFailure(@NotNull Call<OneCallOWMModel> call, @NotNull Throwable t) {
-                        t.printStackTrace();
-                        Toast.makeText(getContext(), "Error with getting weather", Toast.LENGTH_SHORT).show();
-                        srlMainFragment.setRefreshing(false);
-                    }
-                });
+        getViewModel().oneCallOWM.observe(getViewLifecycleOwner(), oneCallOWM -> {
+            if (oneCallOWM != null) {
+                oneCallOWMModel = oneCallOWM;
+                binding.setOneCallOWMModel(oneCallOWMModel);
+                Glide.with(requireContext())
+                        .load(OWMExtensions.getIconById(oneCallOWMModel.getCurrent().getWeather().get(0).getId()))
+                        .into(ivWeatherIco);
+                makeMoreInfoRecycler(oneCallOWMModel);
+                if (city.getLon() != oneCallOWM.getLon() && city.getLat() != oneCallOWM.getLat()) {
+                    city.setLat(oneCallOWM.getLat());
+                    city.setLon(oneCallOWM.getLon());
+                    updateCities();
+                }
             }
+            srlMainFragment.setRefreshing(false);
         });
-        updateLocation();
+        updateCityLocation();
     }
 
     private void updateCities() {
@@ -188,47 +159,26 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         moreInfoRecyclerView.setAdapter(adapter);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == LOCATION_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                updateLocation();
-            } else {
-                askPermission();
-            }
-        }
-    }
-
-    private void askPermission() {
-        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_CODE);
+    private void updateWeatherLiveData() {
+        getViewModel().updateLocationOWM(location.getLatitude(), location.getLongitude());
     }
 
     @SuppressLint("MissingPermission")
-    private void updateLocation() {
-        if (city.isGeolocation()) {
-            if (getViewModel().checkLocationPermissions()) {
-                LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
-                if (locationManager != null) {
-                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    updateWeatherLiveData();
-                }
-            } else {
-                askPermission();
-                Toast.makeText(getContext(), "No permission granted", Toast.LENGTH_SHORT).show();
+    private void updateCityLocation() {
+        if (city.isGeolocation() && getViewModel().checkLocationPermissions()) {
+            LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+            if (locationManager != null) {
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                updateWeatherLiveData();
             }
         } else {
             getViewModel().updateLocationOWM(city.getLat(), city.getLon());
         }
     }
 
-    private void updateWeatherLiveData() {
-        getViewModel().updateLocationOWM(location.getLatitude(), location.getLongitude());
-    }
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((AppApplication) requireActivity().getApplication()).getAppComponent().inject(this);
+        AppApplication.getAppComponent().inject(this);
     }
 }

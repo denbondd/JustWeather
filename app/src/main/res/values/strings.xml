@@ -48,4 +48,7 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="add_city">Add city</string>
     <string name="city_name">City name</string>
+    <string name="locationDialogMessage">You can’t see weather on your location, without allowing this app to see it. If you don’t want to, you can add city manually by typing it.</string>
+    <string name="typeCity">Type City</string>
+    <string name="useLocation">Use Location</string>
 </resources>

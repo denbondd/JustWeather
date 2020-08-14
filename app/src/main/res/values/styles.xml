@@ -71,6 +71,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="txtMedium.16sp">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="FilledButtonWithArrow">
         <item name="android:background">@drawable/btn_filled</item>
         <item name="fontFamily">@font/montserrat_regular</item>
@@ -104,6 +108,11 @@
         <item name="android:colorControlNormal">#6BFFFFFF</item>
         <item name="android:colorControlActivated">#FFFFFF</item>
         <item name="android:textColorHint">#6BFFFFFF</item>
+    </style>
+
+    <style name="AlertDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">@color/gradientStartColor</item>
+        <item name="android:textAppearance">@style/txtMedium.16sp</item>
     </style>
 
 </resources>

@@ -25,6 +25,17 @@ public class ActivityExtensions {
         );
     }
 
+    public static void startSplashActivityWithAnim(AppCompatActivity currentActivity, Intent nextIntent) {
+        currentActivity.startActivity(
+                nextIntent,
+                ActivityOptions.makeCustomAnimation(
+                        currentActivity,
+                        R.anim.splash_enter,
+                        R.anim.splash_exit
+                ).toBundle()
+        );
+    }
+
     public static void setMenuIcon(AppCompatActivity currentAct, DrawerLayout drawerLayout, Toolbar toolbar) {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 currentAct,
