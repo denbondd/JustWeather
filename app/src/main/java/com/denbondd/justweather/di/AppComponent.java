@@ -8,10 +8,13 @@ import com.denbondd.justweather.ui.base.BaseVM;
 import com.denbondd.justweather.ui.fragments.addcity.AddCityFragment;
 import com.denbondd.justweather.ui.fragments.main.MainFragment;
 
+import javax.inject.Singleton;
+
 import dagger.BindsInstance;
 import dagger.Component;
 
-@Component(modules = {DatabaseModule.class})
+@Singleton
+@Component(modules = {DatabaseModule.class, ApiModule.class})
 public interface AppComponent {
 
     AppDatabase getAppDatabase();

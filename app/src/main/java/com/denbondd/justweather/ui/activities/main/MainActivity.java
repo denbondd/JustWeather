@@ -96,6 +96,20 @@ public class MainActivity extends BaseActivity<MainVM> {
         getViewModel().currentPage.observe(this, this::changeCurrent);
     }
 
+    public void addCity(City city) {
+        city.setCurrent(true);
+        long id = appDatabase.cityDao().insert(city);
+        getViewModel().currentPage.postValue(Long.toString(id));
+        FragmentExtensions.replaceFragmentWithAnim(
+                this,
+                MainFragment.newInstance(appDatabase.cityDao().getById(id)),
+                "MainFragment",
+                R.id.fcvMainContainer,
+                true,
+                false);
+        updateCities();
+    }
+
     private void changeCurrent(String state) {
         btnSettings.setBackground(null);
         btnAddCity.setBackground(null);

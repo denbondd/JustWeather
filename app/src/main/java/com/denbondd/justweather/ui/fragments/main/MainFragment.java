@@ -65,7 +65,6 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     private City city;
 
     private RecyclerView moreInfoRecyclerView;
-    private ImageView ivWeatherIco;
     private SwipeRefreshLayout srlMainFragment;
 
     @Inject
@@ -75,15 +74,12 @@ public class MainFragment extends BaseFragment<MainViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         moreInfoRecyclerView = view.findViewById(R.id.rvMoreInfo);
-        ivWeatherIco = view.findViewById(R.id.ivWeatherIco);
         srlMainFragment = view.findViewById(R.id.srlMainFragment);
         city = requireArguments().getParcelable(CITY_KEY);
 
-        view.findViewById(R.id.btnHourly).setOnClickListener(v -> btnHourlyOnClick());
-        view.findViewById(R.id.btnDaily).setOnClickListener(v -> btnDailyOnClick());
-
         binding = MainFragmentBinding.bind(view);
         binding.setDate(System.currentTimeMillis());
+        binding.setMainFragment(this);
 
         srlMainFragment.setRefreshing(true);
         useCityFromVM();
@@ -110,17 +106,14 @@ public class MainFragment extends BaseFragment<MainViewModel> {
             if (oneCallOWM != null) {
                 oneCallOWMModel = oneCallOWM;
                 binding.setOneCallOWMModel(oneCallOWMModel);
-                Glide.with(requireContext())
-                        .load(OWMExtensions.getIconById(oneCallOWMModel.getCurrent().getWeather().get(0).getId()))
-                        .into(ivWeatherIco);
                 makeMoreInfoRecycler(oneCallOWMModel);
                 if (city.getLon() != oneCallOWM.getLon() && city.getLat() != oneCallOWM.getLat()) {
                     city.setLat(oneCallOWM.getLat());
                     city.setLon(oneCallOWM.getLon());
                     updateCities();
                 }
+                srlMainFragment.setRefreshing(false);
             }
-            srlMainFragment.setRefreshing(false);
         });
         updateCityLocation();
     }
@@ -130,7 +123,7 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         new Handler().postDelayed(() -> ((MainActivity) requireActivity()).updateCities(), 1000);
     }
 
-    private void btnHourlyOnClick() {
+    public void btnHourlyOnClick() {
         FragmentExtensions.addFragmentWithAnim(
                 (AppCompatActivity) requireActivity(),
                 HourlyFragment.newInstance((ArrayList<Hourly>) oneCallOWMModel.getHourly()),
@@ -141,7 +134,7 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         ((MainActivity) requireActivity()).setBackArrow();
     }
 
-    private void btnDailyOnClick() {
+    public void btnDailyOnClick() {
         FragmentExtensions.addFragmentWithAnim(
                 (AppCompatActivity) requireActivity(),
                 DailyFragment.newInstance((ArrayList<Daily>) oneCallOWMModel.getDaily()),

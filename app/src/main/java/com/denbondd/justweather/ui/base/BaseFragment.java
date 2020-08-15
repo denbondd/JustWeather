@@ -29,4 +29,13 @@ public abstract class BaseFragment<T extends BaseVM> extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(getLayoutId(), container, false);
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //for delete previous values
+        getViewModel().weatherGetterOWM.findCity.postValue(null);
+        getViewModel().weatherGetterOWM.cityName.postValue(null);
+        getViewModel().weatherGetterOWM.oneCall.postValue(null);
+    }
 }

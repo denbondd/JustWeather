@@ -51,6 +51,13 @@ public class NavItemsRVAdapter extends RecyclerView.Adapter<NavItemsRVViewHolder
         return true;
     }
 
+    public void unCurrentCities() {
+        for (City city : cities) {
+            city.setCurrent(false);
+        }
+        notifyDataSetChanged();
+    }
+
     public ArrayList<City> getCities() {
         return cities;
     }

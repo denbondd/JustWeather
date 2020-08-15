@@ -25,7 +25,7 @@ public interface CityDao {
     City getCurrent();
 
     @Insert
-    void insert(City city);
+    long insert(City city);
 
     @Update
     void update(City city);

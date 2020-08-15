@@ -32,46 +32,14 @@ public class MainViewModel extends BaseVM {
     public MutableLiveData<String> currentLocationNameOWM = new MutableLiveData<>();
 
     public void updateLocationOWM(double lat, double lon) {
-        apiHelper.getOneCallOWM(lat, lon).enqueue(new Callback<OneCallOWMModel>() {
-            @Override
-            public void onResponse(@NotNull Call<OneCallOWMModel> call, @NotNull Response<OneCallOWMModel> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(getContext(), response.code(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                oneCallOWM.postValue(response.body());
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<OneCallOWMModel> call, @NotNull Throwable t) {
-                t.printStackTrace();
-                Toast.makeText(getContext(), "Error with getting weather", Toast.LENGTH_SHORT).show();
-                oneCallOWM.postValue(null);
-            }
-        });
+        weatherGetterOWM.updateOneCall(apiHelper, lat, lon);
+        weatherGetterOWM.oneCall.observeForever(oneCallOWMModel -> oneCallOWM.postValue(oneCallOWMModel));
         updateCurrentLocationNameOWM(lat, lon);
     }
 
     public void updateCurrentLocationNameOWM(double lat, double lon) {
-        apiHelper.getCurrentWeatherOWM(lat, lon).enqueue(new Callback<CurrentWeatherOWMModel>() {
-            @Override
-            public void onResponse(@NotNull Call<CurrentWeatherOWMModel> call, @NotNull Response<CurrentWeatherOWMModel> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(AppApplication.getContext(), response.code(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                CurrentWeatherOWMModel currentWeatherOWMModel = response.body();
-                if (currentWeatherOWMModel != null) {
-                    currentLocationNameOWM.postValue(currentWeatherOWMModel.getName());
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<CurrentWeatherOWMModel> call, @NotNull Throwable t) {
-                t.printStackTrace();
-                Toast.makeText(AppApplication.getContext(), "Error with location name", Toast.LENGTH_SHORT).show();
-            }
-        });
+        weatherGetterOWM.updateCityName(apiHelper, lat, lon);
+        weatherGetterOWM.cityName.observeForever(name -> currentLocationNameOWM.postValue(name));
     }
 
     public boolean checkInternetConnection() {

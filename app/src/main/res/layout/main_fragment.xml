@@ -17,9 +17,17 @@
             name="cityName"
             type="String" />
 
+        <variable
+            name="mainFragment"
+            type="com.denbondd.justweather.ui.fragments.main.MainFragment" />
+
         <import
             alias="timeExt"
             type="com.denbondd.justweather.util.TimeExtensions" />
+
+        <import
+            alias="owmExt"
+            type="com.denbondd.justweather.util.OWMExtensions" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -84,6 +92,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtCityName"
+                    android:src="@{owmExt.getIconById(oneCallOWMModel.current.weather.get(0).id)}"
                     tools:srcCompat="@drawable/ic_weather1d" />
 
                 <TextView
@@ -153,6 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="13dp"
                     android:text="@string/hourly"
+                    android:onClick="@{(view) -> mainFragment.btnHourlyOnClick()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rvMoreInfo" />
@@ -164,6 +174,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="13dp"
                     android:text="@string/daily"
+                    android:onClick="@{(view) -> mainFragment.btnDailyOnClick()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

@@ -4,21 +4,13 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Handler;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.models.City;
-import com.denbondd.justweather.models.CurrentWeatherOWMModel;
 import com.denbondd.justweather.ui.base.BaseVM;
-
-import org.jetbrains.annotations.NotNull;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SplashVM extends BaseVM {
 
@@ -42,26 +34,12 @@ public class SplashVM extends BaseVM {
     }
 
     public void setCityName() {
-        apiHelper.getCurrentWeatherOWM(geolocationCity.getLat(), geolocationCity.getLon()).enqueue(new Callback<CurrentWeatherOWMModel>() {
-            @Override
-            public void onResponse(@NotNull Call<CurrentWeatherOWMModel> call, @NotNull Response<CurrentWeatherOWMModel> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(AppApplication.getContext(), response.code(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                CurrentWeatherOWMModel currentWeatherOWMModel = response.body();
-                if (currentWeatherOWMModel != null) {
-                    geolocationCity.setName(currentWeatherOWMModel.getName());
-                    new Thread(() -> appDatabase.cityDao().insert(geolocationCity)).start();
-                    new Handler().postDelayed(() -> isCityReadyToGo.postValue(true), 2000);
-                }
-            }
+        weatherGetterOWM.updateCityName(apiHelper, geolocationCity.getLat(), geolocationCity.getLon());
 
-            @Override
-            public void onFailure(@NotNull Call<CurrentWeatherOWMModel> call, @NotNull Throwable t) {
-                t.printStackTrace();
-                Toast.makeText(AppApplication.getContext(), "Error with location name", Toast.LENGTH_SHORT).show();
-            }
+        weatherGetterOWM.cityName.observeForever(name -> {
+            geolocationCity.setName(name);
+            new Thread(() -> appDatabase.cityDao().insert(geolocationCity)).start();
+            new Handler().postDelayed(() -> isCityReadyToGo.postValue(true), 2000);
         });
     }
 }
