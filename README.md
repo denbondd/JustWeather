@@ -1,17 +1,26 @@
 # 🌩JustWeather 
 
 ## Table of content
+- [Project description](#project-description)
+- [Screenshots](#screenshots)
 - [Used technologies](#used-technologies)
 - [Set up project](#set-up-the-project)
 - [Project structure](#project-structure)
 - [Download release apk](#download-release-apk)
 - [License](#license)
 
+## Project description
+It's a weather app writed in Java. App asking permission to location and use it to detect weather in your current city (if you granted permission). You can add cities manually by writing them. The whole code and design was made by me. Design you can see <a href="https://www.figma.com/file/wSLUbKT9fAasHgdKyk5tz1/WeatherApp">here</a> in Figma. While making this project, I practiced my knowlege about databases, dependency injection, data binding, working with api and even some design skills.
+
+## Screenshots
+Currently project isn't ready, so do screenshots. They will be added as soon as possible.
+
 ## Used technologies
 #### Libraries:
-- Dagger2 for dependency injection
-- Glide for photo importing
-- Retrofit2 for working with API
+- <a href="https://developer.android.com/jetpack/androidx/releases/room">Room SQLite</a>
+- <a href="https://github.com/google/dagger">Dagger2</a>
+- <a href="https://developer.android.com/topic/libraries/data-binding">DataBinding</a>
+- <a href="https://square.github.io/retrofit/">Retrofit2</a>
 
 #### List of APIs
 - [OpenWeatherMap](https://openweathermap.org) for getting weather info
@@ -41,13 +50,17 @@ Java_com_denbondd_justweather_services_Keys_getOWMkey(JNIEnv* env, jobject this)
 
 ## Project structure
 - com.denbondd.justweather
-    - dataflow - files for working with data (APIs and databases)
-    - di - files for dependency injection
+    - dataflow - files for working with data (APIs)
+    - db - files for working with RoomDB
+    - di - files for dependency injection (Dagger2)
     - models - models needed for project
-        - onecallowm - package with models for OpenWeatherMap OneCallApi
+        - currentweatherowm - package with models for OpenWeatherMap CurrentWeather request
+        - findowm - models for OpenWeatherMap FindCity request
+        - onecallowm - models for OpenWeatherMap OneCall request
     - services - files for working with retrofit
     - ui - files used for user interface
         - activities - all activities of project
+        - adapter - adapters and viewholders for recycler views
         - base - base ui components, that all other inherit
         - fragments - all fragments of project
     - util - different extensions     
