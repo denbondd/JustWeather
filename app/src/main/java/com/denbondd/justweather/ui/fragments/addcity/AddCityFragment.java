@@ -64,6 +64,8 @@ public class AddCityFragment extends BaseFragment<AddCityViewModel> {
             return false;
         });
         setUpObserver();
+        tilCityName.requestFocus();
+        ActivityExtensions.showKeyboard(getActivity());
     }
 
     private void setUpObserver() {

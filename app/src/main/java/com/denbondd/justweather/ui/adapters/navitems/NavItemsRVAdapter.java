@@ -4,19 +4,22 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.models.City;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NavItemsRVAdapter extends RecyclerView.Adapter<NavItemsRVViewHolder> {
     private ArrayList<City> cities = new ArrayList<>();
     private final NavItemsRVInterface navItemsRVInterface;
 
-    public NavItemsRVAdapter(NavItemsRVInterface navItemsRVInterface) {
+    public NavItemsRVAdapter(NavItemsRVInterface navItemsRVInterface, LiveData<List<City>> cities) {
         this.navItemsRVInterface = navItemsRVInterface;
+        cities.observeForever((cities1 -> setCities((ArrayList<City>) cities1)));
     }
 
     @NonNull
@@ -38,7 +41,7 @@ public class NavItemsRVAdapter extends RecyclerView.Adapter<NavItemsRVViewHolder
         return cities.size();
     }
 
-    public void setCities(ArrayList<City> cities) {
+    private void setCities(ArrayList<City> cities) {
         this.cities = cities;
         notifyDataSetChanged();
     }
@@ -49,13 +52,6 @@ public class NavItemsRVAdapter extends RecyclerView.Adapter<NavItemsRVViewHolder
             notifyItemChanged(cities.indexOf(city));
         }
         return true;
-    }
-
-    public void unCurrentCities() {
-        for (City city : cities) {
-            city.setCurrent(false);
-        }
-        notifyDataSetChanged();
     }
 
     public ArrayList<City> getCities() {

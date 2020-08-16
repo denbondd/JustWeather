@@ -120,7 +120,6 @@ public class MainFragment extends BaseFragment<MainViewModel> {
 
     private void updateCities() {
         new Thread(() -> appDatabase.cityDao().update(city)).start();
-        new Handler().postDelayed(() -> ((MainActivity) requireActivity()).updateCities(), 1000);
     }
 
     public void btnHourlyOnClick() {

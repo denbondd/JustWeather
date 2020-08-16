@@ -21,7 +21,6 @@ import com.denbondd.justweather.ui.fragments.settings.SettingsFragment;
 import com.denbondd.justweather.util.ActivityExtensions;
 import com.denbondd.justweather.util.FragmentExtensions;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -102,12 +101,12 @@ public class MainActivity extends BaseActivity<MainVM> {
         getViewModel().currentPage.postValue(Long.toString(id));
         FragmentExtensions.replaceFragmentWithAnim(
                 this,
-                MainFragment.newInstance(appDatabase.cityDao().getById(id)),
+                MainFragment.newInstance(city),
                 "MainFragment",
                 R.id.fcvMainContainer,
                 true,
                 false);
-        updateCities();
+        setMenuIcon();
     }
 
     private void changeCurrent(String state) {
@@ -146,18 +145,16 @@ public class MainActivity extends BaseActivity<MainVM> {
             );
             getViewModel().currentPage.postValue(Long.toString(city.getId()));
             dlMain.closeDrawer(GravityCompat.START);
-        });
+        }, getViewModel().getAllLD());
         rvCities.setAdapter(adapter);
-        updateCities();
-    }
-
-    public void updateCities() {
-        runOnUiThread(() -> adapter.setCities((ArrayList<City>) appDatabase.cityDao().getAll()));
     }
 
     public void setBackArrow() {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        tbMain.setNavigationOnClickListener((view) -> onBackPressed());
+        tbMain.setNavigationOnClickListener((view) -> {
+            ActivityExtensions.hideKeyboard(this);
+            onBackPressed();
+        });
     }
 
     private void setMenuIcon() {
@@ -176,6 +173,7 @@ public class MainActivity extends BaseActivity<MainVM> {
         );
         getViewModel().currentPage.postValue(tag);
         dlMain.closeDrawer(GravityCompat.START);
+        setBackArrow();
     }
 
     @Override
@@ -184,6 +182,7 @@ public class MainActivity extends BaseActivity<MainVM> {
             dlMain.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            changeCurrent(Long.toString(getViewModel().getCurrentId()));
             setMenuIcon();
         }
     }

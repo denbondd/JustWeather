@@ -53,11 +53,13 @@ public class SplashActivity extends BaseActivity<SplashVM> {
             sharedPreferences.edit().putBoolean(PREFERENCES_NEED_PERMISSION, false).apply();
         } else {
             new Handler().postDelayed(() -> startMainActivity(false), 2000);
+            return;
         }
 
         getViewModel().isCityReadyToGo.observe(this, isCityReady -> {
             if (isCityReady != null && isCityReady) {
-                startMainActivity(false);
+                getViewModel().insertCity();
+                new Handler().postDelayed(() -> startMainActivity(false), 2000);
             }
         });
     }

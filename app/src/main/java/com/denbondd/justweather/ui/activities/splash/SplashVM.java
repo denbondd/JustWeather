@@ -38,8 +38,11 @@ public class SplashVM extends BaseVM {
 
         weatherGetterOWM.cityName.observeForever(name -> {
             geolocationCity.setName(name);
-            new Thread(() -> appDatabase.cityDao().insert(geolocationCity)).start();
-            new Handler().postDelayed(() -> isCityReadyToGo.postValue(true), 2000);
+            isCityReadyToGo.postValue(true);
         });
+    }
+
+    public void insertCity() {
+        new Thread(() -> appDatabase.cityDao().insert(geolocationCity)).start();
     }
 }
