@@ -17,6 +17,10 @@
             alias="weatherExt"
             type="com.denbondd.justweather.util.WeatherExtensions" />
 
+        <import
+            alias="owmExt"
+            type="com.denbondd.justweather.util.OWMExtensions" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -39,6 +43,7 @@
                 android:layout_height="36dp"
                 android:layout_marginStart="13dp"
                 android:layout_marginTop="13dp"
+                android:src="@{owmExt.getIconById(hourly.weather.get(0).id)}"
                 android:contentDescription="@string/itemico"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

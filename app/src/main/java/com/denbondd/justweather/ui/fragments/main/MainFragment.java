@@ -5,9 +5,7 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,7 +15,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
 import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.databinding.MainFragmentBinding;
@@ -32,7 +29,6 @@ import com.denbondd.justweather.ui.base.BaseFragment;
 import com.denbondd.justweather.ui.fragments.daily.DailyFragment;
 import com.denbondd.justweather.ui.fragments.hourly.HourlyFragment;
 import com.denbondd.justweather.util.FragmentExtensions;
-import com.denbondd.justweather.util.OWMExtensions;
 
 import java.util.ArrayList;
 
