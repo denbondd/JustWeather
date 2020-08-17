@@ -40,12 +40,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <DigitalClock
+            <TextClock
                 android:id="@+id/txtCurrentTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:fontFamily="@font/montserrat_light"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tbMain"

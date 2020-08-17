@@ -1,9 +1,12 @@
 package com.denbondd.justweather.ui.activities.main;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextClock;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -93,6 +96,10 @@ public class MainActivity extends BaseActivity<MainVM> {
         findViewById(R.id.btnSettings).setOnClickListener(v -> onNavItemClick(new SettingsFragment(), SETTINGS_TAG));
         findViewById(R.id.btnAddCity).setOnClickListener(v -> onNavItemClick(AddCityFragment.newInstance(), ADD_CITY_TAG));
         getViewModel().currentPage.observe(this, this::changeCurrent);
+
+        //for change textClock fontStyle because it's not working in xml
+        Typeface typeface = ResourcesCompat.getFont(this, R.font.montserrat_light);
+        ((TextClock) findViewById(R.id.txtCurrentTime)).setTypeface(typeface);
     }
 
     public void addCity(City city) {

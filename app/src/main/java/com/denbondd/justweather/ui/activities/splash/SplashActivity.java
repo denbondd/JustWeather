@@ -21,6 +21,8 @@ import com.denbondd.justweather.ui.base.BaseActivity;
 import com.denbondd.justweather.util.ActivityExtensions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static com.denbondd.justweather.util.Constants.LOCATION_PERMISSION_CODE;
 import static com.denbondd.justweather.util.Constants.PREFERENCES_NAME;
 import static com.denbondd.justweather.util.Constants.PREFERENCES_NEED_PERMISSION;
@@ -56,9 +58,11 @@ public class SplashActivity extends BaseActivity<SplashVM> {
             return;
         }
 
+        AtomicBoolean isCityAdded = new AtomicBoolean(false);
         getViewModel().isCityReadyToGo.observe(this, isCityReady -> {
             if (isCityReady != null && isCityReady) {
-                getViewModel().insertCity();
+                if (!isCityAdded.get()) getViewModel().insertCity();
+                isCityAdded.set(true);
                 new Handler().postDelayed(() -> startMainActivity(false), 2000);
             }
         });
