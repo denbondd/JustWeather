@@ -20,4 +20,12 @@ public class MainVM extends BaseVM {
     public long getCurrentId() {
         return appDatabase.cityDao().getCurrent().getId();
     }
+
+    public void deleteCity(City city) {
+        new Thread(() -> appDatabase.cityDao().delete(city)).start();
+    }
+
+    public void undoDelete(City city) {
+        new Thread(() -> appDatabase.cityDao().insert(city)).start();
+    }
 }

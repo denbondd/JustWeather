@@ -2,14 +2,18 @@ package com.denbondd.justweather.ui.activities.main;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.TextClock;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.denbondd.justweather.AppApplication;
@@ -19,11 +23,15 @@ import com.denbondd.justweather.models.City;
 import com.denbondd.justweather.ui.adapters.navitems.NavItemsRVAdapter;
 import com.denbondd.justweather.ui.base.BaseActivity;
 import com.denbondd.justweather.ui.fragments.addcity.AddCityFragment;
-import com.denbondd.justweather.ui.fragments.main.MainFragment;
+import com.denbondd.justweather.ui.fragments.main.WeatherFragment;
 import com.denbondd.justweather.ui.fragments.settings.SettingsFragment;
 import com.denbondd.justweather.util.ActivityExtensions;
 import com.denbondd.justweather.util.FragmentExtensions;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -75,7 +83,7 @@ public class MainActivity extends BaseActivity<MainVM> {
         if (!showAddCity) {
             FragmentExtensions.replaceFragmentWithAnim(
                     this,
-                    MainFragment.newInstance(appDatabase.cityDao().getCurrent()),
+                    WeatherFragment.newInstance(appDatabase.cityDao().getCurrent()),
                     "MainFragment",
                     R.id.fcvMainContainer,
                     true,
@@ -108,7 +116,7 @@ public class MainActivity extends BaseActivity<MainVM> {
         getViewModel().currentPage.postValue(Long.toString(id));
         FragmentExtensions.replaceFragmentWithAnim(
                 this,
-                MainFragment.newInstance(city),
+                WeatherFragment.newInstance(city),
                 "MainFragment",
                 R.id.fcvMainContainer,
                 true,
@@ -144,7 +152,7 @@ public class MainActivity extends BaseActivity<MainVM> {
             }
             FragmentExtensions.replaceFragmentWithAnim(
                     this,
-                    MainFragment.newInstance(city),
+                    WeatherFragment.newInstance(city),
                     city.getName(),
                     R.id.fcvMainContainer,
                     true,
@@ -154,6 +162,57 @@ public class MainActivity extends BaseActivity<MainVM> {
             dlMain.closeDrawer(GravityCompat.START);
         }, getViewModel().getAllLD());
         rvCities.setAdapter(adapter);
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT
+        ) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                int positionViewHolder = viewHolder.getAdapterPosition();
+                int positionTarget = target.getAdapterPosition();
+
+                if (positionTarget == positionViewHolder) return false;
+
+                adapter.setNeedToNotify(false);
+
+                City cityViewHolder = adapter.getCities().get(positionViewHolder);
+                City cityTarget = adapter.getCities().get(positionTarget);
+
+                long cityViewHolderId = cityViewHolder.getId();
+                cityViewHolder.setId(cityTarget.getId());
+                cityTarget.setId(cityViewHolderId);
+
+                new Thread(() -> appDatabase.cityDao().updateAll((List<City>) adapter.getCities())).start();
+
+                adapter.notifyItemMoved(positionViewHolder, positionTarget);
+                new Handler().postDelayed(() -> adapter.setNeedToNotify(true), 1000);
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                City city = adapter.getCities().get(viewHolder.getAdapterPosition());
+                if (adapter.getCities().size() == 1) {
+                    Toast.makeText(MainActivity.this, R.string.deleteLastCity, Toast.LENGTH_SHORT).show();
+                    adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                    return;
+                } else if (city.isCurrent()) {
+                    Toast.makeText(MainActivity.this, R.string.snackbarCurrentCity, Toast.LENGTH_SHORT).show();
+                    adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                    return;
+                }
+                getViewModel().deleteCity(city);
+                showUndoSnackbar(city, viewHolder.getAdapterPosition());
+                adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(rvCities);
+    }
+
+    private void showUndoSnackbar(City city, int position) {
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.clMainActivity), getString(R.string.snackbarUndoText, city.getName()), Snackbar.LENGTH_LONG);
+        snackbar.setAction(R.string.undo, v -> getViewModel().undoDelete(city));
+        snackbar.show();
+        adapter.notifyItemInserted(position);
     }
 
     public void setBackArrow() {

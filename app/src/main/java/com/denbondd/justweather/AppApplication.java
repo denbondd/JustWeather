@@ -1,7 +1,11 @@
 package com.denbondd.justweather;
 
+import android.Manifest;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
+
+import androidx.core.app.ActivityCompat;
 
 import com.denbondd.justweather.di.AppComponent;
 import com.denbondd.justweather.di.DaggerAppComponent;
@@ -31,5 +35,10 @@ public class AppApplication extends Application {
 
     public static AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    public static boolean checkLocationPermissions() {
+        return ActivityCompat.checkSelfPermission(AppApplication.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(AppApplication.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 }

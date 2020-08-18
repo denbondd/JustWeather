@@ -22,11 +22,6 @@ public class SplashVM extends BaseVM {
         geolocationCity.setCurrent(true);
     }
 
-    public boolean checkLocationPermissions() {
-        return ActivityCompat.checkSelfPermission(AppApplication.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(AppApplication.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-    }
-
     public void setCityLocation(Location location) {
         geolocationCity.setLon(location.getLongitude());
         geolocationCity.setLat(location.getLatitude());

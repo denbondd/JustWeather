@@ -17,9 +17,11 @@ public class NavItemsRVAdapter extends RecyclerView.Adapter<NavItemsRVViewHolder
     private ArrayList<City> cities = new ArrayList<>();
     private final NavItemsRVInterface navItemsRVInterface;
 
+    private boolean needToNotify = true;
+
     public NavItemsRVAdapter(NavItemsRVInterface navItemsRVInterface, LiveData<List<City>> cities) {
         this.navItemsRVInterface = navItemsRVInterface;
-        cities.observeForever((cities1 -> setCities((ArrayList<City>) cities1)));
+        cities.observeForever(cities1 -> setCities((ArrayList<City>) cities1));
     }
 
     @NonNull
@@ -43,7 +45,7 @@ public class NavItemsRVAdapter extends RecyclerView.Adapter<NavItemsRVViewHolder
 
     private void setCities(ArrayList<City> cities) {
         this.cities = cities;
-        notifyDataSetChanged();
+        if (isNeedToNotify()) notifyDataSetChanged();
     }
 
     public boolean setCurrentCity(long id) {
@@ -56,6 +58,14 @@ public class NavItemsRVAdapter extends RecyclerView.Adapter<NavItemsRVViewHolder
 
     public ArrayList<City> getCities() {
         return cities;
+    }
+
+    public boolean isNeedToNotify() {
+        return needToNotify;
+    }
+
+    public void setNeedToNotify(boolean needToNotify) {
+        this.needToNotify = needToNotify;
     }
 
     public interface NavItemsRVInterface {

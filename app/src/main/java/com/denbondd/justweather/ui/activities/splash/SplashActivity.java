@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
 import com.denbondd.justweather.ui.activities.main.MainActivity;
 import com.denbondd.justweather.ui.base.BaseActivity;
@@ -102,7 +103,7 @@ public class SplashActivity extends BaseActivity<SplashVM> {
 
     @SuppressLint("MissingPermission")
     private void setLocationToCity() {
-        if (getViewModel().geolocationCity.isGeolocation() && getViewModel().checkLocationPermissions()) {
+        if (getViewModel().geolocationCity.isGeolocation() && AppApplication.checkLocationPermissions()) {
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             if (locationManager != null) {
                 location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);

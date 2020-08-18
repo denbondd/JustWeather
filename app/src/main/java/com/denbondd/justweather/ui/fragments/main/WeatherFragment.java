@@ -17,7 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
-import com.denbondd.justweather.databinding.MainFragmentBinding;
+import com.denbondd.justweather.databinding.WeatherFragmentBinding;
 import com.denbondd.justweather.db.AppDatabase;
 import com.denbondd.justweather.models.City;
 import com.denbondd.justweather.models.OneCallOWMModel;
@@ -36,26 +36,26 @@ import javax.inject.Inject;
 
 import static com.denbondd.justweather.util.Constants.CITY_KEY;
 
-public class MainFragment extends BaseFragment<MainViewModel> {
+public class WeatherFragment extends BaseFragment<WeatherViewModel> {
     @Override
     public int getLayoutId() {
-        return R.layout.main_fragment;
+        return R.layout.weather_fragment;
     }
 
     @Override
-    public Class<MainViewModel> getViewModelClass() {
-        return MainViewModel.class;
+    public Class<WeatherViewModel> getViewModelClass() {
+        return WeatherViewModel.class;
     }
 
-    public static MainFragment newInstance(City city) {
+    public static WeatherFragment newInstance(City city) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(CITY_KEY, city);
-        MainFragment mainFragment = new MainFragment();
-        mainFragment.setArguments(bundle);
-        return mainFragment;
+        WeatherFragment weatherFragment = new WeatherFragment();
+        weatherFragment.setArguments(bundle);
+        return weatherFragment;
     }
 
-    private MainFragmentBinding binding;
+    private WeatherFragmentBinding binding;
     private Location location;
     private OneCallOWMModel oneCallOWMModel;
     private City city;
@@ -73,9 +73,9 @@ public class MainFragment extends BaseFragment<MainViewModel> {
         srlMainFragment = view.findViewById(R.id.srlMainFragment);
         city = requireArguments().getParcelable(CITY_KEY);
 
-        binding = MainFragmentBinding.bind(view);
+        binding = WeatherFragmentBinding.bind(view);
         binding.setDate(System.currentTimeMillis());
-        binding.setMainFragment(this);
+        binding.setWeatherFragment(this);
 
         srlMainFragment.setRefreshing(true);
         useCityFromVM();
@@ -153,7 +153,7 @@ public class MainFragment extends BaseFragment<MainViewModel> {
 
     @SuppressLint("MissingPermission")
     private void updateCityLocation() {
-        if (city.isGeolocation() && getViewModel().checkLocationPermissions()) {
+        if (city.isGeolocation() && AppApplication.checkLocationPermissions()) {
             LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
             if (locationManager != null) {
                 location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);

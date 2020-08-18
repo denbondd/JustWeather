@@ -51,4 +51,8 @@
     <string name="locationDialogMessage">You can’t see weather on your location, without allowing this app to see it. If you don’t want to, you can add city manually by typing it.</string>
     <string name="typeCity">Type City</string>
     <string name="useLocation">Use Location</string>
+    <string name="undo">Undo</string>
+    <string name="snackbarUndoText">"You removed %1$s from your list. Undo action?"</string>
+    <string name="deleteLastCity">You can\'t delete all cities</string>
+    <string name="snackbarCurrentCity">You can\'t delete current city.</string>
 </resources>

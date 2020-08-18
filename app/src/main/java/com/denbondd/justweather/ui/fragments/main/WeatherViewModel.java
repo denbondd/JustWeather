@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.denbondd.justweather.AppApplication;
@@ -27,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainViewModel extends BaseVM {
+public class WeatherViewModel extends BaseVM {
     public MutableLiveData<OneCallOWMModel> oneCallOWM = new MutableLiveData<>();
     public MutableLiveData<String> currentLocationNameOWM = new MutableLiveData<>();
 
@@ -110,16 +111,11 @@ public class MainViewModel extends BaseVM {
         return answ;
     }
 
-    public boolean checkLocationPermissions() {
-        return ActivityCompat.checkSelfPermission(AppApplication.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(AppApplication.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-    }
-
     private String getString(int id) {
         return AppApplication.getContext().getString(id);
     }
 
     private Drawable getDrawable(int id) {
-        return AppApplication.getContext().getDrawable(id);
+        return ContextCompat.getDrawable(AppApplication.getContext(), id);
     }
 }
