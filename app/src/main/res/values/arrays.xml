@@ -1,0 +1,37 @@
+<resources>
+    <string-array name="temperature_entries">
+        <item>°C</item>
+        <item>°F</item>
+        <item>K</item>
+    </string-array>
+
+    <string-array name="temperature_values">
+        <item>c</item>
+        <item>f</item>
+        <item>k</item>
+    </string-array>
+
+    <string-array name="speed_entries">
+        <item>km/h</item>
+        <item>mph</item>
+        <item>m/s</item>
+    </string-array>
+
+    <string-array name="speed_values">
+        <item>kmh</item>
+        <item>mph</item>
+        <item>ms</item>
+    </string-array>
+
+    <string-array name="pressure_entries">
+        <item>mBar</item>
+        <item>kPa</item>
+        <item>mmHg</item>
+    </string-array>
+
+    <string-array name="pressure_values">
+        <item>mbar</item>
+        <item>kp</item>
+        <item>mmhg</item>
+    </string-array>
+</resources>

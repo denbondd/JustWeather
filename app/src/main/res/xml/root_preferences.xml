@@ -1,35 +1,36 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/messages_header">
-
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory app:title="Scales">
+        <ListPreference
+            app:dialogTitle="Select temperature unit you want to use"
+            app:entries="@array/temperature_entries"
+            app:entryValues="@array/temperature_values"
+            app:key="temperature"
+            app:title="Temperature" />
 
         <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
+            app:dialogTitle="Select speed unit you want to use"
+            app:entries="@array/speed_entries"
+            app:entryValues="@array/speed_values"
+            app:key="speed"
+            app:title="Speed" />
 
+        <ListPreference
+            app:dialogTitle="Select pressure unit you want to use"
+            app:entries="@array/pressure_entries"
+            app:entryValues="@array/pressure_values"
+            app:key="pressure"
+            app:title="Pressure" />/>
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
+    <PreferenceCategory app:title="About the app">
+        <Preference
+            app:key="githubrepo"
+            app:title="GitHub Repository" />
 
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
-
+        <Preference
+            app:key="authorinfo"
+            app:title="Author Info" />
     </PreferenceCategory>
 
 </PreferenceScreen>
