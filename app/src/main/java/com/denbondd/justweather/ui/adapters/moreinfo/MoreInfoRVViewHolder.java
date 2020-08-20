@@ -5,6 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.databinding.MoreInfoRvitemBinding;
 import com.denbondd.justweather.models.MoreInfoItemModel;
 

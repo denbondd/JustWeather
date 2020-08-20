@@ -10,4 +10,8 @@ public class Constants {
     public static final String PREFERENCES_NEED_PERMISSION = "IS_PERMISSION_NEEDED";
     public static final String SHOW_ADD_CITY = "SHOW_ADD_CITY";
 
+    public static final String GITHUB_REPO_LINK = "https://github.com/denbondd/JustWeather";
+    public static final String AUTHOR_LINKEDIN_LINK = "https://www.linkedin.com/in/denis-bondarenko-2004";
+
+
 }

@@ -1,5 +1,7 @@
 package com.denbondd.justweather.util;
 
+import android.content.SharedPreferences;
+
 import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
 
@@ -12,12 +14,46 @@ public class WeatherExtensions {
         return data % 1 == 0 ? Integer.toString((int) data) : Double.toString(data);
     }
 
-    public static String getMaxMinTempStr(double max, double min) {
-        return Math.round(max) + getString(R.string.celsiusSign) + " / " + Math.round(min) + getString(R.string.celsiusSign);
+    public static String getTemp(double temp, SharedPreferences sharedPreferences) {
+        String key = sharedPreferences.getString(getString(R.string.temperature_key), "c");
+        switch (key) {
+            case "c":
+                return Math.round(temp) + getString(R.string.celsiusSign);
+            case "f":
+                return Math.round(celsiusToFahrenheit(temp)) + getString(R.string.fahrenheitSign);
+            case "k":
+                return Math.round(celsiusToKelvin(temp)) + getString(R.string.kelvinSign);
+            default:
+                return null;
+        }
     }
 
-    public static String getMiddleFeelsLikeTempStr(double middle, double feelsLike) {
-        return Math.round(middle) + getString(R.string.celsiusSign) + "  " + getString(R.string.feels_like) + "  " + Math.round(feelsLike) + getString(R.string.celsiusSign);
+    public static String getMaxMinTempStr(double max, double min, SharedPreferences sharedPreferences) {
+        String key = sharedPreferences.getString(getString(R.string.temperature_key), "c");
+        switch (key) {
+            case "c":
+                return Math.round(max) + getString(R.string.celsiusSign) + " / " + Math.round(min) + getString(R.string.celsiusSign);
+            case "f":
+                return Math.round(celsiusToFahrenheit(max)) + getString(R.string.fahrenheitSign) + " / " + Math.round(celsiusToFahrenheit(min)) + getString(R.string.fahrenheitSign);
+            case "k":
+                return Math.round(celsiusToKelvin(max)) + getString(R.string.kelvinSign) + " / " + Math.round(celsiusToKelvin(min)) + getString(R.string.kelvinSign);
+            default:
+                return null;
+        }
+    }
+
+    public static String getMiddleFeelsLikeTempStr(double middle, double feelsLike, SharedPreferences sharedPreferences) {
+        String key = sharedPreferences.getString(getString(R.string.temperature_key), "c");
+        switch (key) {
+            case "c":
+                return  Math.round(middle) + getString(R.string.celsiusSign) + "  " + getString(R.string.feels_like) + "  " + Math.round(feelsLike) + getString(R.string.celsiusSign);
+            case "f":
+                return  Math.round(celsiusToFahrenheit(middle)) + getString(R.string.fahrenheitSign) + "  " + getString(R.string.feels_like) + "  " + Math.round(celsiusToFahrenheit(feelsLike)) + getString(R.string.fahrenheitSign);
+            case "k":
+                return  Math.round(celsiusToKelvin(middle)) + getString(R.string.kelvinSign) + "  " + getString(R.string.feels_like) + "  " + Math.round(celsiusToKelvin(feelsLike)) + getString(R.string.kelvinSign);
+            default:
+                return null;
+        }
     }
 
     public static String getWindStr(double speed, double degrees) {
@@ -54,6 +90,14 @@ public class WeatherExtensions {
         } else {
             return null;
         }
+    }
+
+    private static double celsiusToFahrenheit(double celsius) {
+        return celsius * 9 / 5 + 32;
+    }
+
+    private static double celsiusToKelvin(double celsius) {
+        return celsius + 273.3;
     }
 
     private static String getString(int id) {

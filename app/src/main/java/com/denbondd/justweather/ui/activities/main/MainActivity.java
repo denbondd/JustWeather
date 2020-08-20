@@ -21,7 +21,7 @@ import com.denbondd.justweather.models.City;
 import com.denbondd.justweather.ui.adapters.navitems.NavItemsRVAdapter;
 import com.denbondd.justweather.ui.base.BaseActivity;
 import com.denbondd.justweather.ui.fragments.addcity.AddCityFragment;
-import com.denbondd.justweather.ui.fragments.main.WeatherFragment;
+import com.denbondd.justweather.ui.fragments.weather.WeatherFragment;
 import com.denbondd.justweather.ui.fragments.settings.SettingsFragment;
 import com.denbondd.justweather.util.ActivityExtensions;
 import com.denbondd.justweather.util.FragmentExtensions;

@@ -1,4 +1,4 @@
-package com.denbondd.justweather.ui.fragments.main;
+package com.denbondd.justweather.ui.fragments.weather;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import static com.denbondd.justweather.util.Constants.CITY_KEY;
+import static com.denbondd.justweather.util.Constants.PREFERENCES_NAME;
 
 public class WeatherFragment extends BaseFragment<WeatherViewModel> {
     @Override
@@ -76,6 +78,7 @@ public class WeatherFragment extends BaseFragment<WeatherViewModel> {
         binding = WeatherFragmentBinding.bind(view);
         binding.setDate(System.currentTimeMillis());
         binding.setWeatherFragment(this);
+        binding.setPref(PreferenceManager.getDefaultSharedPreferences(getContext()));
 
         srlMainFragment.setRefreshing(true);
         useCityFromVM();

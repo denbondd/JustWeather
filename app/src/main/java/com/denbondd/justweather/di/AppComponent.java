@@ -6,7 +6,7 @@ import com.denbondd.justweather.db.AppDatabase;
 import com.denbondd.justweather.ui.activities.main.MainActivity;
 import com.denbondd.justweather.ui.base.BaseVM;
 import com.denbondd.justweather.ui.fragments.addcity.AddCityFragment;
-import com.denbondd.justweather.ui.fragments.main.WeatherFragment;
+import com.denbondd.justweather.ui.fragments.weather.WeatherFragment;
 
 import javax.inject.Singleton;
 

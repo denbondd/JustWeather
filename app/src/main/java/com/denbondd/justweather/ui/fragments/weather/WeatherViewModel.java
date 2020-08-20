@@ -1,32 +1,21 @@
-package com.denbondd.justweather.ui.fragments.main;
+package com.denbondd.justweather.ui.fragments.weather;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 
 import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
-import com.denbondd.justweather.models.CurrentWeatherOWMModel;
 import com.denbondd.justweather.models.MoreInfoItemModel;
 import com.denbondd.justweather.models.MoreInfoTypeEnum;
 import com.denbondd.justweather.models.OneCallOWMModel;
 import com.denbondd.justweather.ui.base.BaseVM;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class WeatherViewModel extends BaseVM {
     public MutableLiveData<OneCallOWMModel> oneCallOWM = new MutableLiveData<>();

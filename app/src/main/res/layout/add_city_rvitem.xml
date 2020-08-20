@@ -9,6 +9,10 @@
             name="city"
             type="com.denbondd.justweather.models.findowm.Data" />
 
+        <variable
+            name="pref"
+            type="android.content.SharedPreferences" />
+
         <import
             alias="weatherExt"
             type="com.denbondd.justweather.util.WeatherExtensions" />
@@ -64,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@android:color/black"
-                android:text="@{weatherExt.getMaxMinTempStr(city.main.tempMax, city.main.tempMin)}"
+                android:text="@{weatherExt.getMaxMinTempStr(city.main.tempMax, city.main.tempMin, pref)}"
                 app:layout_constraintStart_toStartOf="@+id/tvCity"
                 app:layout_constraintTop_toBottomOf="@+id/tvCity"
                 tools:text="-8°C / -10°C" />

@@ -5,32 +5,41 @@
             app:dialogTitle="Select temperature unit you want to use"
             app:entries="@array/temperature_entries"
             app:entryValues="@array/temperature_values"
-            app:key="temperature"
-            app:title="Temperature" />
+            app:key="@string/temperature_key"
+            app:title="@string/temperature" />
 
         <ListPreference
             app:dialogTitle="Select speed unit you want to use"
             app:entries="@array/speed_entries"
             app:entryValues="@array/speed_values"
-            app:key="speed"
-            app:title="Speed" />
+            app:key="@string/speed_key"
+            app:title="@string/speed" />
 
         <ListPreference
             app:dialogTitle="Select pressure unit you want to use"
             app:entries="@array/pressure_entries"
             app:entryValues="@array/pressure_values"
-            app:key="pressure"
-            app:title="Pressure" />/>
+            app:key="@string/pressure_key"
+            app:title="@string/pressure" />/>
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/other_settings">
+        <ListPreference
+            app:title="@string/language" />
+
+        <ListPreference
+            app:title="@string/theme" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="About the app">
         <Preference
-            app:key="githubrepo"
-            app:title="GitHub Repository" />
+            app:key="@string/githubrepo_key"
+            app:title="@string/githubrepo" />
 
         <Preference
-            app:key="authorinfo"
-            app:title="Author Info" />
+            app:key="@string/author_linkedin_key"
+            app:title="@string/author_linkedin" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -1,10 +1,12 @@
 package com.denbondd.justweather.ui.adapters.addcity;
 
+import android.content.SharedPreferences;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.databinding.AddCityRvitemBinding;
 import com.denbondd.justweather.models.City;
 import com.denbondd.justweather.models.findowm.Data;
@@ -21,6 +23,7 @@ public class AddCityRVViewHolder extends RecyclerView.ViewHolder {
 
     public void onBind(Data city) {
         binding.setCity(city);
+        binding.setPref(AppApplication.getSharedPreferences());
         itemView.setOnClickListener(v -> listener.onItemClick(new City(
                 city.getName(),
                 false,

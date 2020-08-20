@@ -67,6 +67,8 @@ public class SplashActivity extends BaseActivity<SplashVM> {
                 new Handler().postDelayed(() -> startMainActivity(false), 2000);
             }
         });
+
+
     }
 
     private void showPrePermissionDialog() {

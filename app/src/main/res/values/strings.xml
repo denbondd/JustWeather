@@ -7,7 +7,13 @@
     <string name="BASE_URL_OPEN_WEATHER_MAP">http://api.openweathermap.org/</string>
     <string name="fullDayNamePattern">EEEE, d MMMM</string>
     <string name="today">Today</string>
+
     <string name="celsiusSign">°C</string>
+    <string name="fahrenheitSign">°F</string>
+    <string name="kelvinSign">K</string>
+
+
+
     <string name="tempSign">°</string>
     <string name="tempMinMaxSplit">%1$d°/%2$d°</string>
     <string name="more_info">More info</string>
@@ -32,20 +38,6 @@
     <string name="w">West</string>
     <string name="nw">Northwest</string>
     <string name="daily">Daily</string>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="add_city">Add city</string>
     <string name="city_name">City name</string>
     <string name="locationDialogMessage">You can’t see weather on your location, without allowing this app to see it. If you don’t want to, you can add city manually by typing it.</string>
@@ -55,4 +47,16 @@
     <string name="snackbarUndoText">"You removed %1$s from your list. Undo action?"</string>
     <string name="deleteLastCity">You can\'t delete all cities</string>
     <string name="snackbarCurrentCity">You can\'t delete current city.</string>
+    <string name="temperature_key">temperature</string>
+    <string name="temperature">Temperature</string>
+    <string name="speed_key">speed</string>
+    <string name="speed">Speed</string>
+    <string name="pressure_key">pressure</string>
+    <string name="githubrepo_key">githubrepo</string>
+    <string name="githubrepo">GitHub Repository</string>
+    <string name="author_linkedin_key">authorlinkedin</string>
+    <string name="author_linkedin">Author\'s LinkedIn</string>
+    <string name="other_settings">Other Settings</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
 </resources>

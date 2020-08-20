@@ -5,6 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.databinding.HourlyRvitemBinding;
 import com.denbondd.justweather.models.onecallowm.Hourly;
 
@@ -18,5 +19,6 @@ public class HourlyRVViewHolder extends RecyclerView.ViewHolder {
 
     public void onBind(Hourly hourly) {
         binding.setHourly(hourly);
+        binding.setPref(AppApplication.getSharedPreferences());
     }
 }

@@ -19,7 +19,11 @@
 
         <variable
             name="weatherFragment"
-            type="com.denbondd.justweather.ui.fragments.main.WeatherFragment" />
+            type="com.denbondd.justweather.ui.fragments.weather.WeatherFragment" />
+
+        <variable
+            name="pref"
+            type="android.content.SharedPreferences" />
 
         <import
             alias="timeExt"
@@ -28,6 +32,10 @@
         <import
             alias="owmExt"
             type="com.denbondd.justweather.util.OWMExtensions" />
+
+        <import
+            alias="weatherExt"
+            type="com.denbondd.justweather.util.WeatherExtensions" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -50,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="35dp"
-                    android:text="@{Long.toString(Math.round(oneCallOWMModel.current.temp)) + @string/celsiusSign}"
+                    android:text="@{weatherExt.getTemp(oneCallOWMModel.current.temp, pref)}"
                     android:textColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +121,7 @@
                     style="@style/txtRegular.24sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.format(@string/tempMinMaxSplit, Math.round(oneCallOWMModel.daily.get(0).temp.min), Math.round(oneCallOWMModel.daily.get(0).temp.max))}"
+                    android:text="@{weatherExt.getMaxMinTempStr(oneCallOWMModel.daily.get(0).temp.max, oneCallOWMModel.daily.get(0).temp.min, pref)}"
                     android:textColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
