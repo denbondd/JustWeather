@@ -154,6 +154,7 @@ public class MainActivity extends BaseActivity<MainVM> {
             );
             getViewModel().currentPage.postValue(Long.toString(city.getId()));
             dlMain.closeDrawer(GravityCompat.START);
+            setMenuIcon();
         }, getViewModel().getAllLD());
         rvCities.setAdapter(adapter);
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(

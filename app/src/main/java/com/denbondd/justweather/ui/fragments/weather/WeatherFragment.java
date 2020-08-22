@@ -78,7 +78,6 @@ public class WeatherFragment extends BaseFragment<WeatherViewModel> {
         binding = WeatherFragmentBinding.bind(view);
         binding.setDate(System.currentTimeMillis());
         binding.setWeatherFragment(this);
-        binding.setPref(PreferenceManager.getDefaultSharedPreferences(getContext()));
 
         srlMainFragment.setRefreshing(true);
         useCityFromVM();

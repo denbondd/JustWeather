@@ -23,7 +23,6 @@ public class AddCityRVViewHolder extends RecyclerView.ViewHolder {
 
     public void onBind(Data city) {
         binding.setCity(city);
-        binding.setPref(AppApplication.getSharedPreferences());
         itemView.setOnClickListener(v -> listener.onItemClick(new City(
                 city.getName(),
                 false,

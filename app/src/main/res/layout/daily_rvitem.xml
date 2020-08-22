@@ -9,10 +9,6 @@
             name="daily"
             type="com.denbondd.justweather.models.onecallowm.Daily" />
 
-        <variable
-            name="pref"
-            type="android.content.SharedPreferences" />
-
         <import
             alias="timeExt"
             type="com.denbondd.justweather.util.TimeExtensions" />
@@ -72,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@{weatherExt.getMaxMinTempStr(daily.temp.max, daily.temp.min, pref)}"
+                android:text="@{weatherExt.getMaxMinTempStr(daily.temp.max, daily.temp.min)}"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/tvTime"
                 app:layout_constraintTop_toBottomOf="@+id/tvTime"
@@ -95,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:text="@{weatherExt.getWindStr(daily.windSpeed, daily.windDeg)}"
+                android:text="@{weatherExt.getWindStr(daily.windSpeed, daily.windDeg, true)}"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toStartOf="@+id/tvWeather"
                 app:layout_constraintTop_toBottomOf="@+id/tvWeather"

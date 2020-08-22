@@ -19,6 +19,5 @@ public class DailyRVViewHolder extends RecyclerView.ViewHolder {
 
     public void onBind(Daily item) {
         binding.setDaily(item);
-        binding.setPref(AppApplication.getSharedPreferences());
     }
 }

@@ -21,10 +21,6 @@
             name="weatherFragment"
             type="com.denbondd.justweather.ui.fragments.weather.WeatherFragment" />
 
-        <variable
-            name="pref"
-            type="android.content.SharedPreferences" />
-
         <import
             alias="timeExt"
             type="com.denbondd.justweather.util.TimeExtensions" />
@@ -58,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="35dp"
-                    android:text="@{weatherExt.getTemp(oneCallOWMModel.current.temp, pref)}"
+                    android:text="@{weatherExt.getTemp(oneCallOWMModel.current.temp)}"
                     android:textColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +117,7 @@
                     style="@style/txtRegular.24sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{weatherExt.getMaxMinTempStr(oneCallOWMModel.daily.get(0).temp.max, oneCallOWMModel.daily.get(0).temp.min, pref)}"
+                    android:text="@{weatherExt.getMaxMinTempStr(oneCallOWMModel.daily.get(0).temp.max, oneCallOWMModel.daily.get(0).temp.min)}"
                     android:textColor="@android:color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

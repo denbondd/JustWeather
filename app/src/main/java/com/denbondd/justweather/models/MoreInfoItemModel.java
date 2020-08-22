@@ -7,23 +7,13 @@ public class MoreInfoItemModel {
     private MoreInfoTypeEnum type;
     private Drawable icon;
     private String title;
-    private double data;
-    private String measure;
+    private String dataAndMeasure;
 
-    public MoreInfoItemModel(MoreInfoTypeEnum type, String title, double data, Drawable icon, String measure) {
-        this.title = title;
+    public MoreInfoItemModel(MoreInfoTypeEnum type, Drawable icon, String title, String dataAndMeasure) {
         this.type = type;
-        this.data = data;
         this.icon = icon;
-        this.measure = measure;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
         this.title = title;
+        this.dataAndMeasure = dataAndMeasure;
     }
 
     public MoreInfoTypeEnum getType() {
@@ -34,14 +24,6 @@ public class MoreInfoItemModel {
         this.type = type;
     }
 
-    public double getData() {
-        return data;
-    }
-
-    public void setData(double data) {
-        this.data = data;
-    }
-
     public Drawable getIcon() {
         return icon;
     }
@@ -50,11 +32,19 @@ public class MoreInfoItemModel {
         this.icon = icon;
     }
 
-    public String getMeasure() {
-        return measure;
+    public String getTitle() {
+        return title;
     }
 
-    public void setMeasure(String measure) {
-        this.measure = measure;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDataAndMeasure() {
+        return dataAndMeasure;
+    }
+
+    public void setDataAndMeasure(String dataAndMeasure) {
+        this.dataAndMeasure = dataAndMeasure;
     }
 }

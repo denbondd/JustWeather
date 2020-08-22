@@ -14,6 +14,7 @@ import com.denbondd.justweather.models.MoreInfoItemModel;
 import com.denbondd.justweather.models.MoreInfoTypeEnum;
 import com.denbondd.justweather.models.OneCallOWMModel;
 import com.denbondd.justweather.ui.base.BaseVM;
+import com.denbondd.justweather.util.WeatherExtensions;
 
 import java.util.ArrayList;
 
@@ -57,45 +58,39 @@ public class WeatherViewModel extends BaseVM {
         ArrayList<MoreInfoItemModel> answ = new ArrayList<>();
         answ.add(new MoreInfoItemModel(
                 MoreInfoTypeEnum.HUMIDITY,
-                getString(R.string.humidity),
-                oneCallOWM.getCurrent().getHumidity(),
                 getDrawable(R.drawable.ic_humidity),
-                getString(R.string.percent)
+                getString(R.string.humidity),
+                oneCallOWM.getCurrent().getHumidity() + getString(R.string.percent)
         ));
         answ.add(new MoreInfoItemModel(
                 MoreInfoTypeEnum.WIND,
-                getString(R.string.wind),
-                oneCallOWM.getCurrent().getWindSpeed(),
                 getDrawable(R.drawable.ic_winddirection),
-                getString(R.string.m_per_sec)
+                getString(R.string.wind),
+                WeatherExtensions.getWindStr(oneCallOWM.getCurrent().getWindSpeed(), -1, false)
         ));
         answ.add(new MoreInfoItemModel(
                 MoreInfoTypeEnum.PRESSURE,
-                getString(R.string.pressure),
-                oneCallOWM.getCurrent().getPressure(),
                 getDrawable(R.drawable.ic_pressure),
-                getString(R.string.h_pa)
+                getString(R.string.pressure),
+                WeatherExtensions.getPressureStr(oneCallOWM.getCurrent().getPressure())
         ));
         answ.add(new MoreInfoItemModel(
                 MoreInfoTypeEnum.CLOUDINESS,
-                getString(R.string.cloudiness),
-                oneCallOWM.getCurrent().getClouds(),
                 getDrawable(R.drawable.ic_cloudiness),
-                getString(R.string.percent)
+                getString(R.string.cloudiness),
+                oneCallOWM.getCurrent().getClouds() + getString(R.string.percent)
         ));
         answ.add(new MoreInfoItemModel(
                 MoreInfoTypeEnum.UV_INDEX,
-                getString(R.string.uv_index),
-                oneCallOWM.getCurrent().getUvi(),
                 getDrawable(R.drawable.ic_uvindex),
-                ""
+                getString(R.string.uv_index),
+                Double.toString(oneCallOWM.getCurrent().getUvi())
         ));
         answ.add(new MoreInfoItemModel(
                 MoreInfoTypeEnum.FEELS_LIKE,
-                getString(R.string.feels_like),
-                oneCallOWM.getCurrent().getFeelsLike(),
                 getDrawable(R.drawable.ic_feelslike),
-                getString(R.string.celsiusSign)
+                getString(R.string.feels_like),
+                WeatherExtensions.getTemp(oneCallOWM.getCurrent().getFeelsLike())
         ));
         return answ;
     }

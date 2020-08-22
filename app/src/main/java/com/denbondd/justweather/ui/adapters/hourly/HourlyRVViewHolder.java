@@ -19,6 +19,5 @@ public class HourlyRVViewHolder extends RecyclerView.ViewHolder {
 
     public void onBind(Hourly hourly) {
         binding.setHourly(hourly);
-        binding.setPref(AppApplication.getSharedPreferences());
     }
 }

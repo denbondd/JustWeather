@@ -9,10 +9,6 @@
             name="city"
             type="com.denbondd.justweather.models.findowm.Data" />
 
-        <variable
-            name="pref"
-            type="android.content.SharedPreferences" />
-
         <import
             alias="weatherExt"
             type="com.denbondd.justweather.util.WeatherExtensions" />
@@ -68,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@android:color/black"
-                android:text="@{weatherExt.getMaxMinTempStr(city.main.tempMax, city.main.tempMin, pref)}"
+                android:text="@{weatherExt.getMaxMinTempStr(city.main.tempMax, city.main.tempMin)}"
                 app:layout_constraintStart_toStartOf="@+id/tvCity"
                 app:layout_constraintTop_toBottomOf="@+id/tvCity"
                 tools:text="-8°C / -10°C" />
@@ -91,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:textColor="@android:color/black"
-                android:text="@{weatherExt.getWindStr(city.wind.speed, city.wind.deg)}"
+                android:text="@{weatherExt.getWindStr(city.wind.speed, city.wind.deg, true)}"
                 app:layout_constraintStart_toStartOf="@+id/tvWeather"
                 app:layout_constraintTop_toBottomOf="@+id/tvWeather"
                 tools:text="Wind  7 m/s  North" />
