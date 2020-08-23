@@ -12,8 +12,6 @@
     <string name="fahrenheitSign">°F</string>
     <string name="kelvinSign">K</string>
 
-
-
     <string name="tempSign">°</string>
     <string name="tempMinMaxSplit">%1$d°/%2$d°</string>
     <string name="more_info">More info</string>
@@ -58,5 +56,10 @@
     <string name="author_linkedin">Author\'s LinkedIn</string>
     <string name="other_settings">Other Settings</string>
     <string name="language">Language</string>
+    <string name="language_key">language</string>
     <string name="theme">Theme</string>
+    <string name="temp_dialog">Select temperature unit you want to use</string>
+    <string name="speed_dialog">Select speed unit you want to use</string>
+    <string name="pressure_dialog">Select pressure unit you want to use</string>
+    <string name="lang_dialog">Select language you want to use</string>
 </resources>

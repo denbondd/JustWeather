@@ -2,21 +2,21 @@
 
     <PreferenceCategory app:title="Scales">
         <ListPreference
-            app:dialogTitle="Select temperature unit you want to use"
+            app:dialogTitle="@string/temp_dialog"
             app:entries="@array/temperature_entries"
             app:entryValues="@array/temperature_values"
             app:key="@string/temperature_key"
             app:title="@string/temperature" />
 
         <ListPreference
-            app:dialogTitle="Select speed unit you want to use"
+            app:dialogTitle="@string/speed_dialog"
             app:entries="@array/speed_entries"
             app:entryValues="@array/speed_values"
             app:key="@string/speed_key"
             app:title="@string/speed" />
 
         <ListPreference
-            app:dialogTitle="Select pressure unit you want to use"
+            app:dialogTitle="@string/pressure_dialog"
             app:entries="@array/pressure_entries"
             app:entryValues="@array/pressure_values"
             app:key="@string/pressure_key"
@@ -25,7 +25,11 @@
 
     <PreferenceCategory app:title="@string/other_settings">
         <ListPreference
-            app:title="@string/language" />
+            app:dialogTitle="@string/lang_dialog"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:key="@string/language_key"
+            app:title="@string/language"  />
 
         <ListPreference
             app:title="@string/theme" />

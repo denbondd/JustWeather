@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 
 import com.denbondd.justweather.AppApplication;
 import com.denbondd.justweather.R;
@@ -22,6 +23,7 @@ import com.denbondd.justweather.ui.base.BaseActivity;
 import com.denbondd.justweather.util.ActivityExtensions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.denbondd.justweather.util.Constants.LOCATION_PERMISSION_CODE;
@@ -52,10 +54,11 @@ public class SplashActivity extends BaseActivity<SplashVM> {
 
         SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE);
         if (sharedPreferences.getBoolean(PREFERENCES_NEED_PERMISSION, true)) {
+            getViewModel().firstStart();
             showPrePermissionDialog();
             sharedPreferences.edit().putBoolean(PREFERENCES_NEED_PERMISSION, false).apply();
         } else {
-            new Handler().postDelayed(() -> startMainActivity(false), 2000);
+            new Handler().postDelayed(() -> startMainActivity(false), 1500);
             return;
         }
 
@@ -64,11 +67,9 @@ public class SplashActivity extends BaseActivity<SplashVM> {
             if (isCityReady != null && isCityReady) {
                 if (!isCityAdded.get()) getViewModel().insertCity();
                 isCityAdded.set(true);
-                new Handler().postDelayed(() -> startMainActivity(false), 2000);
+                new Handler().postDelayed(() -> startMainActivity(false), 1500);
             }
         });
-
-
     }
 
     private void showPrePermissionDialog() {
