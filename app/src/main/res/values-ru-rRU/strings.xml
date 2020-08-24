@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">Настройки</string>
+    <string name="today">Сегодня</string>
+    <string name="feels_like">По ощущениям</string>
+    <string name="humidity">Влажность</string>
+    <string name="wind">Ветер</string>
+    <string name="m_per_sec">м/с</string>
+    <string name="pressure">Давление</string>
+    <string name="h_pa">гПа</string>
+    <string name="cloudiness">Облачность</string>
+    <string name="uv_index">УФ индекс</string>
+    <string name="hourly">По часам</string>
+    <string name="n">Северный</string>
+    <string name="ne">Северо-восточный</string>
+    <string name="e">Восточный</string>
+    <string name="se">Юго-восточный</string>
+    <string name="s">Южный</string>
+    <string name="sw">Юго-западный</string>
+    <string name="w">Западный</string>
+    <string name="nw">Северо-западный</string>
+    <string name="daily">По дням</string>
+    <string name="add_city">Добавить город</string>
+    <string name="city_name">Название города</string>
+    <string name="locationDialogMessage">Вы не сможете посмотреть погоду в вашем текущем местоположении без разрешения на его использование. Вы сможете добавить город вручную.</string>
+    <string name="typeCity">Ввести город</string>
+    <string name="useLocation">Местоположение</string>
+    <string name="undo">Отменить</string>
+    <string name="snackbarUndoText">Отменить удаления %1$s из списка?</string>
+    <string name="deleteLastCity">Вы не можете удалить все города</string>
+    <string name="snackbarCurrentCity">Вы не можете удалить текущий город</string>
+    <string name="temperature">Температура</string>
+    <string name="speed">Скорость</string>
+    <string name="githubrepo">GitHub репозиторий</string>
+    <string name="author_linkedin">LinkedIn автора</string>
+    <string name="other_settings">Другие настройки</string>
+    <string name="language">Язык</string>
+    <string name="theme">Тема</string>
+    <string name="temp_dialog">Выберите шкалу измерения температуры</string>
+    <string name="speed_dialog">Выберите шкалу измерения скорости</string>
+    <string name="pressure_dialog">Выберите шкалу измерения давления</string>
+    <string name="lang_dialog">Выберите язык приложения</string>
+    <string name="more_info">Подробней</string>
+</resources>

@@ -3,6 +3,7 @@ package com.denbondd.justweather.ui.activities.splash;
 import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Handler;
 
@@ -52,11 +53,23 @@ public class SplashVM extends BaseVM {
         preferences.edit().putString(getContext().getString(R.string.speed_key), "ms").apply();
         preferences.edit().putString(getContext().getString(R.string.pressure_key), "mbar").apply();
         preferences.edit().putString(getContext().getString(R.string.language_key), getLanguageTag()).apply();
+        changeLanguage(preferences);
+    }
+
+    public String changeLanguage(SharedPreferences preferences) {
+        String languageTag = preferences.getString(getContext().getString(R.string.language_key), "en");
+        Locale locale = new Locale(languageTag);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.setLocale(locale);
+        getContext().getApplicationContext().getResources()
+                .updateConfiguration(configuration, getContext().getResources().getDisplayMetrics());
+        return languageTag;
     }
 
     private String getLanguageTag() {
         String deviceLang = Locale.getDefault().getLanguage();
-        if (deviceLang.equals("ua") || deviceLang.equals("ru")) {
+        if (deviceLang.equals("uk") || deviceLang.equals("ru")) {
             return deviceLang;
         } else {
             return "en";

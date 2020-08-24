@@ -27,14 +27,14 @@ public class ApiHelper {
     private final OpenWeatherMapApi openWeatherMapApi = retrofitOWM.create(OpenWeatherMapApi.class);
 
     public Call<OneCallOWMModel> getOneCallOWM(double lat, double lon) {
-        return openWeatherMapApi.getOneCallOWM(lat, lon, Keys.readOWMkey(), "metric");
+        return openWeatherMapApi.getOneCallOWM(lat, lon, Keys.readOWMkey(), "metric", AppApplication.getLanguageTag());
     }
 
     public Call<CurrentWeatherOWMModel> getCurrentWeatherOWM(double lat, double lon) {
-        return openWeatherMapApi.getCurrentWeatherOWM(lat, lon, Keys.readOWMkey(), "metric");
+        return openWeatherMapApi.getCurrentWeatherOWM(lat, lon, Keys.readOWMkey(), "metric", AppApplication.getLanguageTag());
     }
 
     public Call<FindCityOWMModel> getFindCityOWM(String name) {
-        return openWeatherMapApi.findCities(name, "metric", Keys.readOWMkey());
+        return openWeatherMapApi.findCities(name, "metric", Keys.readOWMkey(), AppApplication.getLanguageTag());
     }
 }

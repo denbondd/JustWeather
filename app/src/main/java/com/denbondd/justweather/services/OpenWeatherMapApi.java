@@ -18,7 +18,8 @@ public interface OpenWeatherMapApi {
             @Query("lat") double lat,
             @Query("lon") double lon,
             @Query("appid") String appid,
-            @Query("units") String units
+            @Query("units") String units,
+            @Query("lang") String lang
     );
 
     @GET("data/2.5/weather")
@@ -26,13 +27,15 @@ public interface OpenWeatherMapApi {
             @Query("lat") double lat,
             @Query("lon") double lon,
             @Query("appid") String appid,
-            @Query("units") String units
+            @Query("units") String units,
+            @Query("lang") String lang
     );
 
     @GET("data/2.5/find")
     Call<FindCityOWMModel> findCities(
             @Query("q") String name,
             @Query("units") String units,
-            @Query("appid") String appid
+            @Query("appid") String appid,
+            @Query("lang") String lang
     );
 }

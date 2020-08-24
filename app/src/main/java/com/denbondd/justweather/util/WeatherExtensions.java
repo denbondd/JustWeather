@@ -69,19 +69,21 @@ public class WeatherExtensions {
         switch (sharedPreferences.getString("speed", "kmh")) {
             case "kmh":
                 if (longVersion)
-                    return getString(R.string.wind) + "  " + meterPerSecToKmPerHour(speed) + "km/h" + "  " + getWindDirection(degrees);
+                    return getString(R.string.wind) + "  " + meterPerSecToKmPerHour(speed)
+                            + getElementInStrArray(R.array.speed_entries, 1)
+                            + "  " + getWindDirection(degrees);
                 else
-                    return meterPerSecToKmPerHour(speed) + "km/h";
+                    return meterPerSecToKmPerHour(speed) + getElementInStrArray(R.array.speed_entries, 1);
             case "mph":
                 if (longVersion)
-                    return getString(R.string.wind) + "  " + meterPerSecToMph(speed) + "mph" + "  " + getWindDirection(degrees);
+                    return getString(R.string.wind) + "  " + meterPerSecToMph(speed) + getElementInStrArray(R.array.speed_entries, 2) + "  " + getWindDirection(degrees);
                 else
-                    return meterPerSecToMph(speed) + "mph";
+                    return meterPerSecToMph(speed) + getElementInStrArray(R.array.speed_entries, 2);
             case "ms":
                 if (longVersion)
-                    return getString(R.string.wind) + "  " + getRounded(speed) + "m/s" + "  " + getWindDirection(degrees);
+                    return getString(R.string.wind) + "  " + getRounded(speed) + getElementInStrArray(R.array.speed_entries, 3) + "  " + getWindDirection(degrees);
                 else
-                    return getRounded(speed) + "m/s";
+                    return getRounded(speed) + getElementInStrArray(R.array.speed_entries, 3);
             default:
                 return null;
         }
@@ -91,11 +93,11 @@ public class WeatherExtensions {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppApplication.getContext());
         switch (sharedPreferences.getString("pressure", "mBar")) {
             case "mbar":
-                return "" + getRounded(pressure) + "mBar";
+                return "" + getRounded(pressure) + getElementInStrArray(R.array.pressure_entries, 1);
             case "kpa":
-                return "" + mBarToKPa(pressure) + "kPa";
+                return "" + mBarToKPa(pressure) + getElementInStrArray(R.array.pressure_entries, 2);
             case "mmhg":
-                return "" + mBarToHhHg(pressure) + "mmHg";
+                return "" + mBarToHhHg(pressure) + getElementInStrArray(R.array.pressure_entries, 3);
             default:
                 return null;
         }
@@ -131,6 +133,10 @@ public class WeatherExtensions {
         } else {
             return null;
         }
+    }
+
+    private static String getElementInStrArray(int arrayId, int position) {
+        return AppApplication.getContext().getResources().getStringArray(arrayId)[position];
     }
 
     private static String getString(int id) {
