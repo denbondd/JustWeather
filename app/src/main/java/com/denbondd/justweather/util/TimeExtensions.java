@@ -14,7 +14,7 @@ public class TimeExtensions {
     public static String convertMillisToDate(long millis, String pattern) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.US);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.forLanguageTag(AppApplication.getLanguageTag()));
         return simpleDateFormat.format(calendar.getTime());
     }
 
@@ -22,7 +22,7 @@ public class TimeExtensions {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTimeInMillis(utx * 1000);
         SimpleDateFormat simpleDateFormat;
-        simpleDateFormat = new SimpleDateFormat("EEEE, d MMMM", Locale.US);
+        simpleDateFormat = new SimpleDateFormat("EEEE, d MMMM", Locale.forLanguageTag(AppApplication.getLanguageTag()));
         return simpleDateFormat.format(calendar.getTime());
     }
 
@@ -31,9 +31,9 @@ public class TimeExtensions {
         calendar.setTimeInMillis(utx * 1000);
         SimpleDateFormat simpleDateFormat;
         if (DateFormat.is24HourFormat(AppApplication.getContext())) {
-            simpleDateFormat = new SimpleDateFormat("H:mm", Locale.US);
+            simpleDateFormat = new SimpleDateFormat("H:mm", Locale.forLanguageTag(AppApplication.getLanguageTag()));
         } else {
-            simpleDateFormat = new SimpleDateFormat("h:mm a", Locale.US);
+            simpleDateFormat = new SimpleDateFormat("h:mm a", Locale.forLanguageTag(AppApplication.getLanguageTag()));
         }
         return simpleDateFormat.format(calendar.getTime());
     }

@@ -23,11 +23,9 @@ import com.denbondd.justweather.ui.base.BaseActivity;
 import com.denbondd.justweather.util.ActivityExtensions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.denbondd.justweather.util.Constants.LOCATION_PERMISSION_CODE;
-import static com.denbondd.justweather.util.Constants.PREFERENCES_NAME;
 import static com.denbondd.justweather.util.Constants.PREFERENCES_NEED_PERMISSION;
 import static com.denbondd.justweather.util.Constants.SHOW_ADD_CITY;
 
@@ -52,13 +50,13 @@ public class SplashActivity extends BaseActivity<SplashVM> {
 
         mainActivity = new MainActivity();
 
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPreferences.getBoolean(PREFERENCES_NEED_PERMISSION, true)) {
-            getViewModel().firstStart();
+            getViewModel().firstStart(getBaseContext());
             showPrePermissionDialog();
             sharedPreferences.edit().putBoolean(PREFERENCES_NEED_PERMISSION, false).apply();
         } else {
-            AppApplication.setLanguageTag(getViewModel().changeLanguage(PreferenceManager.getDefaultSharedPreferences(this)));
+            AppApplication.setLanguageTag(getViewModel().changeLanguage(PreferenceManager.getDefaultSharedPreferences(this), getBaseContext()));
             new Handler().postDelayed(() -> startMainActivity(false), 1500);
             return;
         }

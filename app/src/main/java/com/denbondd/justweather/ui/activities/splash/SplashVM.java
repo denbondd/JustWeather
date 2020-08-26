@@ -1,6 +1,7 @@
 package com.denbondd.justweather.ui.activities.splash;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -47,28 +48,32 @@ public class SplashVM extends BaseVM {
         new Thread(() -> appDatabase.cityDao().insert(geolocationCity)).start();
     }
 
-    public void firstStart() {
+    public void firstStart(Context baseContext) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         preferences.edit().putString(getContext().getString(R.string.temperature_key), "c").apply();
         preferences.edit().putString(getContext().getString(R.string.speed_key), "ms").apply();
         preferences.edit().putString(getContext().getString(R.string.pressure_key), "mbar").apply();
         preferences.edit().putString(getContext().getString(R.string.language_key), getLanguageTag()).apply();
-        changeLanguage(preferences);
+        changeLanguage(preferences, baseContext);
     }
 
-    public String changeLanguage(SharedPreferences preferences) {
+    public String changeLanguage(SharedPreferences preferences, Context baseContext) {
         String languageTag = preferences.getString(getContext().getString(R.string.language_key), "en");
         Locale locale = new Locale(languageTag);
         Locale.setDefault(locale);
         Configuration configuration = new Configuration();
         configuration.setLocale(locale);
+
+        //setting language to the app in two ways, because they working not fully by their own
         getContext().getApplicationContext().getResources()
                 .updateConfiguration(configuration, getContext().getResources().getDisplayMetrics());
+        baseContext.getResources().updateConfiguration(configuration, baseContext.getResources().getDisplayMetrics());
+
         return languageTag;
     }
 
-    private String getLanguageTag() {
-        String deviceLang = Locale.getDefault().getLanguage();
+    String getLanguageTag() {
+        String deviceLang = Locale.getDefault().getLanguage(); //was rus
         if (deviceLang.equals("uk") || deviceLang.equals("ru")) {
             return deviceLang;
         } else {

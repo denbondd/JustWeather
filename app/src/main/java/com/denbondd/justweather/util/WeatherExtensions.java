@@ -70,20 +70,20 @@ public class WeatherExtensions {
             case "kmh":
                 if (longVersion)
                     return getString(R.string.wind) + "  " + meterPerSecToKmPerHour(speed)
-                            + getElementInStrArray(R.array.speed_entries, 1)
+                            + getElementInStrArray(R.array.speed_entries, 0)
                             + "  " + getWindDirection(degrees);
                 else
-                    return meterPerSecToKmPerHour(speed) + getElementInStrArray(R.array.speed_entries, 1);
+                    return meterPerSecToKmPerHour(speed) + getElementInStrArray(R.array.speed_entries, 0);
             case "mph":
                 if (longVersion)
-                    return getString(R.string.wind) + "  " + meterPerSecToMph(speed) + getElementInStrArray(R.array.speed_entries, 2) + "  " + getWindDirection(degrees);
+                    return getString(R.string.wind) + "  " + meterPerSecToMph(speed) + getElementInStrArray(R.array.speed_entries, 1) + "  " + getWindDirection(degrees);
                 else
-                    return meterPerSecToMph(speed) + getElementInStrArray(R.array.speed_entries, 2);
+                    return meterPerSecToMph(speed) + getElementInStrArray(R.array.speed_entries, 1);
             case "ms":
                 if (longVersion)
-                    return getString(R.string.wind) + "  " + getRounded(speed) + getElementInStrArray(R.array.speed_entries, 3) + "  " + getWindDirection(degrees);
+                    return getString(R.string.wind) + "  " + getRounded(speed) + getElementInStrArray(R.array.speed_entries, 2) + "  " + getWindDirection(degrees);
                 else
-                    return getRounded(speed) + getElementInStrArray(R.array.speed_entries, 3);
+                    return getRounded(speed) + getElementInStrArray(R.array.speed_entries, 2);
             default:
                 return null;
         }
@@ -93,11 +93,11 @@ public class WeatherExtensions {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppApplication.getContext());
         switch (sharedPreferences.getString("pressure", "mBar")) {
             case "mbar":
-                return "" + getRounded(pressure) + getElementInStrArray(R.array.pressure_entries, 1);
+                return "" + getRounded(pressure) + getElementInStrArray(R.array.pressure_entries, 0);
             case "kpa":
-                return "" + mBarToKPa(pressure) + getElementInStrArray(R.array.pressure_entries, 2);
+                return "" + mBarToKPa(pressure) + getElementInStrArray(R.array.pressure_entries, 1);
             case "mmhg":
-                return "" + mBarToHhHg(pressure) + getElementInStrArray(R.array.pressure_entries, 3);
+                return "" + mBarToHhHg(pressure) + getElementInStrArray(R.array.pressure_entries, 2);
             default:
                 return null;
         }

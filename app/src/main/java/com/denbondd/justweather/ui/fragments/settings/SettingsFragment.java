@@ -7,10 +7,16 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 import com.denbondd.justweather.R;
+import com.denbondd.justweather.ui.activities.splash.SplashActivity;
+import com.denbondd.justweather.util.ActivityExtensions;
+
+import java.util.Objects;
 
 import static com.denbondd.justweather.util.Constants.AUTHOR_LINKEDIN_LINK;
 import static com.denbondd.justweather.util.Constants.GITHUB_REPO_LINK;
@@ -26,8 +32,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Preference gitHubRepo = findPreference(getString(R.string.githubrepo_key));
-        Preference authorLinkedIn = findPreference(getString(R.string.author_linkedin_key));
+        Preference gitHubRepo = Objects.requireNonNull(findPreference(getString(R.string.githubrepo_key)));
+        Preference authorLinkedIn = Objects.requireNonNull(findPreference(getString(R.string.author_linkedin_key)));
+        Preference language = Objects.requireNonNull(findPreference(getString(R.string.language_key)));
 
         gitHubRepo.setOnPreferenceClickListener(preference -> {
             openLink(GITHUB_REPO_LINK);
@@ -36,6 +43,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         authorLinkedIn.setOnPreferenceClickListener(preference -> {
             openLink(AUTHOR_LINKEDIN_LINK);
+            return false;
+        });
+
+        language.setOnPreferenceChangeListener((preference, newValue) -> {
+            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString(getString(R.string.language_key), (String) newValue).apply();
+            ActivityExtensions.startSplashActivityWithAnim((AppCompatActivity) requireActivity(), new SplashActivity());
+            requireActivity().finish();
             return false;
         });
     }
