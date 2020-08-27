@@ -6,5 +6,8 @@
     <color name="gradientStartColor">#65C8FF</color>
     <color name="gradientEndColor">#74F1F1</color>
     <color name="mainGray">#515151</color>
-    <color name="lightBlue">#DDF5F5</color>
+    <color name="textColor">#000</color>
+    <color name="background">#fff</color>
+    <color name="navItem">#D1F4F4</color>
+    <color name="navItemPressed">#D7F4F4</color>
 </resources>

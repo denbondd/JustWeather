@@ -20,6 +20,7 @@
         android:layout_margin="6dp"
         android:minWidth="98dp"
         android:minHeight="84dp"
+        android:background="@color/background"
         app:cardCornerRadius="8dp"
         app:cardElevation="7dp">
 
@@ -38,7 +39,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_settings" />
+                tools:srcCompat="@drawable/ic_settings"
+                app:tint="@color/mainGray" />
 
             <TextView
                 android:id="@+id/tvTitle"

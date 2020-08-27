@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="25dp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textColor"
             android:text="@{city.name}"
             tools:text="Kharkov"/>
 
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="27dp"
+            app:tint="@color/textColor"
             android:contentDescription="@string/itemico"
             android:visibility="@{city.geolocation ? View.VISIBLE : View.INVISIBLE}"
             android:src="@drawable/ic_geolocation" />

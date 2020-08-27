@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
@@ -35,6 +36,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         Preference gitHubRepo = Objects.requireNonNull(findPreference(getString(R.string.githubrepo_key)));
         Preference authorLinkedIn = Objects.requireNonNull(findPreference(getString(R.string.author_linkedin_key)));
         Preference language = Objects.requireNonNull(findPreference(getString(R.string.language_key)));
+        Preference theme = Objects.requireNonNull(findPreference(getString(R.string.theme_key)));
 
         gitHubRepo.setOnPreferenceClickListener(preference -> {
             openLink(GITHUB_REPO_LINK);
@@ -52,6 +54,22 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             requireActivity().finish();
             return false;
         });
+
+        theme.setOnPreferenceChangeListener(((preference, newValue) -> {
+            switch ((String) newValue) {
+                case "light":
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    break;
+                case "dark":
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    break;
+                case "system":
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                    break;
+            }
+            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString(getString(R.string.theme_key), (String) newValue).apply();
+            return false;
+        }));
     }
 
     private void openLink(String link) {

@@ -60,6 +60,7 @@
         android:id="@+id/nvMain"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:background="@color/background"
         android:layout_gravity="start">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,7 +100,8 @@
                 app:layout_constraintStart_toStartOf="@+id/btnAddCity"
                 app:layout_constraintTop_toTopOf="@+id/btnAddCity"
                 app:srcCompat="@drawable/ic_add"
-                android:contentDescription="@string/itemico"/>
+                android:contentDescription="@string/itemico"
+                app:tint="@color/textColor" />
 
             <TextView
                 android:id="@+id/tvAddCity"
@@ -108,7 +110,7 @@
                 android:layout_marginStart="10dp"
                 android:text="@string/add_city"
                 style="@style/txtMedium.14sp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColor"
                 app:layout_constraintBottom_toBottomOf="@+id/btnAddCity"
                 app:layout_constraintStart_toEndOf="@+id/ivAddCity"
                 app:layout_constraintTop_toTopOf="@+id/btnAddCity" />
@@ -129,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
                 android:text="@string/settings"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColor"
                 style="@style/txtMedium.14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/btnSettings"
                 app:layout_constraintStart_toStartOf="@+id/btnSettings"

@@ -1,6 +1,6 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="Scales">
+    <PreferenceCategory app:title="@string/scales">
         <ListPreference
             app:dialogTitle="@string/temp_dialog"
             app:entries="@array/temperature_entries"
@@ -32,11 +32,15 @@
             app:title="@string/language"  />
 
         <ListPreference
+            app:dialogTitle="Select the theme for this app"
+            app:entries="@array/theme_entries"
+            app:entryValues="@array/theme_values"
+            app:key="@string/theme_key"
             app:title="@string/theme" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="About the app">
+    <PreferenceCategory app:title="@string/aboutTheApp">
         <Preference
             app:key="@string/githubrepo_key"
             app:title="@string/githubrepo" />

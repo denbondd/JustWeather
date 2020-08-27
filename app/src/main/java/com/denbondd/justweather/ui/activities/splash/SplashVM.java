@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Handler;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.preference.PreferenceManager;
@@ -48,12 +49,18 @@ public class SplashVM extends BaseVM {
         new Thread(() -> appDatabase.cityDao().insert(geolocationCity)).start();
     }
 
+    public void notFirstStart(Context baseContext) {
+        AppApplication.setLanguageTag(changeLanguage(PreferenceManager.getDefaultSharedPreferences(getContext()), baseContext));
+        AppApplication.setAppTheme();
+    }
+
     public void firstStart(Context baseContext) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         preferences.edit().putString(getContext().getString(R.string.temperature_key), "c").apply();
         preferences.edit().putString(getContext().getString(R.string.speed_key), "ms").apply();
         preferences.edit().putString(getContext().getString(R.string.pressure_key), "mbar").apply();
         preferences.edit().putString(getContext().getString(R.string.language_key), getLanguageTag()).apply();
+        preferences.edit().putString(getContext().getString(R.string.theme_key), "system").apply();
         changeLanguage(preferences, baseContext);
     }
 

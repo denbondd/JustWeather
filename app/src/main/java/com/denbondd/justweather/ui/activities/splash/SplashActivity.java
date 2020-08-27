@@ -56,7 +56,7 @@ public class SplashActivity extends BaseActivity<SplashVM> {
             showPrePermissionDialog();
             sharedPreferences.edit().putBoolean(PREFERENCES_NEED_PERMISSION, false).apply();
         } else {
-            AppApplication.setLanguageTag(getViewModel().changeLanguage(PreferenceManager.getDefaultSharedPreferences(this), getBaseContext()));
+            getViewModel().notFirstStart(getBaseContext());
             new Handler().postDelayed(() -> startMainActivity(false), 1500);
             return;
         }

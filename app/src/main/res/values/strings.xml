@@ -62,4 +62,7 @@
     <string name="speed_dialog">Select speed unit you want to use</string>
     <string name="pressure_dialog">Select pressure unit you want to use</string>
     <string name="lang_dialog">Select language you want to use</string>
+    <string name="aboutTheApp">About the app</string>
+    <string name="scales">Scales</string>
+    <string name="theme_key" translatable="false">theme</string>
 </resources>

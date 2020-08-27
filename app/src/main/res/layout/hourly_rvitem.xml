@@ -30,6 +30,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="5dp"
+        android:background="@color/background"
         app:cardCornerRadius="10dp"
         app:cardElevation="7dp">
 
@@ -43,6 +44,7 @@
                 android:layout_height="36dp"
                 android:layout_marginStart="13dp"
                 android:layout_marginTop="13dp"
+                app:tint="@color/textColor"
                 android:src="@{owmExt.getIconById(hourly.weather.get(0).id)}"
                 android:contentDescription="@string/itemico"
                 app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="13dp"
                 android:layout_marginTop="13dp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColor"
                 android:text="@{timeExt.getHoursUTC(hourly.dt)}"
                 app:layout_constraintStart_toEndOf="@+id/ivWeatherIcon"
                 app:layout_constraintTop_toTopOf="parent"
@@ -69,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@{weatherExt.getMiddleFeelsLikeTempStr(hourly.temp, hourly.feelsLike)}"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColor"
                 app:layout_constraintStart_toStartOf="@+id/tvTime"
                 app:layout_constraintTop_toBottomOf="@+id/tvTime"
                 tools:text="-8°C  Feels like  -10°C" />
@@ -80,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{hourly.weather.get(0).description}"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColor"
                 app:layout_constraintStart_toStartOf="@+id/tvTemp"
                 app:layout_constraintTop_toBottomOf="@+id/tvTemp"
                 tools:text="Snow" />
@@ -92,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:text="@{weatherExt.getWindStr(hourly.windSpeed, hourly.windDeg, true)}"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColor"
                 app:layout_constraintStart_toStartOf="@+id/tvWeather"
                 app:layout_constraintTop_toBottomOf="@+id/tvWeather"
                 tools:text="Wind  7 m/s  North" />
@@ -103,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="13dp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvWind"
                 app:layout_constraintTop_toBottomOf="@+id/tvWind"
