@@ -169,13 +169,14 @@ public class MainActivity extends BaseActivity<MainVM> {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 City city = getViewModel().onSwipedNavDrawer(adapter, viewHolder);
-                int position = viewHolder.getAdapterPosition();
-                getViewModel().showUndoSnackbar(findViewById(R.id.clMainActivity), city, position);
-                adapter.notifyItemInserted(position);
+                if (city != null) {
+                    int position = viewHolder.getAdapterPosition();
+                    getViewModel().showUndoSnackbar(findViewById(R.id.clMainActivity), city, position);
+                    adapter.notifyItemInserted(position);
+                }
             }
         }).attachToRecyclerView(rvCities);
     }
-
 
     public void setBackArrow() {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);

@@ -62,11 +62,11 @@ public class MainVM extends BaseVM {
         if (adapter.getCities().size() == 1) {
             Toast.makeText(getContext(), R.string.deleteLastCity, Toast.LENGTH_SHORT).show();
             adapter.notifyItemChanged(viewHolder.getAdapterPosition());
-            return city;
+            return null;
         } else if (city.isCurrent()) {
             Toast.makeText(getContext(), R.string.snackbarCurrentCity, Toast.LENGTH_SHORT).show();
             adapter.notifyItemChanged(viewHolder.getAdapterPosition());
-            return city;
+            return null;
         }
         deleteCity(city);
         adapter.notifyItemRemoved(viewHolder.getAdapterPosition());

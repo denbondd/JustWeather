@@ -26,9 +26,9 @@ public class WeatherExtensions {
             case "c":
                 return Math.round(temp) + getString(R.string.celsiusSign);
             case "f":
-                return Math.round(celsiusToFahrenheit(temp)) + getString(R.string.fahrenheitSign);
+                return Math.round(Double.parseDouble(celsiusToFahrenheit(temp))) + getString(R.string.fahrenheitSign);
             case "k":
-                return Math.round(celsiusToKelvin(temp)) + getString(R.string.kelvinSign);
+                return Math.round(Double.parseDouble(celsiusToKelvin(temp))) + getString(R.string.kelvinSign);
             default:
                 return null;
         }
@@ -41,9 +41,9 @@ public class WeatherExtensions {
             case "c":
                 return Math.round(max) + getString(R.string.celsiusSign) + " / " + Math.round(min) + getString(R.string.celsiusSign);
             case "f":
-                return Math.round(celsiusToFahrenheit(max)) + getString(R.string.fahrenheitSign) + " / " + Math.round(celsiusToFahrenheit(min)) + getString(R.string.fahrenheitSign);
+                return Math.round(Double.parseDouble(celsiusToFahrenheit(max))) + getString(R.string.fahrenheitSign) + " / " + Math.round(Double.parseDouble(celsiusToFahrenheit(min))) + getString(R.string.fahrenheitSign);
             case "k":
-                return Math.round(celsiusToKelvin(max)) + getString(R.string.kelvinSign) + " / " + Math.round(celsiusToKelvin(min)) + getString(R.string.kelvinSign);
+                return Math.round(Double.parseDouble(celsiusToKelvin(max))) + getString(R.string.kelvinSign) + " / " + Math.round(Double.parseDouble(celsiusToKelvin(min))) + getString(R.string.kelvinSign);
             default:
                 return null;
         }
@@ -56,9 +56,9 @@ public class WeatherExtensions {
             case "c":
                 return Math.round(middle) + getString(R.string.celsiusSign) + "  " + getString(R.string.feels_like) + "  " + Math.round(feelsLike) + getString(R.string.celsiusSign);
             case "f":
-                return Math.round(celsiusToFahrenheit(middle)) + getString(R.string.fahrenheitSign) + "  " + getString(R.string.feels_like) + "  " + Math.round(celsiusToFahrenheit(feelsLike)) + getString(R.string.fahrenheitSign);
+                return Math.round(Double.parseDouble(celsiusToFahrenheit(middle))) + getString(R.string.fahrenheitSign) + "  " + getString(R.string.feels_like) + "  " + Math.round(Double.parseDouble(celsiusToFahrenheit(feelsLike))) + getString(R.string.fahrenheitSign);
             case "k":
-                return Math.round(celsiusToKelvin(middle)) + getString(R.string.kelvinSign) + "  " + getString(R.string.feels_like) + "  " + Math.round(celsiusToKelvin(feelsLike)) + getString(R.string.kelvinSign);
+                return Math.round(Double.parseDouble(celsiusToKelvin(middle))) + getString(R.string.kelvinSign) + "  " + getString(R.string.feels_like) + "  " + Math.round(Double.parseDouble(celsiusToKelvin(feelsLike))) + getString(R.string.kelvinSign);
             default:
                 return null;
         }

@@ -2,33 +2,33 @@ package com.denbondd.justweather.util;
 
 public class UnitsConverter {
 
-    public static double celsiusToFahrenheit(double celsius) {
+    public static String celsiusToFahrenheit(double celsius) {
         return getRounded(celsius * 9 / 5 + 32);
     }
 
-    public static double celsiusToKelvin(double celsius) {
+    public static String celsiusToKelvin(double celsius) {
         return getRounded(celsius + 273.3);
     }
 
-    public static double meterPerSecToMph(double meterPerSec) {
+    public static String meterPerSecToMph(double meterPerSec) {
         return getRounded(meterPerSec * 3600 / 1600);
     }
 
-    public static double meterPerSecToKmPerHour(double meterPerSec) {
+    public static String meterPerSecToKmPerHour(double meterPerSec) {
         return getRounded(meterPerSec * 3600 / 1000);
     }
 
-    public static double mBarToKPa(double mBar) {
+    public static String mBarToKPa(double mBar) {
         return getRounded(mBar / 10);
     }
 
-    public static double mBarToHhHg(double mBar) {
+    public static String mBarToHhHg(double mBar) {
         return getRounded(mBar * 1.333);
     }
 
-    public static double getRounded(double data) {
-        if (data % 0.1 != 0) data = Math.round(data * 10.0) / 10.0;
-        return data % 1 == 0 ? (int) data : data;
+    public static String getRounded(double data) {
+        if (data % 1 != 0) return "" + Math.round(data * 10.0) / 10.0;
+        return "" + (int) data;
     }
 
 }
