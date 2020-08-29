@@ -7,7 +7,7 @@
     <color name="gradientEndColor">#001027</color>
     <color name="mainGray">#fff</color>
     <color name="textColor">#fff</color>
-    <color name="background">#5B5B5B</color>
+    <color name="background">#424242</color>
     <color name="navItem">#8000ACC3</color>
     <color name="navItemPressed">#8000BBD5</color>
 </resources>

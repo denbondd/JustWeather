@@ -13,7 +13,14 @@
 It's a weather app writed in Java. App asking permission to location and use it to detect weather in your current city (if you granted permission). You can add cities manually by writing them. The whole code and design was made by me. Design you can see <a href="https://www.figma.com/file/wSLUbKT9fAasHgdKyk5tz1/WeatherApp">here</a> in Figma. While making this project, I practiced my knowlege about databases, dependency injection, data binding, working with api and even some design skills.
 
 ## Screenshots
-Currently project isn't ready, so do screenshots. They will be added as soon as possible.
+Main screen: </br>
+<img src="https://i.imgur.com/RYmZ4Xn.jpg" width="300"> <img src="https://i.imgur.com/mOLcbXZ.jpg" width="300"> <img src="https://i.imgur.com/pM4k7a0.jpg" width="300"> </br>
+</br>
+Hourly and daily: </br>
+<img src="http://i.imgur.com/3NMAcaf.jpg" width="300"> </br>
+</br>
+Custom NavDrawer: </br>
+<img src="https://i.imgur.com/1YwV9Jo.jpg" width="300">
 
 ## Used technologies
 #### Libraries:

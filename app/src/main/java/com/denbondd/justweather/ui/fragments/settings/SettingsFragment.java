@@ -50,8 +50,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         language.setOnPreferenceChangeListener((preference, newValue) -> {
             PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString(getString(R.string.language_key), (String) newValue).apply();
-            ActivityExtensions.startSplashActivityWithAnim((AppCompatActivity) requireActivity(), new SplashActivity());
-            requireActivity().finish();
+            restartApp();
             return false;
         });
 
@@ -68,8 +67,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     break;
             }
             PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString(getString(R.string.theme_key), (String) newValue).apply();
+            restartApp();
             return false;
         }));
+    }
+
+    private void restartApp() {
+        ActivityExtensions.startSplashActivityWithAnim((AppCompatActivity) requireActivity(), new SplashActivity());
+        requireActivity().finish();
     }
 
     private void openLink(String link) {
