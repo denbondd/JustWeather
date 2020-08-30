@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "872525524361",
+    "firebase_url": "https://justweather-d8026.firebaseio.com",
+    "project_id": "justweather-d8026",
+    "storage_bucket": "justweather-d8026.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872525524361:android:70ad8e2a8fa830cfd2c558",
+        "android_client_info": {
+          "package_name": "com.denbondd.justweather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872525524361-4qnbae7h3j88rl4qd8fs7f4n3641uj4e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7sQ7W9iEcTBGswwEaQbi7-qmQTQKpISc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872525524361-4qnbae7h3j88rl4qd8fs7f4n3641uj4e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

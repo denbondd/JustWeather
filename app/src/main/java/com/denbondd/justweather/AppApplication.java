@@ -11,6 +11,7 @@ import androidx.preference.PreferenceManager;
 
 import com.denbondd.justweather.di.AppComponent;
 import com.denbondd.justweather.di.DaggerAppComponent;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.lang.ref.WeakReference;
 

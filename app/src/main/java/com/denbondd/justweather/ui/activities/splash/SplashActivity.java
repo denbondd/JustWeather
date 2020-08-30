@@ -22,6 +22,7 @@ import com.denbondd.justweather.ui.activities.main.MainActivity;
 import com.denbondd.justweather.ui.base.BaseActivity;
 import com.denbondd.justweather.util.ActivityExtensions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -47,6 +48,7 @@ public class SplashActivity extends BaseActivity<SplashVM> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mainActivity = new MainActivity();
 
