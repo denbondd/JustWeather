@@ -6,7 +6,6 @@ import com.denbondd.justweather.AppApplication;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -14,7 +13,11 @@ public class TimeExtensions {
     public static String convertMillisToDate(long millis, String pattern) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.forLanguageTag(AppApplication.getLanguageTag()));
+        SimpleDateFormat simpleDateFormat;
+        if (AppApplication.getLanguageTag() != null)
+            simpleDateFormat = new SimpleDateFormat(pattern, Locale.forLanguageTag(AppApplication.getLanguageTag()));
+        else
+            simpleDateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
         return simpleDateFormat.format(calendar.getTime());
     }
 

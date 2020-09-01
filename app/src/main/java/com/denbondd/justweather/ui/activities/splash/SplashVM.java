@@ -66,6 +66,7 @@ public class SplashVM extends BaseVM {
 
     public String changeLanguage(SharedPreferences preferences, Context baseContext) {
         String languageTag = preferences.getString(getContext().getString(R.string.language_key), "en");
+        AppApplication.setLanguageTag(languageTag);
         Locale locale = new Locale(languageTag);
         Locale.setDefault(locale);
         Configuration configuration = new Configuration();
@@ -86,5 +87,9 @@ public class SplashVM extends BaseVM {
         } else {
             return "en";
         }
+    }
+
+    public boolean isThereCurrentCity() {
+        return appDatabase.cityDao().getCurrent() != null;
     }
 }
