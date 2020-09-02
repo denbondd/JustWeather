@@ -13,11 +13,7 @@ public class TimeExtensions {
     public static String convertMillisToDate(long millis, String pattern) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
-        SimpleDateFormat simpleDateFormat;
-        if (AppApplication.getLanguageTag() != null)
-            simpleDateFormat = new SimpleDateFormat(pattern, Locale.forLanguageTag(AppApplication.getLanguageTag()));
-        else
-            simpleDateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
         return simpleDateFormat.format(calendar.getTime());
     }
 
