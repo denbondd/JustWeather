@@ -54,7 +54,7 @@ public class SplashActivity extends BaseActivity<SplashVM> {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (getViewModel().isThereCurrentCity()) {
+        if (!getViewModel().isThereCurrentCity()) {
             sharedPreferences.edit().putBoolean(PREFERENCES_NEED_PERMISSION, true).apply();
         }
         if (sharedPreferences.getBoolean(PREFERENCES_NEED_PERMISSION, true)) {
